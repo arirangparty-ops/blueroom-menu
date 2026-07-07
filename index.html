@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BLUE ROOM</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; }
+
+/* ── SCREENS ── */
+.screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; }
+.screen.active { display: flex; }
+
+/* ── HOME ── */
+#home { background: #1c1e22; align-items: center; justify-content: flex-start; overflow-y: auto; padding: 28px 0 24px; }
+.home-logo-img { width: 60%; max-width: 420px; height: auto; margin-bottom: 10px; border-radius: 8px; }
+.home-sub { font-size: 10px; letter-spacing: 0.3em; color: #444; text-transform: uppercase; margin-bottom: 20px; }
+
+/* 이달의 메뉴 배너 */
+.monthly-banner {
+  width: 88%; max-width: 860px;
+  background: linear-gradient(135deg, #0f1e3d 0%, #152a55 100%);
+  border: 0.5px solid #1a3d7d;
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.2s;
+}
+.monthly-banner:active { opacity: 0.8; transform: scale(0.99); }
+.monthly-left { display: flex; align-items: center; gap: 12px; }
+.monthly-dot { width: 6px; height: 6px; background: #1a3d7d; border-radius: 50%; }
+.monthly-label { font-size: 10px; letter-spacing: 0.25em; color: #6b9ae8; text-transform: uppercase; }
+.monthly-title { font-size: 13px; color: #e8e0d0; margin-top: 2px; }
+.monthly-arrow { font-size: 14px; color: #555; }
+
+/* 섹션 구분 */
+.home-sections { width: 88%; max-width: 860px; display: flex; gap: 16px; margin-bottom: 4px; }
+.home-section { flex: 1; }
+.section-label { font-size: 10px; letter-spacing: 0.3em; color: #4a6da0; text-transform: uppercase; margin-bottom: 8px; padding-left: 2px; }
+.cat-grid { display: flex; flex-direction: column; gap: 5px; }
+.cat-btn {
+  background: #22242a;
+  border: 0.5px solid #2c2e34;
+  border-radius: 10px;
+  padding: 9px 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.15s;
+}
+.cat-btn:active { background: #282a30; transform: scale(0.98); }
+.cat-left { display: flex; align-items: center; gap: 10px; }
+.cat-icon { font-size: 16px; }
+.cat-name { font-size: 14px; font-weight: 400; color: #c0bcb4; letter-spacing: 0.03em; }
+.cat-count { font-size: 10px; color: #3a3a40; }
+.cat-chevron { font-size: 11px; color: #333; }
+
+/* ── LIST ── */
+#menuList { background: #1c1e22; }
+.list-header {
+  display: flex; align-items: center;
+  padding: 18px 24px 14px;
+  border-bottom: 0.5px solid #26282e;
+  flex-shrink: 0;
+}
+.back-btn { font-size: 12px; color: #555; cursor: pointer; padding: 4px 0; margin-right: 20px; letter-spacing: 0.05em; }
+.back-btn:active { color: #888; }
+.list-title { font-size: 14px; font-weight: 400; color: #f0ede8; letter-spacing: 0.18em; text-transform: uppercase; }
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: min-content;
+  gap: 14px;
+  padding: 20px 24px 80px;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+.menu-card {
+  background: #22242a;
+  border: 0.5px solid #2c2e34;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.menu-card:active { transform: scale(0.96); opacity: 0.85; }
+.menu-clickable { cursor: pointer; flex: 1; min-width: 0; }
+.menu-thumb-wrap { width: 100%; aspect-ratio: 4/3; background: #1a1c20; cursor: pointer; }
+.menu-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
+.menu-info-row { display: flex; align-items: center; padding: 10px 10px 10px 12px; gap: 8px; cursor: pointer; }
+.menu-info-row:active { background: #2a2c32; }
+.menu-info { min-width: 0; flex: 1; }
+.menu-en { font-size: 11px; color: #555; letter-spacing: 0.03em; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.menu-ko { font-size: 13px; color: #b8b4ac; font-weight: 500; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.menu-price { font-size: 12px; color: #666; }
+.menu-price-original { font-size: 9px; color: #444; text-decoration: line-through; margin-bottom: 1px; }
+.menu-price-discounted { color: #6b9ae8; font-weight: 600; }
+.add-btn-inline {
+  width: 26px; height: 26px; flex-shrink: 0;
+  background: #1a3d7d;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 15px;
+  cursor: pointer;
+}
+.add-btn-inline:active { transform: scale(0.88); background: #15326a; }
+
+#drinksList { background: #1c1e22; }
+.drinks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+.drinks-grid.single { display: flex; justify-content: center; }
+.drinks-grid.single .drink-card { width: calc(25% - 11px); }
+.drink-card {
+  background: #22242a;
+  border: 0.5px solid #2c2e34;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; flex-direction: column;
+}
+.drink-card:active { transform: scale(0.96); opacity: 0.85; }
+.drink-thumb { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: #1a1c20; }
+.drink-info { padding: 10px 12px; }
+.drink-en { font-size: 10px; color: #555; letter-spacing: 0.03em; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.drink-name { font-size: 12px; color: #b8b4ac; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
+/* ── WHISKY ── */
+.whisky-tabs {
+  display: flex;
+  overflow-x: auto;
+  padding: 14px 20px 0;
+  gap: 8px;
+  scrollbar-width: none;
+  flex-shrink: 0;
+  background: #1c1e22;
+  border-bottom: 1px solid #2c2e34;
+}
+.whisky-tabs::-webkit-scrollbar { display: none; }
+.whisky-tab {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #666;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #2c2e34;
+  background: #22242a;
+  transition: all 0.15s;
+}
+.whisky-tab.active {
+  background: #1a3d7d;
+  color: #e8e3d9;
+  border-color: #1a3d7d;
+}
+.whisky-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 40px 80px;
+  background: #1c1e22;
+}
+.whisky-brand {
+  margin-bottom: 20px;
+}
+.whisky-brand-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e0dbd0;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.whisky-brand-ko {
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+.whisky-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 0.5px solid #2a2c32;
+}
+.whisky-item:last-child { border-bottom: none; }
+.whisky-item-left { display: flex; flex-direction: column; gap: 1px; }
+.whisky-ctg {
+  font-size: 13px;
+  color: #888;
+  letter-spacing: 0.03em;
+}
+.whisky-item-right {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.whisky-price-col { text-align: right; min-width: 56px; }
+.whisky-price-label {
+  font-size: 10px;
+  color: #444;
+  letter-spacing: 0.05em;
+  margin-bottom: 1px;
+}
+.whisky-price {
+  font-size: 13px;
+  color: #b8b4ac;
+}
+
+
+/* ── DRINKS TEXT ── */
+.dtext-screen {
+  display: flex; flex-direction: column; height: 100%;
+}
+.dtext-tabs {
+  display: flex;
+  overflow-x: auto;
+  padding: 12px 16px 0;
+  gap: 8px;
+  scrollbar-width: none;
+  flex-shrink: 0;
+  background: #1c1e22;
+  border-bottom: 1px solid #2c2e34;
+}
+.dtext-tabs::-webkit-scrollbar { display: none; }
+.dtext-tab {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #666;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #2c2e34;
+  background: #22242a;
+  transition: all 0.15s;
+}
+.dtext-tab.active {
+  background: #1a3d7d;
+  color: #e8e3d9;
+  border-color: #1a3d7d;
+}
+.dtext-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 40px 80px;
+  background: #1c1e22;
+}
+.dtext-section-header {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #8a95b5;
+  margin: 22px 0 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #3a3d45;
+}
+.dtext-section-header:first-child { margin-top: 0; }
+.dtext-brand { margin-bottom: 16px; }
+.dtext-brand-name { font-size: 15px; font-weight: 600; color: #e0dbd0; letter-spacing: 0.04em; margin-bottom: 1px; }
+.dtext-brand-ko { font-size: 10px; color: #555; margin-bottom: 6px; }
+.dtext-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 6px 0; border-bottom: 0.5px solid #2a2c32;
+}
+.dtext-item:last-child { border-bottom: none; }
+.dtext-item-name { font-size: 14px; color: #b8b4ac; }
+.dtext-item-ko { font-size: 12px; color: #555; margin-top: 1px; }
+.dtext-item-sub { font-size: 9px; color: #555; margin-top: 2px; letter-spacing: 0.02em; }
+.dtext-vol-inline { font-size: 10px; color: #555; }
+.dtext-price-wrap { display: flex; gap: 20px; flex-shrink: 0; align-items: center; }
+.dtext-price-col { text-align: right; min-width: 58px; }
+.dtext-price-label { font-size: 9px; color: #444; letter-spacing: 0.05em; margin-bottom: 1px; }
+.dtext-price { font-size: 13px; color: #b8b4ac; }
+.dtext-single-price { font-size: 14px; color: #b8b4ac; padding-top: 1px; }
+.dtext-price-original-strike { font-size: 9px; color: #555; text-decoration: line-through; margin-bottom: 1px; }
+.dtext-price-discounted { color: #6b9ae8; font-weight: 600; }
+
+
+/* ── SEARCH ── */
+.search-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px;
+  background: #1c1e22;
+  border: 1px solid #2c2e34;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.search-icon { font-size: 13px; opacity: 0.5; }
+.search-placeholder { font-size: 13px; color: #555; letter-spacing: 0.02em; }
+
+#searchScreen.active {
+  display: flex; flex-direction: column; height: 100%;
+}
+.search-input-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  background: #1c1e22;
+  border-bottom: 1px solid #2c2e34;
+}
+.search-back { font-size: 14px; color: #888; cursor: pointer; padding: 4px 0; white-space: nowrap; }
+.search-input {
+  flex: 1;
+  background: #22242a;
+  border: 1px solid #2c2e34;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 14px;
+  color: #e0dbd0;
+  outline: none;
+}
+.search-input::placeholder { color: #555; }
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 20px;
+  background: #1c1e22;
+}
+.search-result-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0;
+  border-bottom: 0.5px solid #2a2c32;
+  cursor: pointer;
+}
+.search-result-left { display: flex; flex-direction: column; gap: 2px; }
+.search-result-name { font-size: 13px; color: #e0dbd0; font-weight: 500; }
+.search-result-ko { font-size: 11px; color: #888; }
+.search-result-cat { font-size: 9px; color: #5a6fa0; letter-spacing: 0.05em; margin-top: 2px; }
+.search-result-price { font-size: 11px; color: #888; flex-shrink: 0; padding-left: 12px; text-align: right; }
+.search-empty { text-align: center; color: #444; font-size: 12px; padding: 40px 0; letter-spacing: 0.05em; }
+
+
+/* ── CART ── */
+.add-btn {
+  position: absolute; top: 8px; right: 8px;
+  width: 28px; height: 28px;
+  background: rgba(26,61,125,0.92);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 16px; font-weight: 400;
+  cursor: pointer; z-index: 50;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  pointer-events: auto;
+}
+.add-btn:active { transform: scale(0.88); background: #15326a; }
+.dtext-add-btn {
+  width: 26px; height: 26px;
+  background: #1a3d7d;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 15px;
+  cursor: pointer; flex-shrink: 0; margin-left: 10px;
+}
+.dtext-add-btn:active { transform: scale(0.88); background: #15326a; }
+.dtext-item-row { display: flex; align-items: flex-start; }
+.dtext-item-row > div:first-child { flex: 1; }
+
+.cart-fab {
+  position: fixed; bottom: 22px; right: 22px;
+  width: 52px; height: 52px;
+  background: #1a3d7d;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #e8e3d9; font-size: 20px;
+  cursor: pointer; z-index: 150;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+.cart-fab:active { transform: scale(0.93); }
+.cart-badge {
+  position: absolute; top: -4px; right: -4px;
+  min-width: 18px; height: 18px; padding: 0 4px;
+  background: #c0392b; color: #fff;
+  border-radius: 9px; font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+#cartScreen { background: #1c1e22; }
+.cart-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+.cart-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 0.5px solid #2a2c32;
+}
+.cart-item-left { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.cart-item-name { font-size: 13px; color: #e0dbd0; font-weight: 500; }
+.cart-item-opt { font-size: 10px; color: #888; }
+.cart-item-price { font-size: 11px; color: #888; margin-top: 2px; }
+.cart-qty-row { display: flex; align-items: center; gap: 10px; }
+.cart-qty-btn {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #22242a; border: 1px solid #2c2e34;
+  display: flex; align-items: center; justify-content: center;
+  color: #b8b4ac; font-size: 14px; cursor: pointer;
+}
+.cart-qty-btn:active { background: #2c2e34; }
+.cart-qty-num { font-size: 13px; color: #e0dbd0; min-width: 16px; text-align: center; }
+.cart-remove { font-size: 11px; color: #c0392b; margin-left: 12px; cursor: pointer; }
+.cart-empty { text-align: center; color: #444; font-size: 12px; padding: 60px 0; letter-spacing: 0.05em; }
+.cart-footer {
+  padding: 16px 20px 22px;
+  background: #16171a;
+  border-top: 1px solid #2c2e34;
+}
+.cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.cart-total-label { font-size: 12px; color: #888; letter-spacing: 0.05em; }
+.cart-total-amount { font-size: 18px; color: #e8e3d9; font-weight: 600; }
+.cart-clear { font-size: 11px; color: #666; text-align: center; margin-top: 10px; cursor: pointer; letter-spacing: 0.03em; }
+
+/* option picker modal */
+#optionModal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  display: none; z-index: 300;
+}
+#optionModal.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.option-box {
+  background: #22242a; border: 1px solid #2c2e34; border-radius: 12px;
+  padding: 18px; width: 260px;
+  margin: auto;
+  position: relative;
+}
+.option-title { font-size: 13px; color: #e0dbd0; margin-bottom: 4px; font-weight: 600; }
+.option-sub { font-size: 10px; color: #666; margin-bottom: 14px; }
+.option-choice {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 12px; background: #1c1e22; border-radius: 8px;
+  margin-bottom: 8px; cursor: pointer; border: 1px solid #2c2e34;
+}
+.option-choice:active { background: #2c2e34; }
+.option-choice-label { font-size: 11px; color: #999; letter-spacing: 0.05em; }
+.option-choice-price { font-size: 13px; color: #e0dbd0; }
+.option-cancel { text-align: center; font-size: 11px; color: #666; margin-top: 8px; cursor: pointer; padding: 6px; }
+
+/* ── GUIDE ── */
+.guide-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 24px;
+  background: #1c1e22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.guide-title-block { text-align: center; margin-bottom: 36px; }
+.guide-title-en { font-size: 16px; letter-spacing: 0.15em; color: #e8e0d0; font-weight: 500; }
+.guide-title-sub { font-size: 13px; letter-spacing: 0.15em; color: #6b9ae8; margin-top: 4px; }
+.guide-rules { max-width: 560px; width: 100%; }
+.guide-rule {
+  font-size: 13px; color: #b0aca4; line-height: 1.9;
+  text-align: center; margin-bottom: 28px; letter-spacing: 0.01em;
+}
+.guide-rule b { color: #e8e0d0; font-weight: 600; }
+.guide-sub-rule { font-size: 12px; color: #888; margin-top: 4px; }
+.guide-divider {
+  width: 100%; max-width: 560px;
+  border-top: 1px solid #2c2e34;
+  margin: 20px 0 18px;
+}
+.guide-wifi { font-size: 12px; color: #666; letter-spacing: 0.05em; }
+
+
+/* ── SOLD OUT ── */
+.sold-out-badge {
+  font-size: 9px; letter-spacing: 0.08em;
+  color: #c0392b; border: 1px solid #c0392b;
+  border-radius: 4px; padding: 1px 5px;
+  margin-left: 6px; flex-shrink: 0;
+}
+.sold-out-text { opacity: 0.35; }
+.dtext-add-btn.disabled, .add-btn-inline.disabled {
+  background: #333; cursor: default; opacity: 0.4;
+  pointer-events: none;
+}
+
+
+/* ── MONTHLY REDESIGN ── */
+.monthly-section-title {
+  font-size: 9px; letter-spacing: 0.3em; color: #4a6090;
+  text-transform: uppercase; padding: 4px 0 8px;
+  border-bottom: 1px solid #2a2c34;
+  margin-bottom: 2px;
+}
+.monthly-set-card {
+  background: linear-gradient(135deg, #0f1e3d 0%, #152a55 100%);
+  border: 1px solid #1a3d7d;
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.monthly-set-tag {
+  font-size: 9px; letter-spacing: 0.2em; color: #6b9ae8;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.monthly-set-name {
+  font-size: 14px; color: #f0ede8; font-weight: 400;
+  margin-bottom: 3px;
+}
+.monthly-set-theme {
+  font-size: 11px; color: #6b9ae8; margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.monthly-set-items {
+  font-size: 11px; color: #888; line-height: 1.5;
+  margin-bottom: 8px;
+}
+.monthly-set-note {
+  font-size: 10px; color: #4a6090; margin-bottom: 10px;
+}
+.monthly-set-price-row {
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+}
+.monthly-set-original { font-size: 11px; color: #444; text-decoration: line-through; }
+.monthly-set-special { font-size: 15px; color: #e8e0d0; font-weight: 500; }
+.monthly-set-badge {
+  font-size: 9px; color: #6b9ae8; border: 1px solid #1a3d7d;
+  border-radius: 4px; padding: 2px 6px; letter-spacing: 0.05em;
+}
+.monthly-simple-card2 {
+  background: #1e2028;
+  border: 0.5px solid #2a2c34;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.monthly-simple-card {
+  background: #1e2028;
+  border: 0.5px solid #2a2c34;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.monthly-simple-left { flex: 1; min-width: 0; overflow: hidden; }
+.monthly-simple-name { font-size: 13px; color: #e8e0d0; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.monthly-simple-sub { font-size: 11px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.monthly-simple-price { text-align: right; }
+.monthly-simple-original { font-size: 10px; color: #444; text-decoration: line-through; margin-bottom: 2px; }
+.monthly-simple-special { font-size: 16px; color: #e8e0d0; }
+.monthly-simple-badge { font-size: 9px; color: #6b9ae8; letter-spacing: 0.05em; margin-top: 3px; }
+
+
+.monthly-add-btn {
+  width: 26px; height: 26px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; cursor: pointer;
+  background: #1a3d7d; color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.monthly-add-btn:active { transform: scale(0.88); background: #15326a; }
+.monthly-add-btn.on-blue {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+}
+.monthly-add-btn.on-blue:active { background: rgba(255,255,255,0.3); }
+
+
+/* ── GOODS ── */
+#goodsScreen { background: #1c1e22; }
+.goods-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 20px 20px 80px;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+.goods-card {
+  background: #22242a;
+  border: 0.5px solid #2c2e34;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.goods-card:active { transform: scale(0.97); opacity: 0.85; }
+.goods-thumb-wrap { width: 100%; aspect-ratio: 1/1; background: #111318; cursor: pointer; overflow: hidden; }
+.goods-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
+.goods-info-row { display: flex; align-items: center; padding: 10px 10px 10px 12px; gap: 8px; }
+.goods-info { flex: 1; min-width: 0; }
+.goods-en { font-size: 11px; color: #888; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.goods-ko { font-size: 13px; color: #e0dbd0; font-weight: 500; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.goods-price { font-size: 12px; color: #6b9ae8; }
+.goods-add-btn {
+  width: 26px; height: 26px; flex-shrink: 0;
+  background: #1a3d7d; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 15px; cursor: pointer;
+}
+.goods-add-btn:active { transform: scale(0.88); background: #15326a; }
+
+
+/* ── HELLO ── */
+#helloScreen { background: #1c1e22; }
+.hello-body {
+  flex: 1; overflow-y: auto;
+  padding: 24px 24px 80px;
+  display: flex; flex-direction: column;
+}
+.hello-desc {
+  margin-bottom: 32px;
+  font-size: 13px; color: #888; line-height: 1.8;
+  letter-spacing: 0.02em;
+  background: #1e2028; border: 0.5px solid #2a2c34;
+  border-radius: 12px; padding: 18px;
+}
+.hello-qr-row {
+  display: flex; justify-content: center; padding: 0 40px; margin-top: 24px;
+}
+.hello-qr-card {
+  width: 210px; flex-shrink: 0;
+  background: #1e2028; border: 0.5px solid #2a2c34;
+  border-radius: 12px; padding: 14px;
+  display: flex; flex-direction: column; align-items: center;
+  margin: 0 30px;
+}
+.hello-qr-label {
+  font-size: 9px; letter-spacing: 0.2em; color: #4a6090;
+  text-transform: uppercase; text-align: center;
+}
+.hello-qr-wrap {
+  width: 100%; aspect-ratio: 1/1;
+  background: #1a1c20; border-radius: 6px; overflow: hidden;
+  padding: 6px; box-sizing: border-box;
+}
+.hello-qr-img { width: 100%; height: 100%; object-fit: contain; display: block; filter: invert(1); }
+.hello-qr-name { font-size: 10px; color: #666; letter-spacing: 0.03em; text-align: center; }
+
+/* ── DETAIL ── */
+#detail {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #1c1e22;
+  z-index: 200;
+  display: none; opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+  touch-action: none;
+}
+#detail.active { display: block; }
+#detail.visible { opacity: 1; }
+#detail img { width: 100%; height: 100%; object-fit: contain; display: block; will-change: transform; }
+.detail-close {
+  position: absolute; top: 18px; right: 20px;
+  width: 34px; height: 34px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; color: #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+}
+.detail-close:active { background: rgba(0,0,0,0.6); }
+.detail-back {
+  position: absolute; top: 18px; left: 16px;
+  height: 34px; padding: 0 14px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 17px;
+  display: flex; align-items: center;
+  cursor: pointer; font-size: 13px; color: #fff; font-weight: 500;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.4); letter-spacing: 0.02em;
+}
+.detail-back:active { background: rgba(0,0,0,0.6); }
+
+/* ── MONTHLY ── */
+#monthly { background: #1c1e22; }
+.monthly-content {
+  flex: 1; overflow-y: auto;
+  padding: 12px 16px 80px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.monthly-header-card {
+  background: linear-gradient(135deg, #0f1e3d 0%, #152a55 100%);
+  border: 0.5px solid #1a3d7d;
+  border-radius: 14px;
+  padding: 20px 24px;
+  text-align: center;
+}
+.monthly-month { font-size: 11px; letter-spacing: 0.3em; color: #6b9ae8; text-transform: uppercase; margin-bottom: 6px; }
+.monthly-headline { font-size: 20px; font-weight: 300; color: #f0ede8; letter-spacing: 0.1em; }
+.monthly-desc { font-size: 12px; color: #666; margin-top: 6px; }
+.monthly-item-card {
+  background: #22242a;
+  border: 0.5px solid #2c2e34;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.monthly-item-label {
+  padding: 10px 18px;
+  font-size: 10px; letter-spacing: 0.25em; color: #6b9ae8; text-transform: uppercase;
+  border-bottom: 0.5px solid #1a3050;
+  background: #111826;
+}
+.monthly-item-body { padding: 16px 18px; display: flex; justify-content: space-between; align-items: flex-start; }
+.monthly-item-name { font-size: 16px; color: #e8e0d0; font-weight: 400; margin-bottom: 4px; }
+.monthly-item-sub { font-size: 12px; color: #666; }
+.monthly-item-price { text-align: right; }
+.monthly-price-original { font-size: 11px; color: #444; text-decoration: line-through; margin-bottom: 3px; }
+.monthly-price-special { font-size: 15px; color: #6b9ae8; font-weight: 500; }
+.monthly-price-tag { font-size: 10px; color: #3a6abf; background: #0f1e3d; padding: 2px 7px; border-radius: 4px; margin-top: 4px; display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <img class="home-logo-img" src="blueroom_logo.PNG" alt="BLUE ROOM">
+
+  <div class="monthly-banner" onclick="showScreen('monthly')">
+    <div class="monthly-left">
+      <div class="monthly-dot"></div>
+      <div>
+        <div class="monthly-label">July Special</div>
+        <div class="monthly-title">이달의 메뉴</div>
+      </div>
+    </div>
+    <div class="monthly-arrow">›</div>
+  </div>
+
+  <div class="home-sections">
+    <div class="home-section">
+      <div class="section-label">Food</div>
+      <div class="cat-grid">
+        <div class="cat-btn" onclick="showFoodCategory('mains')">
+          <div class="cat-left"><div class="cat-icon">🥩</div><div class="cat-name">Mains</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showFoodCategory('plates')">
+          <div class="cat-left"><div class="cat-icon">🍽</div><div class="cat-name">Plates</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showFoodCategory('pasta')">
+          <div class="cat-left"><div class="cat-icon">🍝</div><div class="cat-name">Pasta</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showFoodCategory('cheese')">
+          <div class="cat-left"><div class="cat-icon">🧀</div><div class="cat-name">Cheese & Snacks</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-section">
+      <div class="section-label">Drinks</div>
+      <div class="cat-grid">
+        <div class="cat-btn" onclick="showDrinksCategory('whisky')">
+          <div class="cat-left"><div class="cat-icon">🥃</div><div class="cat-name">Whisky</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showDrinksCategory('cognac')">
+          <div class="cat-left"><div class="cat-icon">🍾</div><div class="cat-name">Cognac & Spirits</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showDrinksCategory('wine')">
+          <div class="cat-left"><div class="cat-icon">🍷</div><div class="cat-name">Wine</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showDrinksCategory('cocktail')">
+          <div class="cat-left"><div class="cat-icon">🍸</div><div class="cat-name">Cocktail</div></div>
+          <div class="cat-chevron">›</div>
+        </div>
+        <div class="cat-btn" onclick="showDrinksCategory('beer')">
+          <div class="cat-left"><div class="cat-icon">🍺</div><div class="cat-name">Highball · Beer · Soju</div></div>
+          <div style="display:flex;align-items:center;gap:8px"><div class="cat-chevron">›</div></div>
+        </div>
+        <div class="cat-btn" onclick="showDrinksCategory('nonalc')">
+          <div class="cat-left"><div class="cat-icon">🥤</div><div class="cat-name">Non-Alc</div></div>
+          <div style="display:flex;align-items:center;gap:8px"><div class="cat-chevron">›</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:88%;max-width:860px;margin-top:10px;">
+    <div class="search-bar" onclick="showSearch()">
+      <span class="search-icon">🔍</span>
+      <span class="search-placeholder">메뉴 검색...</span>
+    </div>
+  </div>
+
+  <div style="width:88%;max-width:860px;margin-top:8px;">
+    <div class="cat-btn" onclick="showScreen('guideScreen')" style="background:#0f0f11;border-color:#1a1a1e;">
+      <div class="cat-left"><div class="cat-icon" style="font-size:14px;">📋</div><div class="cat-name" style="font-size:12px;color:#555;">House Guidelines</div></div>
+      <div class="cat-chevron">›</div>
+    </div>
+  </div>
+  <div style="width:88%;max-width:860px;margin-top:8px;">
+    <div class="cat-btn" onclick="showScreen('helloScreen')" style="background:#0f0f11;border-color:#1a3d7d;">
+      <div class="cat-left"><div class="cat-icon" style="font-size:14px;">💙</div><div class="cat-name" style="font-size:12px;color:#4a6090;">Say Hello to Blue Room</div></div>
+      <div class="cat-chevron" style="color:#4a6090;">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOD LIST -->
+<div id="menuList" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title" id="listTitle"></div>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</div>
+
+<!-- DRINKS LIST -->
+<div id="drinksList" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title" id="drinksTitle"></div>
+  </div>
+  <div class="drinks-grid" id="drinksGrid"></div>
+</div>
+
+
+
+<!-- COGNAC TEXT -->
+<div id="cognacText" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Cognac & Spirits</div>
+  </div>
+  <div class="dtext-tabs" id="cognacTabs"></div>
+  <div class="dtext-body" id="cognacBody"></div>
+</div>
+
+<!-- WINE TEXT -->
+<div id="wineText" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Wine</div>
+  </div>
+  <div class="dtext-tabs" id="wineTabs"></div>
+  <div class="dtext-body" id="wineBody"></div>
+</div>
+
+<!-- COCKTAIL TEXT -->
+<div id="cocktailText" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Cocktail</div>
+  </div>
+  <div class="dtext-tabs" id="cocktailTabs"></div>
+  <div class="dtext-body" id="cocktailBody"></div>
+</div>
+
+<!-- NON-ALC TEXT -->
+<div id="nonalcText" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Non-Alc</div>
+  </div>
+  <div class="dtext-body" id="nonalcBody"></div>
+</div>
+
+<!-- BEER TEXT -->
+<div id="beerText" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Highball · Beer · Soju</div>
+  </div>
+  <div class="dtext-body" id="beerBody"></div>
+</div>
+
+
+
+<!-- CART -->
+<div id="cartScreen" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">My Order</div>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total-row">
+      <div class="cart-total-label">TOTAL</div>
+      <div class="cart-total-amount" id="cartTotalAmount">₩0</div>
+    </div>
+    <div class="cart-clear" onclick="clearCart()">전체 비우기</div>
+  </div>
+</div>
+
+<!-- CART FAB -->
+<div class="cart-fab" id="cartFab" onclick="showCart()" style="display:none;">
+  🛒
+  <div class="cart-badge" id="cartBadge">0</div>
+</div>
+
+<!-- OPTION MODAL -->
+<div id="optionModal">
+  <div class="option-box">
+    <div class="option-title" id="optionTitle"></div>
+    <div class="option-sub" id="optionSub"></div>
+    <div id="optionChoices"></div>
+    <div class="option-cancel" onclick="closeOptionModal()">취소</div>
+  </div>
+</div>
+
+
+
+<!-- HELLO SCREEN -->
+<div id="helloScreen" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Say Hello</div>
+  </div>
+  <div class="hello-body">
+    <div class="hello-desc">
+      블루룸 카카오톡 채널을 통해 다양한 문의와 협업 제안을 보내주세요.<br>
+      이벤트 소식, 신메뉴 안내, 특별한 밤의 이야기도 채널에서 먼저 만날 수 있어요.
+    </div>
+    <div class="hello-qr-row">
+      <div class="hello-qr-card">
+        <div class="hello-qr-label">KakaoTalk Channel</div>
+        <div class="hello-qr-wrap">
+          <img src="qr_kakao.JPG" class="hello-qr-img" alt="Kakao QR">
+        </div>
+        <div class="hello-qr-name">블루룸</div>
+      </div>
+      <div class="hello-qr-card">
+        <div class="hello-qr-label">Instagram</div>
+        <div class="hello-qr-wrap">
+          <img src="qr_insta.JPG" class="hello-qr-img" alt="Instagram QR">
+        </div>
+        <div class="hello-qr-name">@blueroom_suyu</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GOODS -->
+<div id="goodsScreen" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Blue Room Goods</div>
+  </div>
+  <div class="goods-grid">
+    <div class="goods-card" onclick="showDetail('goods_t1.JPG', goodsItems, 0)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_t1.JPG" alt="T-Shirt Olive">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">T-Shirt · Olive</div>
+          <div class="goods-ko">티셔츠 · 올리브</div>
+          <div class="goods-price">₩45,000</div>
+        </div>
+        <div class="goods-add-btn" data-name="T-Shirt · Olive" data-ko="티셔츠 · 올리브" data-price="45000">+</div>
+      </div>
+    </div>
+    <div class="goods-card" onclick="showDetail('goods_t2.JPG', goodsItems, 1)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_t2.JPG" alt="T-Shirt Blue Card">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">T-Shirt · Blue Card</div>
+          <div class="goods-ko">티셔츠 · 블루카드</div>
+          <div class="goods-price">₩45,000</div>
+        </div>
+        <div class="goods-add-btn" data-name="T-Shirt · Blue Card" data-ko="티셔츠 · 블루카드" data-price="45000">+</div>
+      </div>
+    </div>
+    <div class="goods-card" onclick="showDetail('goods_ca1.JPG', goodsItems, 2)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_ca1.JPG" alt="Cap">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">Trucker Cap</div>
+          <div class="goods-ko">트러커캡</div>
+          <div class="goods-price">₩35,000</div>
+        </div>
+        <div class="goods-add-btn" data-name="Trucker Cap" data-ko="트러커캡" data-price="35000">+</div>
+      </div>
+    </div>
+    <div class="goods-card" onclick="showDetail('goods_c1.JPG', goodsItems, 3)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_c1.JPG" alt="Coaster">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">Diatomite Coaster</div>
+          <div class="goods-ko">규조토 코스터</div>
+          <div class="goods-price">₩10,000</div>
+        </div>
+        <div class="goods-add-btn" data-name="Diatomite Coaster" data-ko="규조토 코스터" data-price="10000">+</div>
+      </div>
+    </div>
+    <div class="goods-card" onclick="showDetail('goods_k1.JPG', goodsItems, 4)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_k1.JPG" alt="Keyring 1">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">Keyring · Blue Room</div>
+          <div class="goods-ko">키링 · 블루룸</div>
+          <div class="goods-price">₩5,000</div>
+        </div>
+        <div class="goods-add-btn" data-name="Keyring · Blue Room" data-ko="키링 · 블루룸" data-price="5000">+</div>
+      </div>
+    </div>
+    <div class="goods-card" onclick="showDetail('goods_k2.JPG', goodsItems, 5)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_k2.JPG" alt="Keyring 2">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">Keyring · Blue Cat</div>
+          <div class="goods-ko">키링 · 블루 고양이</div>
+          <div class="goods-price">₩5,000</div>
+        </div>
+        <div class="goods-add-btn" data-name="Keyring · Blue Cat" data-ko="키링 · 블루 고양이" data-price="5000">+</div>
+      </div>
+    </div>
+    <div class="goods-card" onclick="showDetail('goods_l.JPG', goodsItems, 6)">
+      <div class="goods-thumb-wrap">
+        <img class="goods-thumb" src="goods_l.JPG" alt="Lighter">
+      </div>
+      <div class="goods-info-row">
+        <div class="goods-info">
+          <div class="goods-en">Lighter</div>
+          <div class="goods-ko">라이터</div>
+          <div class="goods-price" style="font-style:italic;">On the House</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="searchScreen" class="screen">
+  <div class="search-input-row">
+    <div class="search-back" onclick="goHome()">← Back</div>
+    <input type="text" class="search-input" id="searchInput" placeholder="메뉴, 술 이름으로 검색" oninput="runSearch(this.value)">
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- GUIDE -->
+<div id="guideScreen" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">House Guidelines</div>
+  </div>
+  <div class="guide-body">
+    <div class="guide-title-block">
+      <div class="guide-title-en">BLUEROOM SUYU</div>
+      <div class="guide-title-sub">HOUSE GUIDELINES</div>
+    </div>
+    <div class="guide-rules">
+      <div class="guide-rule">BLUEROOM은 Whiskey, Cognac, Spirits에 한해 <b>15ml 샘플러(½ Shot) 서비스</b>를 판매하고 있습니다.</div>
+      <div class="guide-rule">Keep Bottle 보관 기간은 6개월이며, 기간 경과 시 <b>Keeping Charge 30,000원</b>이 부과됩니다.</div>
+      <div class="guide-rule">
+        외부 주류 반입 시 <b>Corkage Fee</b>가 적용됩니다.
+        <div class="guide-sub-rule">· Whiskey : 25,000원 / Bottle</div>
+        <div class="guide-sub-rule">· Wine : 15,000원 / Bottle</div>
+      </div>
+      <div class="guide-rule"><b>잔 또는 접시 파손 시 10,000원</b>의 비용이 발생할 수 있습니다.</div>
+      <div class="guide-rule">만석일 경우에 한해 원활한 운영을 위해 이용 시간에 제한이 있을 수 있는 점 너른 양해 부탁드립니다.</div>
+    </div>
+    <div class="guide-divider"></div>
+    <div class="guide-wifi">Wi-Fi Password : blueroom@@</div>
+  </div>
+</div>
+
+<!-- WHISKY -->
+<div id="whiskyCat" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">Whisky</div>
+  </div>
+  <div class="whisky-tabs" id="whiskyTabs"></div>
+  <div class="whisky-list" id="whiskyList"></div>
+</div>
+
+<!-- MONTHLY -->
+<div id="monthly" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">July Special</div>
+  </div>
+  <div class="monthly-content">
+
+    <!-- 헤더 -->
+    <div class="monthly-header-card">
+      <div class="monthly-month">July 2026</div>
+      <div class="monthly-headline">이달의 블루룸</div>
+      <div class="monthly-desc">7월 한정 스페셜 메뉴</div>
+    </div>
+
+    <!-- 이달의 세트 -->
+    <div class="monthly-section-title">이달의 세트</div>
+
+    <div class="monthly-set-card">
+      <div class="monthly-set-tag">Dinner Set · 2인</div>
+      <div class="monthly-set-name">Dinner Set</div>
+      <div class="monthly-set-theme">A complete dinner for two</div>
+      <div class="monthly-set-items">
+        채끝 버섯 크림 스테이크<br>
+        명란 새우 오일 파스타<br>
+        하우스 와인 2잔
+      </div>
+      <div class="monthly-set-note">음료 변경 가능 (직원 문의)</div>
+      <div class="monthly-set-price-row">
+        <div class="monthly-set-original">₩72,000</div>
+        <div class="monthly-set-special">₩68,000</div>
+        <div class="monthly-set-badge">July Only</div>
+        <div class="monthly-add-btn on-blue" id="addDinnerSet">+</div>
+      </div>
+    </div>
+
+    <div class="monthly-set-card">
+      <div class="monthly-set-tag">Pairing Set · Wine & Food</div>
+      <div class="monthly-set-name">Pairing Set</div>
+      <div class="monthly-set-theme">Food & Wine Pairing</div>
+      <div class="monthly-set-items">
+        부르스케타<br>
+        소뮈르 에르보쥬 1병
+      </div>
+      <div class="monthly-set-price-row">
+        <div class="monthly-set-original">₩98,000</div>
+        <div class="monthly-set-special">₩93,000</div>
+        <div class="monthly-set-badge">July Only</div>
+        <div class="monthly-add-btn on-blue" id="addPairingSet">+</div>
+      </div>
+    </div>
+
+    <!-- 이달의 요리 / 한 잔 -->
+    <div class="monthly-section-title" style="margin-top:6px;">이달의 요리 · 한 잔</div>
+
+    <div class="monthly-simple-card2">
+      <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 요리</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div class="monthly-simple-name">White Mushroom Cream Risotto</div>
+          <div class="monthly-simple-sub">양송이 크림 리조또</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;margin-left:10px;">
+          <div>
+            <div class="monthly-simple-original">₩24,000</div>
+            <div class="monthly-simple-special">₩22,000</div>
+            <div class="monthly-simple-badge">July Only</div>
+          </div>
+          <div class="monthly-add-btn" id="addRisotto">+</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="monthly-simple-card2">
+      <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 한 잔</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div class="monthly-simple-name">Guinness Microdraught (生)</div>
+          <div class="monthly-simple-sub">기네스 마이크로 드래프트</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;margin-left:10px;">
+          <div>
+            <div class="monthly-simple-original">₩14,000</div>
+            <div class="monthly-simple-special">₩12,000</div>
+            <div class="monthly-simple-badge">July Only</div>
+          </div>
+          <div class="monthly-add-btn" id="addGuinness">+</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DETAIL -->
+<div id="detail">
+  <img id="detailImg" src="" alt="">
+  <div class="detail-back" onclick="closeDetail()">← Back</div>
+  <div class="detail-close" onclick="closeDetail()">✕</div>
+</div>
+
+<script>
+const foods = {
+  mains: {
+    title: 'Mains',
+    items: [
+      { en: 'Butter Glazed Sirloin Steak', ko: '살치살 스테이크', price: '₩34,000', img: 'mains_bgss.JPG' },
+      { en: 'Mushroom Cream Scaloppine', ko: '채끝 버섯 크림 스테이크', price: '₩34,000', img: 'mains_mcs.JPG' },
+    ]
+  },
+  plates: {
+    title: 'Plates',
+    items: [
+      { en: 'White Mushroom Cream Risotto', ko: '양송이 크림 리조또', price: '₩22,000', originalPrice: '₩24,000', img: 'plates_wmcr.JPG' },
+      { en: 'Bruschetta', ko: '부르스케타', price: '₩20,000', img: 'plates_b.jpg' },
+      { en: 'Roasted Napa Steak', ko: '알배추 스테이크', price: '₩15,000', img: 'plates_rns.JPG' },
+    ]
+  },
+  pasta: {
+    title: 'Pasta',
+    items: [
+      { en: 'Perilla Oil & Seaweed Cold Pasta', ko: '들기름 감태 냉파스타', price: '₩23,000', img: 'pasta_poscp.JPG' },
+      { en: 'Garlic Butter Anchovy Pasta', ko: '갈릭 버터 엔초비 파스타', price: '₩21,000', img: 'pasta_gbap.JPG' },
+      { en: 'Mentaiko Shrimp Oil Pasta', ko: '명란 새우 오일 파스타', price: '₩19,000', img: 'pasta_msop.JPG' },
+      { en: 'Zucchini Basil Pasta', ko: '애호박 바질 파스타', price: '₩18,000', img: 'pasta_zbp.jpg' },
+    ]
+  },
+
+  cheese: {
+    title: 'Cheese & Snacks',
+    items: [
+      { en: 'Herb Baked Brie', ko: '브리치즈 구이', price: '₩13,000', img: 'c_s_hbb.JPG' },
+      { en: 'Cheese Plate', ko: '치즈 플레이트', price: '₩21,000', img: 'c_s_cp.JPG' },
+      { en: 'Yuzu Cream Cheese & Fruits', ko: '유자 크림치즈 & 과일', price: '₩19,000', img: 'c_s_ycc_f.JPG' },
+      { en: 'Vanilla Ice Cream', ko: '바닐라 아이스크림', price: '₩8,000', img: 'c_s_vic.JPG' },
+      { en: 'Marlenka Honey Cake', ko: '말렌카 허니케이크', price: '₩8,000', img: 'c_s_mhc.JPG' },
+      { en: 'Blueberry Cheese Canapé', ko: '블루베리 치즈 카나페', price: '₩10,000', img: 'c_s_bcc.JPG' },
+      { en: 'Melon & Jamón', ko: '메론 & 하몽', price: '₩12,000', img: 'c_s_m_j.JPG' },
+      { en: 'Jerky', ko: '육포', price: '₩15,000', img: 'c_s_j.JPG' },
+      { en: 'Mini Cup Ramen (Yukgaejang)', ko: '미니 컵라면 (육개장)', price: '₩3,000', img: '', noimg: true },
+      { en: 'Mini Cup Ramen (Shin Ramen)', ko: '미니 컵라면 (신라면)', price: '₩3,000', img: '', noimg: true },
+      { en: 'Mini Cup Ramen (Jjajang)', ko: '미니 컵라면 (짜장범벅)', price: '₩3,000', img: '', noimg: true },
+    ]
+  }
+};
+
+const drinks = {
+  whisky: {
+    title: 'Whisky',
+    items: [
+      { en: 'Scotch · Speyside', name: '스카치 · 스페이사이드', img: 'whisky_scotch_speyside.JPG' },
+      { en: 'Scotch · Islay', name: '스카치 · 아일라', img: 'whisky_scotch_islay.JPG' },
+      { en: 'Scotch · Islands', name: '스카치 · 아일랜즈', img: 'whisky_scotch_islands.JPG' },
+      { en: 'Scotch · Highland', name: '스카치 · 하이랜드', img: 'whisky_scotch_highland.JPG' },
+      { en: 'Japanese · Independent', name: '재패니즈 · 인디펜던트', img: 'whisky_japanese_independent.JPG' },
+      { en: 'Bourbon', name: '버번', img: 'whisky_bourbon.JPG' },
+      { en: 'Blended · Korean', name: '블렌디드 · 코리안', img: 'whisky_blended_korean.JPG' },
+      { en: 'Irish · Taiwan', name: '아이리시 · 타이완', img: 'whisky_irish_taiwan.JPG' },
+    ]
+  },
+  cognac: {
+    title: 'Cognac & Spirits',
+    items: [
+      { en: 'Cognac · Spirits', name: '코냑 · 스피리츠', img: 'cognac_spirits.JPG' },
+    ]
+  },
+  wine: {
+    title: 'Wine',
+    items: [
+      { en: 'Sparkling · Porto · House', name: '스파클링 · 포르토 · 하우스', img: 'wine_sparkling.JPG' },
+      { en: 'White', name: '화이트', img: 'wine_white.JPG' },
+      { en: 'Red', name: '레드', img: 'wine_red.JPG' },
+    ]
+  },
+  cocktail: {
+    title: 'Cocktail',
+    items: [
+      { en: 'Signature · Modern', name: '시그니처 · 모던', img: 'cocktail_signature.JPG' },
+      { en: 'Classic', name: '클래식', img: 'cocktail_classic.JPG' },
+    ]
+  },
+  beer: {
+    title: 'Highball & Beer',
+    items: [
+      { en: 'Beer · Highball · Non-Alc', name: '비어 · 하이볼 · 논알콜', img: 'beer_highball.JPG' },
+    ]
+  }
+};
+
+
+const whiskyData = {
+  'Speyside': [
+    { brand: 'The Balvenie', ko: '더 발베니', items: [
+      { ctg: '12y DoubleWood', shot: 13000, bottle: 250000 },
+      { ctg: '14y Caribbean Cask', shot: 20000, bottle: 390000 },
+      { ctg: '12y Single Barrel', shot: 24000, bottle: 480000 },
+      { ctg: '15y Madeira Cask', shot: 37000, bottle: 750000 },
+      { ctg: '16y French Oak', shot: 39000, bottle: 800000 },
+      { ctg: '18y P.X Cask', shot: 61000, bottle: 1250000 },
+    ]},
+    { brand: 'The Macallan', ko: '더 맥켈란', items: [
+      { ctg: '12y Double Cask', shot: 13000, bottle: 250000 },
+      { ctg: '12y Sherry Oak Cask', shot: 14000, bottle: 260000 },
+      { ctg: '15y Double Cask', shot: 25000, bottle: 510000 },
+      { ctg: 'Harmony Collection', shot: 48000, bottle: 1000000 },
+      { ctg: '18y Sherry Oak Cask', shot: 56000, bottle: 1150000 },
+    ]},
+    { brand: 'Glenfiddich', ko: '글렌피딕', items: [
+      { ctg: '12y', shot: 11000, bottle: 210000 },
+      { ctg: '12y Sherry', shot: 12000, bottle: 220000 },
+      { ctg: '15y Solera Reserve', shot: 15000, bottle: 290000 },
+      { ctg: '18y Small Batch Reserve', shot: 22000, bottle: 440000 },
+    ]},
+    { brand: 'The Glenlivet', ko: '더 글렌리벳', items: [
+      { ctg: '12y', shot: 12000, bottle: 225000 },
+      { ctg: '15y', shot: 17000, bottle: 325000 },
+    ]},
+    { brand: 'Benromach', ko: '벤로막', items: [
+      { ctg: '10y', shot: 10000, bottle: 185000 },
+      { ctg: '15y', shot: 23000, bottle: 460000 },
+    ]},
+    { brand: 'Glenallachie', ko: '글렌알라키', items: [
+      { ctg: '8y', shot: 11000, bottle: 210000 },
+      { ctg: '12y', shot: 14000, bottle: 260000 },
+      { ctg: '10y batch 12 (cs)', shot: 19000, bottle: 370000 },
+      { ctg: '15y', shot: 22000, bottle: 430000 },
+      { ctg: '18y', shot: 41000, bottle: 830000 },
+    ]},
+    { brand: 'Aberlour', ko: '아벨라워', items: [
+      { ctg: '12y Non Chill Filtered', shot: 13000, bottle: 255000 },
+      { ctg: "A'bunadh (cs)", shot: 24000, bottle: 475000 },
+      { ctg: '18y Double Sherry Cask', shot: 37000, bottle: 760000 },
+    ]},
+    { brand: 'The GlenGrant', ko: '더 글렌그란트', items: [
+      { ctg: '10y', shot: 9000, bottle: 165000 },
+      { ctg: '12y', shot: 11000, bottle: 205000 },
+      { ctg: '15y', shot: 16000, bottle: 315000 },
+    ]},
+    { brand: 'Glenfarclas', ko: '글렌파클라스', items: [
+      { ctg: '12y', shot: 12000, bottle: 230000 },
+    ]},
+    { brand: 'Tamdhu', ko: '탐두', items: [
+      { ctg: '12y', shot: 13000, bottle: 260000 },
+    ]},
+  ],
+  'Islay': [
+    { brand: 'Ardbeg', ko: '아드벡', items: [
+      { ctg: '5y Wee Beastie', shot: 10000, bottle: 200000 },
+      { ctg: '10y', shot: 13000, bottle: 250000 },
+      { ctg: 'Uigeadail', shot: 19000, bottle: 370000 },
+      { ctg: 'Spectacular', shot: 20000, bottle: 390000 },
+      { ctg: 'Corryvreckan', shot: 22000, bottle: 440000 },
+    ]},
+    { brand: 'Bowmore', ko: '보모어', items: [
+      { ctg: '12y', shot: 11000, bottle: 185000 },
+      { ctg: '15y', shot: 17000, bottle: 330000 },
+      { ctg: '18y Deep & Complex', shot: 23000, bottle: 460000 },
+    ]},
+    { brand: 'Lagavulin', ko: '라가볼린', items: [
+      { ctg: '8y', shot: 14000, bottle: 270000 },
+      { ctg: '16y', shot: 22000, bottle: 430000 },
+    ]},
+    { brand: 'Kilchoman', ko: '킬호만', items: [
+      { ctg: 'Machir Bay', shot: 12000, bottle: 240000 },
+      { ctg: 'Sanaig', shot: 15000, bottle: 300000 },
+    ]},
+    { brand: 'Bunnahabhain', ko: '부나하벤', items: [
+      { ctg: 'Stiuireadair', shot: 9000, bottle: 170000 },
+      { ctg: '12y', shot: 13000, bottle: 240000 },
+      { ctg: '18y', shot: 45000, bottle: 920000 },
+    ]},
+    { brand: 'Laphroaig', ko: '라프로익', items: [
+      { ctg: 'Oak Select', shot: 9000, bottle: 165000 },
+      { ctg: '10y', shot: 10000, bottle: 190000 },
+      { ctg: 'Quarter Casks', shot: 12000, bottle: 225000 },
+      { ctg: '10y Sherry Oak Finish', shot: 13000, bottle: 255000 },
+    ]},
+    { brand: 'Octomore', ko: '옥토모어', items: [
+      { ctg: '10.1', shot: 46000, bottle: 920000 },
+      { ctg: '13.3', shot: 61000, bottle: 1250000, soldOut: true },
+      { ctg: '14.1', shot: 46000, bottle: 920000 },
+      { ctg: '14.2', shot: 46000, bottle: 950000 },
+      { ctg: '14.3', shot: 56000, bottle: 1150000, soldOut: true },
+      { ctg: '15.1', shot: 46000, bottle: 920000 },
+      { ctg: '15.2', shot: 49000, bottle: 1000000 },
+    ]},
+  ],
+  'Highland': [
+    { brand: 'Glenmorangie', ko: '글렌모렌지', items: [
+      { ctg: 'The Original 12y', shot: 10000, bottle: 180000 },
+      { ctg: '12y Lasanta', shot: 12000, bottle: 240000 },
+      { ctg: '14y Quinta Ruban', shot: 14000, bottle: 280000 },
+      { ctg: '16y The Nectar', shot: 17000, bottle: 330000 },
+      { ctg: 'Signet', shot: 36000, bottle: 730000 },
+    ]},
+    { brand: 'The Dalmore', ko: '더 달모어', items: [
+      { ctg: '12y', shot: 14000, bottle: 270000 },
+      { ctg: '15y', shot: 26000, bottle: 520000 },
+      { ctg: 'King Alexander III', shot: 53000, bottle: 1100000 },
+    ]},
+    { brand: 'Glenglassaugh', ko: '글렌글라사', items: [
+      { ctg: 'Revival', shot: 10000, bottle: 190000 },
+      { ctg: 'Evolution', shot: 11000, bottle: 200000 },
+      { ctg: 'SandEnd', shot: 13000, bottle: 250000 },
+      { ctg: '12y', shot: 12000, bottle: 220000 },
+    ]},
+    { brand: 'The GlenDronach', ko: '더 글렌드로낙', items: [
+      { ctg: '12y', shot: 11000, bottle: 215000 },
+      { ctg: '15y', shot: 20000, bottle: 400000 },
+    ]},
+    { brand: 'Edradour', ko: '에드라두어', items: [
+      { ctg: '10y (cs)', shot: 34000, bottle: 700000 },
+    ]},
+    { brand: 'Oban', ko: '오반', items: [
+      { ctg: '14y', shot: 16000, bottle: 310000 },
+    ]},
+    { brand: 'Clynelish', ko: '클라이넬리쉬', items: [
+      { ctg: '14y', shot: 15000, bottle: 300000 },
+    ]},
+    { brand: 'Royal Brackla', ko: '로얄 브라클라', items: [
+      { ctg: '12y', shot: 14000, bottle: 260000 },
+    ]},
+    { brand: 'Tomatin', ko: '토마틴', items: [
+      { ctg: '12y', shot: 11000, bottle: 200000 },
+    ]},
+    { brand: 'Aberfeldy', ko: '에버펠디', items: [
+      { ctg: '16y', shot: 16000, bottle: 320000 },
+    ]},
+  ],
+  'Islands': [
+    { brand: 'Arran', ko: '아란', items: [
+      { ctg: '10y', shot: 12000, bottle: 240000 },
+      { ctg: 'Quarter Cask', shot: 15000, bottle: 290000 },
+      { ctg: 'Marchrie Moor', shot: 17000, bottle: 335000 },
+      { ctg: 'Marchrie Moor (cs)', shot: 19000, bottle: 380000 },
+      { ctg: 'Sherry Cask', shot: 19000, bottle: 380000 },
+    ]},
+    { brand: 'Talisker', ko: '탈리스커', items: [
+      { ctg: '10y', shot: 10000, bottle: 195000 },
+    ]},
+  ],
+  'Japanese': [
+    { brand: 'Yamazaki', ko: '야마자키', items: [
+      { ctg: '12y', shot: 33000, bottle: 700000 },
+    ]},
+    { brand: 'Hakushu', ko: '하쿠슈', items: [
+      { ctg: 'DR', shot: 20000, bottle: 400000 },
+    ]},
+    { brand: 'Hibiki', ko: '히비키', items: [
+      { ctg: 'Harmony', shot: 16000, bottle: 325000 },
+      { ctg: "Blender's Choice", shot: 35000, bottle: 750000 },
+    ]},
+    { brand: 'Suntory Kakubin', ko: '선토리 카쿠빈', items: [
+      { ctg: '', shot: 6000, bottle: 80000 },
+    ]},
+    { brand: 'Nikka', ko: '닛카', items: [
+      { ctg: 'From the Barrel', shot: 11000, bottle: 140000 },
+      { ctg: 'Yoichi', shot: 14000, bottle: 260000 },
+      { ctg: 'Taketsuru', shot: 14000, bottle: 260000 },
+      { ctg: 'Miyagikyo', shot: 14000, bottle: 260000 },
+    ]},
+    { brand: 'Kanoske', ko: '카노스케', items: [
+      { ctg: 'Single Malt', shot: 26000, bottle: 530000 },
+      { ctg: 'Hioki Pot Still', shot: 27000, bottle: 550000 },
+      { ctg: 'Double Distillery', shot: 32000, bottle: 640000 },
+    ]},
+    { brand: 'Ryuka', ko: '류카', items: [
+      { ctg: '3YO 2025 Edition', shot: 37000, bottle: 760000 },
+    ]},
+  ],
+  'Independent': [
+    { brand: 'Signatory', ko: '시그나토리', items: [
+      { ctg: 'Ben Nevis 9y', shot: 15000, bottle: 300000 },
+      { ctg: 'Caol Ila 10y', shot: 15000, bottle: 300000 },
+      { ctg: 'Glen Ord 12y', shot: 15000, bottle: 300000 },
+      { ctg: 'Speyside 15(M)', shot: 25000, bottle: 500000 },
+      { ctg: 'Speyside 16(GL)', shot: 26000, bottle: 530000 },
+      { ctg: 'Blair Athol 2007 17y', shot: 26000, bottle: 530000 },
+      { ctg: 'Glentauchers 2009 16y', shot: 26000, bottle: 530000 },
+      { ctg: 'Teaninich 2007 17y', shot: 35000, bottle: 720000 },
+    ]},
+  ],
+  'Bourbon': [
+    { brand: "Jack Daniel's", ko: '잭 다니엘스', items: [
+      { ctg: 'Old No.7', shot: 7000, bottle: 120000 },
+      { ctg: 'Single Barrel', shot: 11000, bottle: 210000 },
+    ]},
+    { brand: "Maker's Mark", ko: '메이커스 마크', items: [
+      { ctg: 'Original', shot: 7000, bottle: 130000 },
+      { ctg: '46', shot: 9000, bottle: 160000 },
+      { ctg: 'CS', shot: 12000, bottle: 230000 },
+    ]},
+    { brand: 'Buffalo Trace', ko: '버팔로 트레이스', items: [
+      { ctg: '375ml', shot: 7000, bottle: 75000 },
+      { ctg: '750ml', shot: 7000, bottle: 120000 },
+    ]},
+    { brand: 'Wild Turkey', ko: '와일드 터키', items: [
+      { ctg: 'Rare Breed', shot: 12000, bottle: 225000 },
+    ]},
+    { brand: 'Jim Beam', ko: '짐 빔', items: [
+      { ctg: 'Bourbon', shot: 6000, bottle: 65000 },
+    ]},
+    { brand: "Russell's Reserve", ko: '러셀 리저브', items: [
+      { ctg: '10y', shot: 12000, bottle: 225000 },
+      { ctg: 'Single Barrel', shot: 14000, bottle: 275000 },
+      { ctg: 'Single Barrel Rye', shot: 17000, bottle: 325000 },
+    ]},
+    { brand: 'Woodford Reserve', ko: '우드포드 리저브', items: [
+      { ctg: 'Bourbon', shot: 10000, bottle: 185000 },
+    ]},
+    { brand: '1792', ko: '1792', items: [
+      { ctg: 'Small batch', shot: 11000, bottle: 200000 },
+      { ctg: 'Bottled In Bond', shot: 14000, bottle: 270000 },
+      { ctg: 'Sweet Wheat', shot: 18000, bottle: 350000 },
+      { ctg: '12y', shot: 19000, bottle: 380000 },
+      { ctg: 'Full Proof', shot: 20000, bottle: 400000 },
+      { ctg: 'Single Barrel', shot: 23000, bottle: 450000 },
+    ]},
+    { brand: 'Willet', ko: '윌렛', items: [
+      { ctg: 'Rye', shot: 21000, bottle: 420000 },
+    ]},
+    { brand: 'Four Roses', ko: '포 로지스', items: [
+      { ctg: 'Small Batch', shot: 7000, bottle: 130000 },
+      { ctg: 'Single Barrel', shot: 10000, bottle: 200000 },
+    ]},
+    { brand: 'Weller', ko: '웰러', items: [
+      { ctg: 'Antique 107', shot: 31000, bottle: 620000 },
+      { ctg: '12y', shot: 36000, bottle: 730000 },
+    ]},
+    { brand: "Angle's Envy", ko: '엔젤스 엔비', items: [
+      { ctg: 'Port Cask Finish', shot: 11000, bottle: 200000 },
+      { ctg: 'CS', shot: 76000, bottle: 1600000 },
+    ]},
+    { brand: 'Eagle Rare', ko: '이글레어', items: [
+      { ctg: '10y', shot: 13000, bottle: 260000 },
+    ]},
+    { brand: "Noah's Mill", ko: '노아스 밀', items: [
+      { ctg: '', shot: 18000, bottle: 360000 },
+    ]},
+    { brand: "Booker's", ko: '부커스', items: [
+      { ctg: '2024-01E', shot: 31000, bottle: 620000 },
+    ]},
+    { brand: "Michter's", ko: '믹터스', items: [
+      { ctg: 'Bourbon', shot: 11000, bottle: 210000 },
+      { ctg: 'Sour Mash', shot: 11000, bottle: 210000 },
+      { ctg: 'Unblended American', shot: 11000, bottle: 210000 },
+    ]},
+  ],
+  'Blended': [
+    { brand: "Ballantine's", ko: '발렌타인스', items: [
+      { ctg: '21y', shot: 25000, bottle: 510000 },
+      { ctg: '30y', shot: 71000, bottle: 1450000 },
+    ]},
+    { brand: 'Royals Salute', ko: '로얄 살루트', items: [
+      { ctg: '21y', shot: 27000, bottle: 550000 },
+    ]},
+    { brand: 'Johnnie Walker', ko: '조니워커', items: [
+      { ctg: 'Red Label', shot: 6000, bottle: 80000 },
+      { ctg: 'Black Label', shot: 7500, bottle: 140000 },
+      { ctg: 'Double Black', shot: 8000, bottle: 150000 },
+      { ctg: 'Black Ruby', shot: 8500, bottle: 150000 },
+      { ctg: 'Gold Reserve', shot: 10000, bottle: 190000 },
+      { ctg: 'Green Label', shot: 11000, bottle: 200000 },
+      { ctg: 'Blue Label', shot: 32000, bottle: 660000 },
+    ]},
+    { brand: 'Monkey Shoulder', ko: '몽키숄더', items: [
+      { ctg: '', shot: 8000, bottle: 150000 },
+    ]},
+  ],
+  'Korean': [
+    { brand: 'Ki one', ko: '기원', items: [
+      { ctg: 'Eagle', shot: 12000, bottle: 220000 },
+      { ctg: 'Unicorn', shot: 13000, bottle: 240000 },
+      { ctg: 'Tiger', shot: 13000, bottle: 240000 },
+      { ctg: 'Red pepper Cask', shot: 22000, bottle: 440000 },
+      { ctg: 'Batch 4 Smoked (cs)', shot: 27000, bottle: 550000 },
+      { ctg: 'Batch 4 Peated (cs)', shot: 30000, bottle: 600000 },
+      { ctg: 'Batch 8 (cs)', shot: 22000, bottle: 450000 },
+    ]},
+  ],
+  'Irish': [
+    { brand: 'Jameson', ko: '제임슨', items: [
+      { ctg: 'Standard', shot: 6000, bottle: 85000 },
+    ]},
+    { brand: 'Bushmills', ko: '부시밀스', items: [
+      { ctg: '10y', shot: 10000, bottle: 185000 },
+      { ctg: '12y', shot: 12000, bottle: 230000 },
+    ]},
+  ],
+  'Taiwan': [
+    { brand: 'Kavalan', ko: '카발란', items: [
+      { ctg: 'Distillery Select No.1', shot: 12000, bottle: 225000 },
+      { ctg: 'Solist Vinho barrique(cs)', shot: 36000, bottle: 740000 },
+      { ctg: 'Solist Port Cask(cs)', shot: 37000, bottle: 760000 },
+      { ctg: 'Sollist Fino Sherry Cask(cs)', shot: 43000, bottle: 880000 },
+    ]},
+  ],
+};
+
+const whiskyTabs = ['Blended','Speyside','Islay','Highland','Islands','Japanese','Independent','Bourbon','Korean','Irish','Taiwan'];
+let currentWhiskyTab = 'Blended';
+
+function showWhisky() {
+  const tabs = document.getElementById('whiskyTabs');
+  tabs.innerHTML = '';
+  whiskyTabs.forEach(tab => {
+    const el = document.createElement('div');
+    el.className = 'whisky-tab' + (tab === currentWhiskyTab ? ' active' : '');
+    el.textContent = tab;
+    el.onclick = () => { currentWhiskyTab = tab; showWhisky(); };
+    tabs.appendChild(el);
+  });
+  renderWhiskyList(currentWhiskyTab);
+  showScreen('whiskyCat');
+}
+
+function renderWhiskyList(tab) {
+  const list = document.getElementById('whiskyList');
+  list.innerHTML = '';
+  const brands = whiskyData[tab] || [];
+  brands.forEach(brand => {
+    const div = document.createElement('div');
+    div.className = 'whisky-brand';
+    let itemsHtml = brand.items.map((item, idx) => `
+      <div class="whisky-item">
+        <div class="whisky-item-left">
+          <div class="whisky-ctg${item.soldOut ? ' sold-out-text' : ''}">${item.ctg || '&nbsp;'}</div>
+        </div>
+        <div class="whisky-item-right">
+          <div class="whisky-price-col${item.soldOut ? ' sold-out-text' : ''}">
+            <div class="whisky-price-label">SHOT</div>
+            <div class="whisky-price">${item.shot.toLocaleString()}</div>
+          </div>
+          <div class="whisky-price-col${item.soldOut ? ' sold-out-text' : ''}">
+            <div class="whisky-price-label">BOTTLE</div>
+            <div class="whisky-price">${item.bottle.toLocaleString()}</div>
+          </div>
+          ${item.soldOut ? '<span class="sold-out-badge">SOLD OUT</span>' : '<div class="dtext-add-btn" data-idx="' + idx + '">+</div>'}
+        </div>
+      </div>`).join('');
+    div.innerHTML = `
+      <div class="whisky-brand-name">${brand.brand}</div>
+      <div class="whisky-brand-ko">${brand.ko}</div>
+      ${itemsHtml}`;
+    div.querySelectorAll('.dtext-add-btn').forEach(btn => {
+      const idx = parseInt(btn.dataset.idx);
+      const item = brand.items[idx];
+      btn.addEventListener('click', () => {
+        const fullName = brand.brand + (item.ctg ? ' ' + item.ctg : '');
+        openOptionModal(fullName, brand.ko, [
+          { label: 'SHOT', value: item.shot },
+          { label: 'BOTTLE', value: item.bottle }
+        ]);
+      });
+    });
+    list.appendChild(div);
+  });
+}
+
+
+const drinksTextData = {
+  cognac: {
+    title: 'Cognac & Spirits',
+    sections: [
+      { title: 'COGNAC', items: [
+        { brand: 'Ragnaud Sabourin', ko: '라노 사브랑', items: [
+          { ctg: 'V.S', shot: 13000, bottle: 260000 },
+          { ctg: 'V.S.O.P', shot: 18000, bottle: 355000 },
+          { ctg: 'No.20 Reserve', shot: 26000, bottle: 535000 },
+          { ctg: 'Vintage 1989', shot: 36000, bottle: 740000 },
+          { ctg: 'No.25 XO', shot: 39000, bottle: 800000 },
+          { ctg: 'No.35 Fontvieille', shot: 73000, bottle: 1500000 },
+        ]},
+        { brand: 'Remy Martin', ko: '레미마틴', items: [
+          { ctg: 'V.S.O.P', shot: 11000, bottle: 210000 },
+          { ctg: 'EXTRA', shot: 64000, bottle: 690000 },
+        ]},
+        { brand: 'Hennessy', ko: '헤네시', items: [
+          { ctg: 'V.S.O.P', shot: 11000, bottle: 210000 },
+          { ctg: 'X.O', shot: 43000, bottle: 875000 },
+        ]},
+      ]},
+      { title: 'MEZCAL TEQUILA', items: [
+        { brand: 'Madre Mezcal', ko: '마드레 메즈칼', items: [
+          { ctg: 'Espadin', shot: 9000, bottle: 165000 },
+          { ctg: 'Ensemble', shot: 11000, bottle: 200000 },
+        ]},
+        { brand: 'Jose Cuervo', ko: '호세 쿠엘보', items: [
+          { ctg: 'Especial', shot: 6000, bottle: 90000 },
+        ]},
+        { brand: 'Patron', ko: '패트론', items: [
+          { ctg: 'Anejo', shot: 19000, bottle: 390000, soldOut: true },
+        ]},
+        { brand: 'Clase Azul', ko: '클라세 아줄', items: [
+          { ctg: 'Plata', shot: 32000, bottle: 650000 },
+          { ctg: 'Reposado', shot: 36000, bottle: 740000, soldOut: true },
+        ]},
+      ]},
+      { title: 'VODKA', items: [
+        { brand: 'Le Philtre', ko: '르 필트르', items: [
+          { ctg: 'Organic', shot: 8000, bottle: 138000 },
+        ]},
+        { brand: 'Faubourg Paris Vodka', ko: '포부르그 드 파리 보드카', items: [
+          { ctg: 'Bergamot', shot: 8000, bottle: 120000 },
+        ]},
+      ]},
+      { title: 'GIN', items: [
+        { brand: 'Hendricks Gin', ko: '헨드릭스 진', items: [
+          { ctg: '', shot: 8000, bottle: 130000 },
+        ]},
+        { brand: 'Sipsmith London Dry Gin', ko: '십스미스 런던 드라이 진', items: [
+          { ctg: '', shot: 8000, bottle: 120000 },
+        ]},
+        { brand: 'Tanqueray', ko: '탱커레이', items: [
+          { ctg: 'London Dry Gin', shot: 6000, bottle: 100000 },
+        ]},
+        { brand: 'Faubourg Paris Gin', ko: '포부르그 드 파리 진', items: [
+          { ctg: '', shot: 8000, bottle: 120000, soldOut: true },
+        ]},
+      ]},
+      { title: 'SPIRITS', items: [
+        { brand: 'Absinthe', ko: '압생트', items: [
+          { ctg: '', shot: 12000, bottle: 240000 },
+        ]},
+      ]},
+    ]
+  },
+  wine: {
+    title: 'Wine',
+    tabs: ['Sparkling · Porto · House', 'White', 'Red'],
+    sections: {
+      'Sparkling · Porto · House': [
+        { header: 'SPARKLING', items: [
+          { name: 'Brut, Fun Kiss', ko: '브뤼 펀 키스', grape: 'Chardonnay · Aligoté', alc: '11.5%', country: 'FRANCE · Bourgogne', bottle: 46000 },
+          { name: "T' SPOT Brut", ko: '티스팟 브뤼', grape: 'Chardonnay', alc: '11.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 70000, soldOut: true },
+          { name: 'Domaine Des Herbuages Luminescence', ko: '도멘 데 에르보쥬, 루미네상스', grape: 'Chardonnay · Grolleau Gris · Melon de Bourgogne', alc: '12.5%', country: 'FRANCE · Loire', bottle: 75000 },
+          { name: 'Piper-Heidsieck Cuvee Brut', ko: '파이퍼 하이직 뀌베 브뤼', grape: 'Pinot Noir · Pinot Meunier · Chardonnay', alc: '12%', country: 'FRANCE · Champagne', bottle: 170000 },
+          { name: 'Dom Perignon Vintage 2015', ko: '돔 페리뇽 빈티지 2015', grape: 'Chardonnay · Pinot Noir', alc: '12.5%', country: 'FRANCE · Champagne', bottle: 880000 },
+        ]},
+        { header: 'PORTO', items: [
+          { name: 'Kopke Fine Tawny', ko: '콥케 파인 토니', grape: 'Touriga Franca · Touriga Nacional · Tinta Roriz', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 43000 },
+          { name: 'Quinta da Corta Late Bottled Vintage', ko: '퀸타 다 코타 LBV', grape: 'Touriga Franca · Touriga Nacional · Tinta Cão · Tinta Roriz · Tinta Barroca', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 90000 },
+        ]},
+        { header: 'HOUSE', items: [
+          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9000 },
+          { name: 'House White', ko: '하우스 화이트 와인', grape: '', alc: '', country: '', bottle: 9500 },
+          { name: 'House Porto', ko: '하우스 포트 와인', grape: '', alc: '', country: '', bottle: 13000 },
+        ]},
+      ],
+      'White': [
+        { header: 'WHITE WINE', items: [
+          { name: "Moulin d'Argent Chardonnay", ko: '물랑 다르장 샤르도네', grape: 'Chardonnay', alc: '12%', country: 'FRANCE · Loire AOP', bottle: 39000 },
+          { name: 'Chateau Haute – Brande Moelleux', ko: '샤또 오뜨 브랑드 모엘루', grape: 'Sauvignon Blanc · Sémillon', alc: '14%', country: 'FRANCE · Bordeaux', bottle: 41000 },
+          { name: 'Saumur Domaine Des Herbuages', ko: '소뮈르 에르보쥬', grape: 'Chenin Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 78000 },
+          { name: 'Stephane Brocard Macon–Villages', ko: '마콩 빌라쥬', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 80000 },
+          { name: "T' SPOT Blanc", ko: '티스팟 블랑', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 100000 },
+          { name: 'Domaine Carroy Pouilly–Fume', ko: '도멘 카로이 푸이–퓌메', grape: 'Sauvignon Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 110000 },
+          { name: 'Babich Marlborough Sauvignon Blanc', ko: '베비치 말보로 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '12%', country: 'NEW ZEALAND · Marlborough', bottle: 70000 },
+          { name: 'Babich Black Label Marlborough Sauvignon Blanc', ko: '베비치 블랙라벨 말보로 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '12%', country: 'NEW ZEALAND · Marlborough', bottle: 82000 },
+          { name: 'Oyster Bay Sauvignon Blanc', ko: '오이스터베이 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '13%', country: 'NEW ZEALAND · Marlborough', bottle: 90000 },
+          { name: 'Cloudy Bay Sauvignon Blanc', ko: '클라우디베이 소비뇽블랑', grape: 'Sauvignon Blanc', alc: '13–13.5%', country: 'NEW ZEALAND · Marlborough', bottle: 120000 },
+        ]},
+      ],
+      'Red': [
+        { header: 'RED WINE', items: [
+          { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 38000 },
+          { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 38000 },
+          { name: 'Chateau Tour Sivadon', ko: '샤또 뚜르 시바동', grape: 'Merlot · Cabernet Sauvignon', alc: '13.5%', country: 'FRANCE · Bordeaux Graves', bottle: 60000 },
+          { name: 'Chateau Le Bourdillot', ko: '샤또 르 부르디요', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 68000 },
+          { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 75000 },
+          { name: 'La Closerie De Malescasse', ko: '라 크롤제리 드 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 114000 },
+          { name: 'Chateau Malescasse', ko: '샤또 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 125000 },
+        ]},
+      ],
+    }
+  },
+  cocktail: {
+    title: 'Cocktail',
+    tabs: ['Signature', 'Modern', 'Classic'],
+    sections: {
+      'Signature': [
+        { header: 'BLUE ROOM SIGNATURE', items: [
+          { name: 'Brown Sugar', ko: '브라운 슈거', desc: 'Creamy · Sweet · Coffee · Milk · Cheese · Vanilla', glass: 12000 },
+          { name: 'Saturn', ko: '새턴', desc: 'Ice cream · Sweet · Nuts · Cherry', glass: 12000 },
+          { name: 'Green day', ko: '그린데이', desc: 'Basil · Fresh · Citrus', glass: 13000 },
+          { name: 'Rotten Tomatoes', ko: '로튼 토마토', desc: 'Tomato · Basil · Fresh', glass: 13000 },
+          { name: 'Cigarettes After Sex', ko: '시가렛 애프터 섹스', desc: 'Smoky · Bitter · Fruity · Sweet', glass: 13000 },
+        ]},
+      ],
+      'Modern': [
+        { header: 'MODERN COCKTAIL', items: [
+          { name: 'Cocoberry', ko: '코코베리', desc: '', glass: 10000 },
+          { name: 'Cassis Frappe', ko: '카시스 프라페', desc: '', glass: 11000 },
+          { name: 'June Bug', ko: '준 벅', desc: '', glass: 12000 },
+          { name: '玉蒲團', ko: '옥보단', desc: '', glass: 12000 },
+          { name: 'Sex on the Beach', ko: '섹스 온 더 비치', desc: '', glass: 12000 },
+          { name: 'Malibu Summer Rose', ko: '말리부 써머로즈', desc: '', glass: 12000 },
+          { name: 'Midori Sour', ko: '미도리 사워', desc: '', glass: 12000 },
+          { name: 'Catharsis', ko: '카타르시스', desc: '', glass: 13000 },
+        ]},
+      ],
+      'Classic': [
+        { header: 'CLASSIC COCKTAIL', items: [
+          { name: 'Kalua Milk', ko: '깔루아 밀크', desc: '', glass: 9000 },
+          { name: 'JackCoke', ko: '잭콕', desc: '', glass: 9000 },
+          { name: 'GinTonic', ko: '진토닉', desc: '', glass: 9000 },
+          { name: "Hendrick's GinTonic", ko: '헨드릭스 진토닉', desc: '', glass: 11000 },
+          { name: 'White Russian', ko: '화이트 러시안', desc: '', glass: 10000 },
+          { name: 'Black Russian', ko: '블랙 러시안', desc: '', glass: 10000 },
+          { name: 'Cuba Libre', ko: '쿠바 리브레', desc: '', glass: 10000 },
+          { name: 'Tequila Sunrise', ko: '데킬라 선라이즈', desc: '', glass: 11000 },
+          { name: 'Blue Sapphire', ko: '블루 사파이어', desc: '', glass: 11000 },
+          { name: 'Daiquiri', ko: '다이키리', desc: '', glass: 11000 },
+          { name: 'Cosmopolitan', ko: '코스모폴리탄', desc: '', glass: 11000 },
+          { name: 'Piña Colada', ko: '피나 콜라다', desc: '', glass: 12000 },
+          { name: 'Long Island Iced Tea', ko: '롱티', desc: '', glass: 12000 },
+          { name: 'Espresso Martini', ko: '에스프레소 마티니', desc: '', glass: 14000 },
+          { name: 'Lime Mojito', ko: '생라임 모히또', desc: '', glass: 12000 },
+          { name: 'Limoncello Mojito', ko: '리몬첼로 모히또', desc: '', glass: 12000 },
+          { name: 'Margarita', ko: '마가리타', desc: '', glass: 12000 },
+          { name: 'God Father', ko: '갓 파더', desc: '', glass: 12000 },
+          { name: 'French Connection', ko: '프렌치 커넥션', desc: '', glass: 12000 },
+          { name: 'Amaretto Sour', ko: '아마레또 사워', desc: '', glass: 13000 },
+          { name: 'Parision', ko: '파리지앵', desc: '', glass: 13000 },
+          { name: 'Manhattan', ko: '맨하탄', desc: '', glass: 13000 },
+          { name: 'Faust', ko: '파우스트', desc: '', glass: 13000 },
+          { name: 'Old Fashioned', ko: '올드 패션드', desc: '', glass: 14000 },
+          { name: 'Negroni', ko: '네그로니', desc: '', glass: 14000 },
+          { name: 'Dry Martini', ko: '드라이 마티니', desc: '', glass: 14000 },
+        ]},
+      ],
+    }
+  },
+  beer: {
+    title: 'Highball & Beer',
+    sections: [
+      { header: 'HIGHBALL', items: [
+        { name: 'Laphroaig Highball', ko: '라프로익 하이볼', glass: 14000 },
+        { name: '烟台 Highball', ko: '연태 하이볼', glass: 9000 },
+        { name: 'Monkey Shoulder Highball', ko: '몽키숄더 하이볼', glass: 11000 },
+        { name: 'Earl Grey Highball', ko: '얼그레이 하이볼', glass: 10000 },
+        { name: "Maker's Mark Highball", ko: '메이커스 마크 하이볼', glass: 10000 },
+        { name: 'Jameson Highball', ko: '제임슨 하이볼', glass: 9000 },
+        { name: 'Red Label Highball', ko: '레드라벨 하이볼', glass: 9000 },
+        { name: 'Suntory Highball', ko: '산토리 하이볼', glass: 9000 },
+        { name: 'Jim Beam Highball', ko: '짐빔 하이볼', glass: 9000 },
+      ]},
+      { header: 'BEER', items: [
+        { name: 'Budweiser (生)', ko: '버드와이저', vol: '330ml', glass: 8000 },
+        { name: 'Suntory Premium (生)', ko: '산토리 프리미엄', vol: '380ml', glass: 10000 },
+        { name: 'Guinness Microdraught (生)', ko: '기네스 마이크로 드래프트', vol: '558ml', glass: 12000, originalGlass: 14000 },
+        { name: "Blonde L'Anecdote", ko: '블롱드 라넥도트', vol: '330ml', glass: 16000 },
+        { name: 'Rochefort 10', ko: '로슈포르10', vol: '330ml', glass: 14000 },
+        { name: 'Westmalle Tripel', ko: '베스트말러 트리펠', vol: '330ml', glass: 12000 },
+        { name: 'Westmalle Dubbel', ko: '베스트말러 듀벨', vol: '330ml', glass: 11000 },
+        { name: 'Corona', ko: '코로나', vol: '330ml', glass: 8000 },
+        { name: 'Kirin', ko: '기린', vol: '330ml', glass: 7000 },
+        { name: 'Hoegaarden', ko: '호가든', vol: '330ml', glass: 7000 },
+      ]},
+      { header: 'SOJU', items: [
+        { name: '一品眞露', ko: '일품 진로', vol: '375ml', glass: 31000 },
+        { name: '火堯', ko: '화요', vol: '375ml', glass: 31000 },
+        { name: 'Saero', ko: '새로', vol: '330ml', glass: 6000 },
+      ]},
+    ]
+  },
+  nonalc: {
+    title: 'Non-Alc',
+    sections: [
+      { header: 'NON-ALCOHOLIC', items: [
+        { name: 'Jinro Tonic Water', ko: '토닉워터', vol: '250ml', glass: 2000 },
+        { name: 'Canada Dry Ginger Ale', ko: '진저에일', vol: '250ml', glass: 2000 },
+        { name: 'Singha Soda Water', ko: '탄산수', vol: '325ml', glass: 3000 },
+        { name: 'Coca Cola', ko: '코카콜라', vol: '190ml', glass: 2000 },
+        { name: 'Coca Cola Zero', ko: '제로 코카콜라', vol: '350ml', glass: 3000 },
+        { name: 'Cinderella', ko: '신데렐라', glass: 9000 },
+        { name: 'Basil Tomato Ade', ko: '바질토마토 에이드', glass: 9000 },
+        { name: 'Melon Soda / Cream Soda', ko: '메론소다 / 크림소다', glass: 8000 },
+        { name: 'Shirley Temple', ko: '셀리 템플', glass: 8000 },
+        { name: 'Americano', ko: '아메리카노', glass: 6000 },
+        { name: 'Tea - Earl Grey / Rooibos / Peppermint', ko: '차 – 얼그레이 / 루이보스 / 페퍼민트', glass: 6000 },
+      ]},
+    ]
+  }
+};
+
+let currentWineTab = '스파클링 · 포르토 · 하우스';
+let currentCocktailTab = 'Signature';
+
+function renderDtextBrands(container, sections) {
+  container.innerHTML = '';
+  sections.forEach(sec => {
+    if (sec.header) {
+      const h = document.createElement('div');
+      h.className = 'dtext-section-header';
+      h.textContent = sec.header;
+      container.appendChild(h);
+    }
+    sec.items.forEach(item => {
+      if (item.brand !== undefined) {
+        // brand group
+        const bd = document.createElement('div');
+        bd.className = 'dtext-brand';
+        let rows = item.items.map((i, idx) => `
+          <div class="dtext-item">
+            <div><div class="dtext-item-name">${i.ctg || '&nbsp;'}</div></div>
+            <div class="dtext-price-wrap">
+              ${i.shot !== undefined ? `<div class="dtext-price-col${i.soldOut ? ' sold-out-text' : ''}"><div class="dtext-price-label">SHOT</div><div class="dtext-price">${i.shot.toLocaleString()}</div></div>` : ''}
+              ${i.bottle !== undefined ? `<div class="dtext-price-col${i.soldOut ? ' sold-out-text' : ''}"><div class="dtext-price-label">BOTTLE</div><div class="dtext-price">${i.bottle.toLocaleString()}</div></div>` : ''}
+              ${i.soldOut ? '<span class="sold-out-badge">SOLD OUT</span>' : '<div class="dtext-add-btn" data-idx="' + idx + '">+</div>'}
+            </div>
+          </div>`).join('');
+        bd.innerHTML = `<div class="dtext-brand-name">${item.brand}</div><div class="dtext-brand-ko">${item.ko}</div>${rows}`;
+        bd.querySelectorAll('.dtext-add-btn').forEach(btn => {
+          const idx = parseInt(btn.dataset.idx);
+          const i = item.items[idx];
+          btn.addEventListener('click', () => {
+            const fullName = item.brand + (i.ctg ? ' ' + i.ctg : '');
+            const choices = [];
+            if (i.shot !== undefined) choices.push({ label: 'SHOT', value: i.shot });
+            if (i.bottle !== undefined) choices.push({ label: 'BOTTLE', value: i.bottle });
+            openOptionModal(fullName, item.ko, choices);
+          });
+        });
+        container.appendChild(bd);
+      } else {
+        // single item (wine, cocktail, beer)
+        const div = document.createElement('div');
+        div.className = 'dtext-item';
+        let left = `<div>
+          <div class="dtext-item-name">${item.name}</div>
+          ${item.ko ? `<div class="dtext-item-ko">${item.ko}</div>` : ''}
+          ${item.desc ? `<div class="dtext-item-sub">${item.desc}</div>` : ''}
+          ${item.grape ? `<div class="dtext-item-sub">${item.grape}${item.country ? ' · ' + item.country : ''}${item.alc ? ' · ' + item.alc : ''}</div>` : ''}
+          <div class="dtext-item-sub">${item.vol || '&nbsp;'}</div>
+        </div>`;
+        let right = '';
+        let priceVal = item.bottle || item.glass || 0;
+        let priceLabel = item.bottle ? '₩' + item.bottle.toLocaleString() : (item.glass ? '₩' + item.glass.toLocaleString() : '');
+        if (item.bottle && item.glass) {
+          right = `<div class="dtext-price-wrap">
+            <div class="dtext-price-col"><div class="dtext-price-label">GLASS</div><div class="dtext-price">${item.glass.toLocaleString()}</div></div>
+            <div class="dtext-price-col"><div class="dtext-price-label">BOTTLE</div><div class="dtext-price">${item.bottle.toLocaleString()}</div></div>
+            <div class="dtext-add-btn dtext-add-multi">+</div>
+          </div>`;
+        } else if (priceVal) {
+          right = `<div style="display:flex;align-items:center;"><div class="dtext-single-price">${priceVal.toLocaleString()}</div><div class="dtext-add-btn dtext-add-single">+</div></div>`;
+        }
+        div.innerHTML = left + right;
+        const multiBtn = div.querySelector('.dtext-add-multi');
+        if (multiBtn) {
+          multiBtn.addEventListener('click', () => {
+            openOptionModal(item.name, item.ko || '', [
+              { label: 'GLASS', value: item.glass },
+              { label: 'BOTTLE', value: item.bottle }
+            ]);
+          });
+        }
+        const singleBtn = div.querySelector('.dtext-add-single');
+        if (singleBtn) {
+          singleBtn.addEventListener('click', () => {
+            addToCart(item.name, item.ko || '', priceLabel, priceVal);
+          });
+        }
+        container.appendChild(div);
+      }
+    });
+  });
+}
+
+const cognacTabs = ['Cognac', 'Mezcal · Tequila', 'Spirits'];
+const cognacSectionMap = {
+  'Cognac': ['COGNAC'],
+  'Mezcal · Tequila': ['MEZCAL TEQUILA'],
+  'Spirits': ['VODKA', 'GIN', 'SPIRITS'],
+};
+let currentCognacTab = 'Cognac';
+
+function renderCognacTabs() {
+  const tabs = document.getElementById('cognacTabs');
+  tabs.innerHTML = '';
+  cognacTabs.forEach(tab => {
+    const el = document.createElement('div');
+    el.className = 'dtext-tab' + (tab === currentCognacTab ? ' active' : '');
+    el.textContent = tab;
+    el.onclick = () => {
+      currentCognacTab = tab;
+      renderCognacBody();
+      document.querySelectorAll('#cognacTabs .dtext-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    };
+    tabs.appendChild(el);
+  });
+}
+
+function renderCognacBody() {
+  const body = document.getElementById('cognacBody');
+  const targetTitles = cognacSectionMap[currentCognacTab];
+  const matchedSecs = drinksTextData.cognac.sections.filter(s => targetTitles.includes(s.title));
+  if (!matchedSecs.length) { body.innerHTML = ''; return; }
+  const sections = matchedSecs.map(s => ({ header: targetTitles.length > 1 ? s.title : null, items: s.items }));
+  renderDtextBrands(body, sections);
+}
+
+function showCognacText() {
+  currentCognacTab = 'Cognac';
+  renderCognacTabs();
+  renderCognacBody();
+  showScreen('cognacText');
+}
+
+function renderWineTabs() {
+  const tabs = document.getElementById('wineTabs');
+  tabs.innerHTML = '';
+  drinksTextData.wine.tabs.forEach(tab => {
+    const el = document.createElement('div');
+    el.className = 'dtext-tab' + (tab === currentWineTab ? ' active' : '');
+    el.textContent = tab;
+    el.onclick = () => { currentWineTab = tab; renderWineBody(); document.querySelectorAll('#wineTabs .dtext-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); };
+    tabs.appendChild(el);
+  });
+}
+
+function renderWineBody() {
+  const body = document.getElementById('wineBody');
+  body.innerHTML = '';
+  const secs = drinksTextData.wine.sections[currentWineTab] || [];
+  secs.forEach(sec => {
+    const h = document.createElement('div');
+    h.className = 'dtext-section-header';
+    h.textContent = sec.header;
+    body.appendChild(h);
+    sec.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'dtext-item';
+      let sub = [item.grape, item.country, item.alc].filter(Boolean).join(' · ');
+      div.innerHTML = `<div>
+        <div class="dtext-item-name">${item.name}</div>
+        ${item.ko ? `<div class="dtext-item-ko">${item.ko}</div>` : ''}
+        ${sub ? `<div class="dtext-item-sub">${sub}</div>` : ''}
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="dtext-single-price${item.soldOut ? ' sold-out-text' : ''}">${item.bottle ? item.bottle.toLocaleString() : ''}</div>
+        ${item.bottle ? (item.soldOut ? '<span class="sold-out-badge">SOLD OUT</span>' : '<div class="dtext-add-btn dtext-wine-add">+</div>') : ''}
+      </div>`;
+      const addBtn = div.querySelector('.dtext-wine-add');
+      if (addBtn) {
+        addBtn.addEventListener('click', () => {
+          addToCart(item.name, item.ko || '', '₩' + item.bottle.toLocaleString(), item.bottle);
+        });
+      }
+      body.appendChild(div);
+    });
+  });
+}
+
+function showWineText() {
+  currentWineTab = drinksTextData.wine.tabs[0];
+  renderWineTabs();
+  renderWineBody();
+  showScreen('wineText');
+}
+
+function renderCocktailTabs() {
+  const tabs = document.getElementById('cocktailTabs');
+  tabs.innerHTML = '';
+  drinksTextData.cocktail.tabs.forEach(tab => {
+    const el = document.createElement('div');
+    el.className = 'dtext-tab' + (tab === currentCocktailTab ? ' active' : '');
+    el.textContent = tab;
+    el.onclick = () => { currentCocktailTab = tab; renderCocktailBody(); document.querySelectorAll('#cocktailTabs .dtext-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); };
+    tabs.appendChild(el);
+  });
+}
+
+function renderCocktailBody() {
+  const body = document.getElementById('cocktailBody');
+  body.innerHTML = '';
+  const secs = drinksTextData.cocktail.sections[currentCocktailTab] || [];
+  secs.forEach(sec => {
+    const h = document.createElement('div');
+    h.className = 'dtext-section-header';
+    h.textContent = sec.header;
+    body.appendChild(h);
+    sec.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'dtext-item';
+      div.innerHTML = `<div>
+        <div class="dtext-item-name">${item.name}</div>
+        ${item.ko ? `<div class="dtext-item-ko">${item.ko}</div>` : ''}
+        ${item.desc ? `<div class="dtext-item-sub">${item.desc}</div>` : ''}
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="dtext-single-price">${item.glass ? item.glass.toLocaleString() : ''}</div>
+        ${item.glass ? `<div class="dtext-add-btn dtext-cocktail-add">+</div>` : ''}
+      </div>`;
+      const addBtn = div.querySelector('.dtext-cocktail-add');
+      if (addBtn) {
+        addBtn.addEventListener('click', () => {
+          addToCart(item.name, item.ko || '', '₩' + item.glass.toLocaleString(), item.glass);
+        });
+      }
+      body.appendChild(div);
+    });
+  });
+}
+
+function showCocktailText() {
+  currentCocktailTab = drinksTextData.cocktail.tabs[0];
+  renderCocktailTabs();
+  renderCocktailBody();
+  showScreen('cocktailText');
+}
+
+function showNonAlcText() {
+  const body = document.getElementById('nonalcBody');
+  body.innerHTML = '';
+  drinksTextData.nonalc.sections.forEach(sec => {
+    const h = document.createElement('div');
+    h.className = 'dtext-section-header';
+    h.textContent = sec.header;
+    body.appendChild(h);
+    sec.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'dtext-item';
+      div.innerHTML = `<div>
+        <div class="dtext-item-name">${item.name}${item.vol ? ` <span class="dtext-vol-inline">${item.vol}</span>` : ''}</div>
+        <div class="dtext-item-ko">${item.ko || '&nbsp;'}</div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="dtext-single-price">${item.glass ? item.glass.toLocaleString() : ''}</div>
+        ${item.glass ? '<div class="dtext-add-btn dtext-nonalc-add">+</div>' : ''}
+      </div>`;
+      const addBtn = div.querySelector('.dtext-nonalc-add');
+      if (addBtn) {
+        addBtn.addEventListener('click', () => {
+          addToCart(item.name, item.ko || '', '₩' + item.glass.toLocaleString(), item.glass);
+        });
+      }
+      body.appendChild(div);
+    });
+  });
+  showScreen('nonalcText');
+}
+
+function showBeerText() {
+  const body = document.getElementById('beerBody');
+  body.innerHTML = '';
+  drinksTextData.beer.sections.forEach(sec => {
+    const h = document.createElement('div');
+    h.className = 'dtext-section-header';
+    h.textContent = sec.header;
+    body.appendChild(h);
+    sec.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'dtext-item';
+      div.innerHTML = `<div>
+        <div class="dtext-item-name">${item.name}${item.vol ? ` <span class="dtext-vol-inline">${item.vol}</span>` : ''}</div>
+        <div class="dtext-item-ko">${item.ko || '&nbsp;'}</div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div style="text-align:right;">
+          ${item.originalGlass ? `<div class="dtext-price-original-strike">${item.originalGlass.toLocaleString()}</div>` : ''}
+          <div class="dtext-single-price${item.originalGlass ? ' dtext-price-discounted' : ''}">${item.glass ? item.glass.toLocaleString() : ''}</div>
+        </div>
+        ${item.glass ? `<div class="dtext-add-btn dtext-beer-add">+</div>` : ''}
+      </div>`;
+      const addBtn = div.querySelector('.dtext-beer-add');
+      if (addBtn) {
+        addBtn.addEventListener('click', () => {
+          addToCart(item.name, item.ko || '', '₩' + item.glass.toLocaleString(), item.glass);
+        });
+      }
+      body.appendChild(div);
+    });
+  });
+  showScreen('beerText');
+}
+
+
+function buildSearchIndex() {
+  const idx = [];
+  // foods
+  Object.keys(foods).forEach(cat => {
+    foods[cat].items.forEach(item => {
+      idx.push({ name: item.en, ko: item.ko, price: item.price, priceVal: item.price ? parseInt(item.price.replace(/[^0-9]/g,'')) : 0, cat: foods[cat].title, type: 'food', catKey: cat });
+    });
+  });
+  // whisky
+  whiskyTabs.forEach(tab => {
+    (whiskyData[tab] || []).forEach(brand => {
+      brand.items.forEach(i => {
+        idx.push({ name: brand.brand + (i.ctg ? ' ' + i.ctg : ''), ko: brand.ko, price: 'SHOT ' + i.shot.toLocaleString() + ' / BOTTLE ' + i.bottle.toLocaleString(), shot: i.shot, bottle: i.bottle, cat: 'Whisky · ' + tab, type: 'whisky', tab: tab });
+      });
+    });
+  });
+  // cognac
+  drinksTextData.cognac.sections.forEach(sec => {
+    sec.items.forEach(brand => {
+      brand.items.forEach(i => {
+        idx.push({ name: brand.brand + (i.ctg ? ' ' + i.ctg : ''), ko: brand.ko, price: 'SHOT ' + i.shot.toLocaleString() + ' / BOTTLE ' + i.bottle.toLocaleString(), cat: 'Cognac & Spirits · ' + sec.title, type: 'cognac' });
+      });
+    });
+  });
+  // wine
+  Object.keys(drinksTextData.wine.sections).forEach(tabName => {
+    drinksTextData.wine.sections[tabName].forEach(sec => {
+      sec.items.forEach(item => {
+        idx.push({ name: item.name, ko: item.ko, price: item.bottle ? '₩' + item.bottle.toLocaleString() : '', cat: 'Wine · ' + tabName, type: 'wine', tab: tabName });
+      });
+    });
+  });
+  // cocktail
+  Object.keys(drinksTextData.cocktail.sections).forEach(tabName => {
+    drinksTextData.cocktail.sections[tabName].forEach(sec => {
+      sec.items.forEach(item => {
+        idx.push({ name: item.name, ko: item.ko, price: item.glass ? '₩' + item.glass.toLocaleString() : '', cat: 'Cocktail · ' + tabName, type: 'cocktail', tab: tabName });
+      });
+    });
+  });
+  // beer
+  drinksTextData.beer.sections.forEach(sec => {
+    sec.items.forEach(item => {
+      idx.push({ name: item.name, ko: item.ko || '', price: item.glass ? '₩' + item.glass.toLocaleString() : '', priceVal: item.glass || 0, cat: 'Highball & Beer', type: 'beer' });
+    });
+  });
+  if (drinksTextData.nonalc) {
+    drinksTextData.nonalc.sections.forEach(sec => {
+      sec.items.forEach(item => {
+        idx.push({ name: item.name, ko: item.ko || '', price: item.glass ? '₩' + item.glass.toLocaleString() : '', priceVal: item.glass || 0, cat: 'Non-Alc', type: 'nonalc' });
+      });
+    });
+  }
+  return idx;
+}
+
+let searchIndex = null;
+
+function showSearch() {
+  if (!searchIndex) searchIndex = buildSearchIndex();
+  showScreen('searchScreen');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResults').innerHTML = '<div class="search-empty">메뉴, 위스키, 칵테일 이름을 검색해보세요</div>';
+  setTimeout(() => document.getElementById('searchInput').focus(), 100);
+}
+
+function runSearch(query) {
+  const results = document.getElementById('searchResults');
+  const q = query.trim().toLowerCase();
+  if (!q) {
+    results.innerHTML = '<div class="search-empty">메뉴, 위스키, 칵테일 이름을 검색해보세요</div>';
+    return;
+  }
+  const matches = searchIndex.filter(item =>
+    (item.name && item.name.toLowerCase().includes(q)) ||
+    (item.ko && item.ko.toLowerCase().includes(q))
+  );
+  if (matches.length === 0) {
+    results.innerHTML = '<div class="search-empty">검색 결과가 없습니다</div>';
+    return;
+  }
+  results.innerHTML = '';
+  matches.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'search-result-item';
+    div.innerHTML = `
+      <div class="search-result-left">
+        <div class="search-result-name">${item.name}</div>
+        ${item.ko ? `<div class="search-result-ko">${item.ko}</div>` : ''}
+        <div class="search-result-cat">${item.cat}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="search-result-price">${item.price || ''}</div>
+        <div class="dtext-add-btn search-add-btn">+</div>
+      </div>`;
+    const addBtn = div.querySelector('.search-add-btn');
+    addBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (item.type === 'whisky' || (item.type === 'cognac' && item.shot !== undefined)) {
+        const choices = [];
+        if (item.shot) choices.push({ label: 'SHOT', value: item.shot });
+        if (item.bottle) choices.push({ label: 'BOTTLE', value: item.bottle });
+        if (choices.length > 0) {
+          openOptionModal(item.name, item.ko || '', choices);
+        } else {
+          addToCart(item.name, item.ko || '', item.price || '', item.priceVal || 0);
+        }
+      } else if (item.type === 'wine' && item.glass && item.bottle) {
+        openOptionModal(item.name, item.ko || '', [
+          { label: 'GLASS', value: item.glass },
+          { label: 'BOTTLE', value: item.bottle }
+        ]);
+      } else {
+        const priceVal = item.priceVal || 0;
+        const priceLabel = priceVal ? '₩' + priceVal.toLocaleString() : (item.price || '');
+        addToCart(item.name, item.ko || '', priceLabel, priceVal);
+      }
+    });
+    results.appendChild(div);
+  });
+}
+
+
+// ── CART STATE ──
+let cart = [];
+let pendingOptionItem = null;
+
+function cartKey(name, opt) { return name + '|' + (opt || ''); }
+
+function addToCart(name, ko, priceLabel, priceValue, opt) {
+  const key = cartKey(name, opt);
+  const existing = cart.find(c => c.key === key);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ key, name, ko, priceLabel, priceValue, opt: opt || '', qty: 1 });
+  }
+  updateCartUI();
+  flashAdded();
+}
+
+function flashAdded() {
+  const fab = document.getElementById('cartFab');
+  fab.style.transform = 'scale(1.15)';
+  setTimeout(() => { fab.style.transform = 'scale(1)'; }, 150);
+}
+
+function updateCartUI() {
+  const totalQty = cart.reduce((s, c) => s + c.qty, 0);
+  const fab = document.getElementById('cartFab');
+  const badge = document.getElementById('cartBadge');
+  const onCartScreen = document.getElementById('cartScreen').classList.contains('active');
+  if (totalQty > 0 && !onCartScreen) {
+    fab.style.display = 'flex';
+    badge.textContent = totalQty;
+  } else {
+    fab.style.display = 'none';
+  }
+}
+
+function showCart() {
+  renderCart();
+  showScreen('cartScreen');
+  document.getElementById('cartFab').style.display = 'none';
+}
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    body.innerHTML = '<div class="cart-empty">담긴 메뉴가 없습니다</div>';
+    footer.style.display = 'none';
+    return;
+  }
+  body.innerHTML = '';
+  let total = 0;
+  cart.forEach(item => {
+    total += item.priceValue * item.qty;
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div class="cart-item-left">
+        <div class="cart-item-name">${item.name}</div>
+        ${item.ko ? `<div class="cart-item-opt">${item.ko}${item.opt ? ' · ' + item.opt : ''}</div>` : (item.opt ? `<div class="cart-item-opt">${item.opt}</div>` : '')}
+        <div class="cart-item-price">${item.priceLabel} × ${item.qty}</div>
+      </div>
+      <div class="cart-qty-row">
+        <div class="cart-qty-btn cart-minus">−</div>
+        <div class="cart-qty-num">${item.qty}</div>
+        <div class="cart-qty-btn cart-plus">+</div>
+        <div class="cart-remove">삭제</div>
+      </div>`;
+    div.querySelector('.cart-minus').addEventListener('click', () => changeQty(item.key, -1));
+    div.querySelector('.cart-plus').addEventListener('click', () => changeQty(item.key, 1));
+    div.querySelector('.cart-remove').addEventListener('click', () => removeFromCart(item.key));
+    body.appendChild(div);
+  });
+  document.getElementById('cartFooter').style.display = 'block';
+  document.getElementById('cartTotalAmount').textContent = '₩' + total.toLocaleString();
+}
+
+function changeQty(key, delta) {
+  const item = cart.find(c => c.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.key !== key);
+  renderCart();
+  updateCartUI();
+}
+
+function removeFromCart(key) {
+  cart = cart.filter(c => c.key !== key);
+  renderCart();
+  updateCartUI();
+}
+
+function clearCart() {
+  cart = [];
+  renderCart();
+  updateCartUI();
+}
+
+// ── OPTION MODAL (for shot/bottle style items) ──
+function openOptionModal(name, ko, choices) {
+  pendingOptionItem = { name, ko, choices };
+  document.getElementById('optionTitle').textContent = name;
+  document.getElementById('optionSub').textContent = ko || '';
+  const wrap = document.getElementById('optionChoices');
+  wrap.innerHTML = '';
+  choices.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'option-choice';
+    div.innerHTML = `<div class="option-choice-label">${c.label}</div><div class="option-choice-price">₩${c.value.toLocaleString()}</div>`;
+    div.onclick = () => {
+      addToCart(name, ko, c.label, c.value, c.label);
+      closeOptionModal();
+    };
+    wrap.appendChild(div);
+  });
+  document.getElementById('optionModal').classList.add('active');
+}
+
+function closeOptionModal() {
+  document.getElementById('optionModal').classList.remove('active');
+  pendingOptionItem = null;
+}
+
+
+const goodsItems = [
+  { img: 'goods_t1.JPG' },
+  { img: 'goods_t2.JPG' },
+  { img: 'goods_ca1.JPG' },
+  { img: 'goods_c1.JPG' },
+  { img: 'goods_k1.JPG' },
+  { img: 'goods_k2.JPG' },
+  { img: 'goods_l.JPG' },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.goods-add-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const name = btn.dataset.name;
+      const ko = btn.dataset.ko;
+      const price = parseInt(btn.dataset.price);
+      addToCart(name, ko, '₩' + price.toLocaleString(), price);
+    });
+  });
+
+  // 로고 더블탭 → 굿즈 히든 페이지
+  let lastTap = 0;
+  const logo = document.querySelector('.home-logo-img');
+  if (logo) {
+    logo.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastTap < 400) {
+        showScreen('goodsScreen');
+      }
+      lastTap = now;
+    });
+  }
+});
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const fab = document.getElementById('cartFab');
+  if (id === 'cartScreen') {
+    fab.style.display = 'none';
+  } else {
+    updateCartUI();
+  }
+}
+
+function goHome() { showScreen('home'); }
+
+function initMonthlyButtons() {
+  const addRisotto = document.getElementById('addRisotto');
+  if (addRisotto) addRisotto.addEventListener('click', () => {
+    addToCart('White Mushroom Cream Risotto', '양송이 크림 리조또', '₩22,000', 22000);
+  });
+  const addGuinness = document.getElementById('addGuinness');
+  if (addGuinness) addGuinness.addEventListener('click', () => {
+    addToCart('Guinness Microdraught (生)', '기네스 마이크로 드래프트', '₩12,000', 12000);
+  });
+  const addDinnerSet = document.getElementById('addDinnerSet');
+  if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
+    addToCart('Dinner Set', '채끝+명란파스타+하우스와인2잔', '₩68,000', 68000);
+  });
+  const addPairingSet = document.getElementById('addPairingSet');
+  if (addPairingSet) addPairingSet.addEventListener('click', () => {
+    addToCart('Pairing Set', '부르스케타+소뮈르 에르보쥬', '₩93,000', 93000);
+  });
+}
+document.addEventListener('DOMContentLoaded', initMonthlyButtons);
+
+function handleFoodAdd(en, ko, priceStr) {
+  const multi = parseMultiPrice(priceStr);
+  if (multi) {
+    openOptionModal(en, ko, multi);
+  } else {
+    addToCart(en, ko, priceStr, parsePriceValue(priceStr));
+  }
+}
+
+function parsePriceValue(priceStr) {
+  const m = priceStr.match(/₩([\d,]+)/);
+  return m ? parseInt(m[1].replace(/,/g, '')) : 0;
+}
+
+function parseMultiPrice(priceStr) {
+  // e.g. "1pcs ₩9,000 / 2pcs ₩17,000"
+  const parts = priceStr.split('/').map(s => s.trim());
+  if (parts.length <= 1) return null;
+  const choices = [];
+  parts.forEach(p => {
+    const priceMatch = p.match(/₩([\d,]+)/);
+    if (priceMatch) {
+      const label = p.replace(/₩[\d,]+/, '').trim();
+      choices.push({ label: label || p, value: parseInt(priceMatch[1].replace(/,/g, '')) });
+    }
+  });
+  return choices.length > 1 ? choices : null;
+}
+
+function showFoodCategory(cat) {
+  const data = foods[cat];
+  document.getElementById('listTitle').textContent = data.title;
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  data.items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'menu-card';
+    if (item.noimg) {
+      card.innerHTML = `
+        <div class="menu-info-row menu-add-area" style="padding: 16px 12px; flex: 1;">
+          <div class="menu-info">
+            <div class="menu-en">${item.en}</div>
+            <div class="menu-ko">${item.ko}</div>
+            <div class="menu-price">${item.price}</div>
+          </div>
+          <div class="add-btn-inline">+</div>
+        </div>`;
+      const addArea = card.querySelector('.menu-add-area');
+      addArea.addEventListener('click', () => {
+        handleFoodAdd(item.en, item.ko, item.price);
+      });
+    } else {
+      card.innerHTML = `
+        <div class="menu-thumb-wrap">
+          <img class="menu-thumb" src="${item.img}" alt="${item.ko}" onerror="this.style.visibility='hidden'">
+        </div>
+        <div class="menu-info-row menu-add-area">
+          <div class="menu-info">
+            <div class="menu-en">${item.en}</div>
+            <div class="menu-ko">${item.ko}</div>
+            ${item.originalPrice ? `<div class="menu-price-original">${item.originalPrice}</div>` : ''}
+            <div class="menu-price${item.originalPrice ? ' menu-price-discounted' : ''}">${item.price}</div>
+          </div>
+          <div class="add-btn-inline">+</div>
+        </div>`;
+      const addArea = card.querySelector('.menu-add-area');
+      const thumbWrap = card.querySelector('.menu-thumb-wrap');
+      addArea.addEventListener('click', () => {
+        handleFoodAdd(item.en, item.ko, item.price);
+      });
+      thumbWrap.addEventListener('click', () => {
+        showDetail(item.img, data.items, data.items.indexOf(item));
+      });
+    }
+    grid.appendChild(card);
+  });
+  showScreen('menuList');
+}
+
+function showDrinksCategory(cat) {
+  if (cat === 'whisky') { currentWhiskyTab = 'Blended'; showWhisky(); return; }
+  if (cat === 'cognac') { showCognacText(); return; }
+  if (cat === 'wine') { showWineText(); return; }
+  if (cat === 'cocktail') { showCocktailText(); return; }
+  if (cat === 'beer') { showBeerText(); return; }
+  if (cat === 'nonalc') { showNonAlcText(); return; }
+}
+
+let currentItems = [];
+let currentIndex = 0;
+
+function showDetail(imgSrc, items, index) {
+  currentItems = items || [imgSrc];
+  currentIndex = (index !== undefined) ? index : 0;
+  const detail = document.getElementById('detail');
+  document.getElementById('detailImg').src = (typeof currentItems[currentIndex] === 'object') ? currentItems[currentIndex].img : currentItems[currentIndex];
+  detail.style.display = 'block';
+  detail.classList.add('active');
+  setTimeout(() => detail.classList.add('visible'), 10);
+}
+
+function closeDetail() {
+  const detail = document.getElementById('detail');
+  detail.classList.remove('visible');
+  setTimeout(() => {
+    detail.style.display = 'none';
+    detail.classList.remove('active');
+  }, 300);
+}
+
+// Swipe support + Pinch zoom
+(function() {
+  let startX = 0, startY = 0;
+  let scale = 1, lastScale = 1;
+  let panX = 0, panY = 0, lastPanX = 0, lastPanY = 0;
+  let initialPinchDist = 0;
+  let isPinching = false;
+  const el = document.getElementById('detail');
+  const img = document.getElementById('detailImg');
+
+  function getDist(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx*dx + dy*dy);
+  }
+
+  function applyTransform() {
+    img.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  }
+
+  function resetZoom() {
+    scale = 1; lastScale = 1; panX = 0; panY = 0; lastPanX = 0; lastPanY = 0;
+    img.style.transition = 'transform 0.2s';
+    applyTransform();
+    setTimeout(() => { img.style.transition = ''; }, 200);
+  }
+
+  el.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      isPinching = true;
+      initialPinchDist = getDist(e.touches);
+      lastScale = scale;
+    } else if (e.touches.length === 1) {
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  el.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && isPinching) {
+      e.preventDefault();
+      const dist = getDist(e.touches);
+      scale = Math.min(Math.max(lastScale * (dist / initialPinchDist), 1), 4);
+      applyTransform();
+    } else if (e.touches.length === 1 && scale > 1) {
+      e.preventDefault();
+      panX = lastPanX + (e.touches[0].clientX - startX);
+      panY = lastPanY + (e.touches[0].clientY - startY);
+      applyTransform();
+    }
+  }, { passive: false });
+
+  el.addEventListener('touchend', e => {
+    if (isPinching && e.touches.length === 0) {
+      isPinching = false;
+      lastScale = scale;
+      lastPanX = panX; lastPanY = panY;
+      if (scale <= 1.05) resetZoom();
+      return;
+    }
+    if (scale > 1) {
+      lastPanX = panX; lastPanY = panY;
+      return;
+    }
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (currentItems.length <= 1) return;
+      if (dx < 0 && currentIndex < currentItems.length - 1) {
+        currentIndex++;
+      } else if (dx > 0 && currentIndex > 0) {
+        currentIndex--;
+      } else return;
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = (typeof currentItems[currentIndex] === 'object') ? currentItems[currentIndex].img : currentItems[currentIndex];
+        img.style.opacity = '1';
+      }, 150);
+    }
+  }, { passive: true });
+
+  // double-tap to reset zoom
+  let lastTap = 0;
+  el.addEventListener('touchend', e => {
+    const now = Date.now();
+    if (now - lastTap < 300 && scale > 1) resetZoom();
+    lastTap = now;
+  });
+
+  // reset zoom whenever a new detail is opened
+  const origShowDetail = showDetail;
+  window.showDetail = function(...args) {
+    resetZoom();
+    origShowDetail.apply(this, args);
+  };
+
+  document.getElementById('detailImg').style.transition = 'opacity 0.15s';
+  document.getElementById('detailImg').style.transformOrigin = 'center center';
+})();
+</script>
+</body>
+</html>
+
