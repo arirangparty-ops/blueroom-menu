@@ -1406,7 +1406,7 @@ const whiskyData = {
     { brand: 'Bowmore', ko: '보모어', items: [
       { ctg: '12y', shot: 11000, bottle: 185000 },
       { ctg: '15y', shot: 17000, bottle: 330000 },
-      { ctg: '18y Deep & Complex', shot: 23000, bottle: 460000 },
+      { ctg: '18y Deep & Complex', shot: 23000, bottle: 460000, soldOut: true },
     ]},
     { brand: 'Lagavulin', ko: '라가볼린', items: [
       { ctg: '8y', shot: 14000, bottle: 270000 },
@@ -1782,6 +1782,11 @@ const drinksTextData = {
     tabs: ['Sparkling · Porto · House', 'White', 'Red'],
     sections: {
       'Sparkling · Porto · House': [
+        { header: 'HOUSE', items: [
+          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9000 },
+          { name: 'House White', ko: '하우스 화이트 와인', grape: '', alc: '', country: '', bottle: 9500 },
+          { name: 'House Porto', ko: '하우스 포트 와인', grape: '', alc: '', country: '', bottle: 13000 },
+        ]},
         { header: 'SPARKLING', items: [
           { name: 'Brut, Fun Kiss', ko: '브뤼 펀 키스', grape: 'Chardonnay · Aligoté', alc: '11.5%', country: 'FRANCE · Bourgogne', bottle: 46000 },
           { name: "T' SPOT Brut", ko: '티스팟 브뤼', grape: 'Chardonnay', alc: '11.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 70000, soldOut: true },
@@ -1792,11 +1797,6 @@ const drinksTextData = {
         { header: 'PORTO', items: [
           { name: 'Kopke Fine Tawny', ko: '콥케 파인 토니', grape: 'Touriga Franca · Touriga Nacional · Tinta Roriz', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 43000 },
           { name: 'Quinta da Corta Late Bottled Vintage', ko: '퀸타 다 코타 LBV', grape: 'Touriga Franca · Touriga Nacional · Tinta Cão · Tinta Roriz · Tinta Barroca', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 90000 },
-        ]},
-        { header: 'HOUSE', items: [
-          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9000 },
-          { name: 'House White', ko: '하우스 화이트 와인', grape: '', alc: '', country: '', bottle: 9500 },
-          { name: 'House Porto', ko: '하우스 포트 와인', grape: '', alc: '', country: '', bottle: 13000 },
         ]},
       ],
       'White': [
@@ -2242,7 +2242,7 @@ function buildSearchIndex() {
   whiskyTabs.forEach(tab => {
     (whiskyData[tab] || []).forEach(brand => {
       brand.items.forEach(i => {
-        idx.push({ name: brand.brand + (i.ctg ? ' ' + i.ctg : ''), ko: brand.ko, price: 'SHOT ' + i.shot.toLocaleString() + ' / BOTTLE ' + i.bottle.toLocaleString(), shot: i.shot, bottle: i.bottle, cat: 'Whisky · ' + tab, type: 'whisky', tab: tab });
+        idx.push({ name: brand.brand + (i.ctg ? ' ' + i.ctg : ''), ko: brand.ko, price: 'SHOT ' + i.shot.toLocaleString() + ' / BOTTLE ' + i.bottle.toLocaleString(), shot: i.shot, bottle: i.bottle, soldOut: i.soldOut || false, cat: 'Whisky · ' + tab, type: 'whisky', tab: tab });
       });
     });
   });
@@ -2250,7 +2250,7 @@ function buildSearchIndex() {
   drinksTextData.cognac.sections.forEach(sec => {
     sec.items.forEach(brand => {
       brand.items.forEach(i => {
-        idx.push({ name: brand.brand + (i.ctg ? ' ' + i.ctg : ''), ko: brand.ko, price: 'SHOT ' + i.shot.toLocaleString() + ' / BOTTLE ' + i.bottle.toLocaleString(), cat: 'Cognac & Spirits · ' + sec.title, type: 'cognac' });
+        idx.push({ name: brand.brand + (i.ctg ? ' ' + i.ctg : ''), ko: brand.ko, price: 'SHOT ' + i.shot.toLocaleString() + ' / BOTTLE ' + i.bottle.toLocaleString(), soldOut: i.soldOut || false, cat: 'Cognac & Spirits · ' + sec.title, type: 'cognac' });
       });
     });
   });
@@ -2258,7 +2258,7 @@ function buildSearchIndex() {
   Object.keys(drinksTextData.wine.sections).forEach(tabName => {
     drinksTextData.wine.sections[tabName].forEach(sec => {
       sec.items.forEach(item => {
-        idx.push({ name: item.name, ko: item.ko, price: item.bottle ? '₩' + item.bottle.toLocaleString() : '', cat: 'Wine · ' + tabName, type: 'wine', tab: tabName });
+        idx.push({ name: item.name, ko: item.ko, price: item.bottle ? '₩' + item.bottle.toLocaleString() : '', soldOut: item.soldOut || false, cat: 'Wine · ' + tabName, type: 'wine', tab: tabName });
       });
     });
   });
@@ -2317,16 +2317,17 @@ function runSearch(query) {
     div.className = 'search-result-item';
     div.innerHTML = `
       <div class="search-result-left">
-        <div class="search-result-name">${item.name}</div>
+        <div class="search-result-name${item.soldOut ? ' sold-out-text' : ''}">${item.name}</div>
         ${item.ko ? `<div class="search-result-ko">${item.ko}</div>` : ''}
         <div class="search-result-cat">${item.cat}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="search-result-price">${item.price || ''}</div>
-        <div class="dtext-add-btn search-add-btn">+</div>
+        ${item.soldOut ? '<span class="sold-out-badge">SOLD OUT</span>' : '<div class="dtext-add-btn search-add-btn">+</div>'}
       </div>`;
     const addBtn = div.querySelector('.search-add-btn');
-    addBtn.addEventListener('click', (e) => {
+    if (addBtn) {
+      addBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (item.type === 'whisky' || (item.type === 'cognac' && item.shot !== undefined)) {
         const choices = [];
@@ -2348,6 +2349,7 @@ function runSearch(query) {
         addToCart(item.name, item.ko || '', priceLabel, priceVal);
       }
     });
+    }
     results.appendChild(div);
   });
 }
