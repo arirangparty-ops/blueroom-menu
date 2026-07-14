@@ -142,7 +142,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
 .whisky-tabs {
   display: flex;
   overflow-x: auto;
-  padding: 14px 20px 0;
+  padding: 14px 20px 10px;
   gap: 8px;
   scrollbar-width: none;
   flex-shrink: 0;
@@ -230,7 +230,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
 .dtext-tabs {
   display: flex;
   overflow-x: auto;
-  padding: 12px 16px 0;
+  padding: 12px 16px 10px;
   gap: 8px;
   scrollbar-width: none;
   flex-shrink: 0;
@@ -740,7 +740,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
   .menu-price { font-size: 12px; }
 
   /* 위스키 탭 */
-  .whisky-tabs { padding: 10px 12px 0; gap: 6px; }
+  .whisky-tabs { padding: 10px 12px 10px; gap: 6px; }
   .whisky-tab { font-size: 12px; padding: 6px 12px; }
   .whisky-list { padding: 14px 16px 80px; }
   .whisky-brand-name { font-size: 15px; }
@@ -1145,6 +1145,32 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
   <div class="list-header">
     <div class="back-btn" onclick="goHome()">← Back</div>
     <div class="list-title">Whisky</div>
+  </div>
+  <div style="flex-shrink:0;margin:14px 20px 0;">
+    <div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin-bottom:8px;padding-left:2px;">위스키 처음이신가요? · 15ml 샘플러 플라이트</div>
+    <div style="padding:14px 16px;background:#1e2028;border:0.5px solid #2a2c34;border-radius:10px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:0.5px solid #2a2c32;">
+      <div>
+        <div style="font-size:12px;color:#b8b4ac;">Speyside 입문 3종</div>
+        <div style="font-size:10px;color:#555;margin-top:3px;">발베니12y · 맥켈란12y · 글렌피딕12y</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">17,000</div><div class="monthly-add-btn" id="addFlightSpeyside" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:0.5px solid #2a2c32;">
+      <div>
+        <div style="font-size:12px;color:#b8b4ac;">Islay 스모키 3종</div>
+        <div style="font-size:10px;color:#555;margin-top:3px;">아드벡10y · 보모어12y · 라프로익QC</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">16,500</div><div class="monthly-add-btn" id="addFlightIslay" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;">
+      <div>
+        <div style="font-size:12px;color:#b8b4ac;">Bourbon 스무스 3종</div>
+        <div style="font-size:10px;color:#555;margin-top:3px;">메이커스마크 · 우드포드 · 포로지스</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">11,000</div><div class="monthly-add-btn" id="addFlightBourbon" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    </div>
   </div>
   <div class="whisky-tabs" id="whiskyTabs"></div>
   <div class="whisky-list" id="whiskyList"></div>
@@ -2544,6 +2570,18 @@ function initMonthlyButtons() {
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
     addToCart('Pairing Set', '부르스케타+소뮈르 에르보쥬', '₩93,000', 93000);
+  });
+  const addFlightSpeyside = document.getElementById('addFlightSpeyside');
+  if (addFlightSpeyside) addFlightSpeyside.addEventListener('click', () => {
+    addToCart('Speyside Starter Flight', '발베니12y·맥켈란12y·글렌피딕12y (15ml×3)', '₩17,000', 17000);
+  });
+  const addFlightIslay = document.getElementById('addFlightIslay');
+  if (addFlightIslay) addFlightIslay.addEventListener('click', () => {
+    addToCart('Islay Smoky Flight', '아드벡10y·보모어12y·라프로익QC (15ml×3)', '₩16,500', 16500);
+  });
+  const addFlightBourbon = document.getElementById('addFlightBourbon');
+  if (addFlightBourbon) addFlightBourbon.addEventListener('click', () => {
+    addToCart('Bourbon Smooth Flight', '메이커스마크·우드포드·포로지스 (15ml×3)', '₩11,000', 11000);
   });
 }
 document.addEventListener('DOMContentLoaded', initMonthlyButtons);
