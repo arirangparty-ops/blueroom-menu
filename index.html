@@ -142,7 +142,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
 .whisky-tabs {
   display: flex;
   overflow-x: auto;
-  padding: 14px 20px 10px;
+  padding: 14px 20px 0;
   gap: 8px;
   scrollbar-width: none;
   flex-shrink: 0;
@@ -230,7 +230,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
 .dtext-tabs {
   display: flex;
   overflow-x: auto;
-  padding: 12px 16px 10px;
+  padding: 12px 16px 0;
   gap: 8px;
   scrollbar-width: none;
   flex-shrink: 0;
@@ -740,10 +740,9 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
   .menu-price { font-size: 12px; }
 
   /* 위스키 탭 */
-  .whisky-tabs { padding: 10px 12px 10px; gap: 6px; }
+  .whisky-tabs { padding: 10px 12px 0; gap: 6px; }
   .whisky-tab { font-size: 12px; padding: 6px 12px; }
   .whisky-list { padding: 14px 16px 80px; }
-  .flight-intro { margin: 12px 12px 0 !important; }
   .whisky-brand-name { font-size: 15px; }
   .whisky-ctg { font-size: 13px; }
   .whisky-price { font-size: 13px; }
@@ -777,6 +776,77 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
   .monthly-set-items { font-size: 12px; }
   .hello-qr-card { width: 160px; }
 }
+
+/* ── MAP GAME (페스티벌 포스터 스타일 — 크림 줄무늬 + 브랜드 블루 지형 + 검정 태그 라벨) ── */
+.mapgame-body { flex: 1; overflow-y: auto; padding: 18px 20px 30px; display: flex; flex-direction: column; align-items: center; gap: 14px; background: repeating-linear-gradient(45deg, #f5eddb, #f5eddb 3px, #e9dcbf 3px, #e9dcbf 4px); }
+.mapgame-stampbar { width: 100%; max-width: 380px; background: #f5eddb; border: 1.5px solid #1b1d22; border-top: 4px solid #1f5fa8; border-radius: 4px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 3px 3px 0 rgba(27,29,34,0.15); }
+.mapgame-stamp-label { font-size: 11px; color: #1b1d22; letter-spacing: 0.03em; flex-shrink: 0; font-weight: 700; }
+.mapgame-stamps { display: flex; gap: 3px; flex-wrap: wrap; flex: 1; justify-content: center; }
+.mapgame-stamp-dot { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #1b1d22; background: transparent; flex-shrink: 0; }
+.mapgame-stamp-dot.filled { background: #d9a62e; border-color: #1b1d22; }
+.mapgame-stamp-count { font-size: 10px; color: #1f5fa8; flex-shrink: 0; letter-spacing: 0.03em; font-weight: 700; }
+.mapgame-discoverbar { width: 100%; max-width: 380px; display: flex; align-items: center; justify-content: space-between; padding: 0 4px; font-size: 10.5px; color: #1b1d22; letter-spacing: 0.02em; }
+.mapgame-discoverbar span:last-child { color: #1f5fa8; font-weight: 700; }
+.mapgame-mission { width: 100%; max-width: 380px; background: #1f5fa8; border: 1.5px solid #1b1d22; border-radius: 4px; padding: 8px 12px; font-size: 11px; color: #f5eddb; line-height: 1.5; display: none; box-shadow: 3px 3px 0 rgba(27,29,34,0.15); }
+.mapgame-mission.active { display: block; }
+.mapgame-mission b { color: #d9a62e; }
+.mapgame-map-wrap { position: relative; width: 100%; max-width: 380px; aspect-ratio: 13 / 23; border-radius: 8px; overflow: hidden; background: repeating-linear-gradient(45deg, #f5eddb, #f5eddb 3px, #e9dcbf 3px, #e9dcbf 4px); border: 2px solid #1b1d22; box-shadow: 4px 4px 0 rgba(27,29,34,0.2); }
+.mapgame-district { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mapgame-district path { fill: #1f5fa8; }
+.mapgame-district .mg-label { font-family: Georgia, serif; font-style: italic; font-size: 3.2px; fill: #1f5fa8; text-anchor: middle; letter-spacing: 0.04em; }
+.mapgame-district .mg-compass { fill: none; stroke: #1f5fa8; stroke-width: 0.9; }
+.mapgame-district .mg-compass-n { font-family: Georgia, serif; font-size: 3.4px; fill: #1f5fa8; text-anchor: middle; }
+.mapgame-roads { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mapgame-roads .mg-road { fill: none; stroke: #f5eddb; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 0.3 2.6; }
+.mapgame-roads .mg-leader { fill: none; stroke: #1b1d22; stroke-width: 0.45; }
+.mapgame-pins { position: absolute; inset: 0; }
+.mapgame-pin-dot { position: absolute; transform: translate(-50%, -50%); width: 13px; height: 13px; border-radius: 50%; background: #f5eddb; border: 1.5px solid #1b1d22; cursor: pointer; transition: transform 0.15s ease; }
+.mapgame-pin-dot:active { transform: translate(-50%, -50%) scale(0.85); }
+.mapgame-pin-dot.visited { background: #d9a62e; }
+.mapgame-pin-dot.visited::after { content: '✓'; position: absolute; top: -7px; left: 11px; font-size: 8px; background: #d9a62e; color: #1b1d22; width: 11px; height: 11px; border-radius: 50%; border: 1.2px solid #1b1d22; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.mapgame-pin-dot.mission { animation: mgPinPulse 1.6s ease-in-out infinite; }
+@keyframes mgPinPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(31,95,168,0.55); } 50% { box-shadow: 0 0 0 6px rgba(31,95,168,0); } }
+.mapgame-pin-dot.final { width: 16px; height: 16px; background: #f5eddb; border: 2px solid #1b1d22; }
+.mapgame-pin-tag { position: absolute; background: #1b1d22; color: #f5eddb; font-size: 8px; font-weight: 900; white-space: nowrap; padding: 3px 6px; border: 1px solid #1b1d22; box-shadow: 2px 2px 0 rgba(27,29,34,0.25); cursor: pointer; }
+.mapgame-pin-tag.final { background: #f5eddb; color: #1b1d22; border: 1.5px solid #1b1d22; font-size: 9px; }
+.mapgame-hint { font-size: 11px; color: #1b1d22; text-align: center; max-width: 340px; line-height: 1.7; letter-spacing: 0.01em; }
+#mapgameModal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(27,29,34,0.6); display: none; z-index: 300; align-items: center; justify-content: center; }
+#mapgameModal.active { display: flex; }
+.mapgame-reward-code { margin-top: 12px; background: #f5eddb; border: 1.5px solid #1b1d22; border-radius: 4px; padding: 12px; text-align: center; box-shadow: 3px 3px 0 rgba(27,29,34,0.2); }
+.mapgame-reward-code-label { font-size: 9px; color: #1f5fa8; letter-spacing: 0.15em; margin-bottom: 4px; font-weight: 700; }
+.mapgame-reward-code-value { font-size: 18px; color: #1b1d22; font-weight: 900; letter-spacing: 0.08em; }
+.mapgame-reward-note { font-size: 10px; color: #5a5648; margin-top: 6px; line-height: 1.5; }
+.mapgame-reset-btn { margin-top: 10px; font-size: 11px; color: #1f5fa8; text-align: center; cursor: pointer; text-decoration: underline; }
+
+/* ── MAP GAME CARD (인스타 스토리 스타일 스와이프 카드) ── */
+#mapgameCardModal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(27,29,34,0.75); display: none; z-index: 320; align-items: center; justify-content: center; padding: 24px 16px; }
+#mapgameCardModal.active { display: flex; }
+.mgcard-box { position: relative; width: 100%; max-width: 340px; background: #f5eddb; border: 2px solid #1b1d22; border-radius: 10px; box-shadow: 5px 5px 0 rgba(27,29,34,0.3); overflow: hidden; }
+.mgcard-close { position: absolute; top: 8px; right: 8px; z-index: 5; width: 24px; height: 24px; border-radius: 50%; background: #1b1d22; color: #f5eddb; display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; }
+.mgcard-pages { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.mgcard-pages::-webkit-scrollbar { display: none; }
+.mgcard-page { flex: 0 0 100%; scroll-snap-align: start; min-height: 420px; display: flex; flex-direction: column; padding: 20px 18px 16px; box-sizing: border-box; }
+.mgcard-badge { display: inline-block; align-self: flex-start; background: #1f5fa8; color: #f5eddb; font-size: 9px; font-weight: 800; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 3px; margin-bottom: 10px; }
+.mgcard-logo-wrap { width: 100%; aspect-ratio: 4/3; border-radius: 6px; overflow: hidden; border: 1.5px solid #1b1d22; margin-bottom: 14px; background: #fff; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box; }
+.mgcard-logo-wrap img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.mgcard-name { font-size: 18px; font-weight: 900; color: #1b1d22; margin-bottom: 3px; }
+.mgcard-category { font-size: 10.5px; color: #1f5fa8; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 10px; }
+.mgcard-tagline { font-size: 11.5px; color: #1b1d22; font-weight: 700; margin-bottom: 8px; line-height: 1.5; }
+.mgcard-desc { font-size: 11.5px; color: #4a4638; line-height: 1.7; }
+.mgcard-menu-title { font-size: 12px; font-weight: 900; color: #1b1d22; margin-bottom: 12px; }
+.mgcard-menu-title span { color: #1f5fa8; }
+.mgcard-menu-item { border-top: 1px dashed #c9bd9c; padding: 10px 0; }
+.mgcard-menu-item:first-of-type { border-top: none; }
+.mgcard-menu-name { font-size: 12.5px; font-weight: 800; color: #1b1d22; margin-bottom: 3px; }
+.mgcard-menu-note { font-size: 10.5px; color: #5a5648; line-height: 1.5; }
+.mgcard-info-title { font-size: 12px; font-weight: 900; color: #1b1d22; margin-bottom: 14px; }
+.mgcard-info-row { display: flex; align-items: flex-start; gap: 8px; font-size: 11px; color: #1b1d22; margin-bottom: 10px; line-height: 1.5; }
+.mgcard-info-row b { color: #1f5fa8; flex-shrink: 0; font-size: 9.5px; letter-spacing: 0.04em; }
+.mgcard-info-row a { color: #1b1d22; text-decoration: underline; }
+.mgcard-note { margin-top: auto; font-size: 10px; color: #1f5fa8; background: rgba(31,95,168,0.08); border: 1px dashed #1f5fa8; border-radius: 4px; padding: 8px 10px; line-height: 1.5; }
+.mgcard-dots { display: flex; justify-content: center; gap: 6px; padding: 10px 0 14px; }
+.mgcard-dot { width: 6px; height: 6px; border-radius: 50%; background: #c9bd9c; transition: background 0.15s ease, transform 0.15s ease; cursor: pointer; }
+.mgcard-dot.active { background: #1f5fa8; transform: scale(1.3); }
 </style>
 </head>
 <body>
@@ -867,6 +937,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
     <div class="cat-btn" onclick="showScreen('helloScreen')" style="background:#0f0f11;border-color:#1a3d7d;">
       <div class="cat-left"><div class="cat-icon" style="font-size:14px;">💙</div><div class="cat-name" style="font-size:12px;color:#4a6090;">Say Hello to Blue Room</div></div>
       <div class="cat-chevron" style="color:#4a6090;">›</div>
+    </div>
+  </div>
+  <div style="width:88%;max-width:860px;margin-top:8px;">
+    <div class="cat-btn" onclick="openMapGame()" style="background:#0f0f11;border-color:#2d5a3d;">
+      <div class="cat-left"><div class="cat-icon" style="font-size:14px;">🕹️</div><div class="cat-name" style="font-size:12px;color:#5fae7a;">수유동 탐험 · 도장 모으기</div></div>
+      <div class="cat-chevron" style="color:#5fae7a;">›</div>
     </div>
   </div>
 </div>
@@ -1105,6 +1181,60 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
   </div>
 </div>
 
+<!-- MAP GAME -->
+<div id="mapGameScreen" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="list-title">수유동 탐험</div>
+  </div>
+  <div class="mapgame-body">
+    <div class="mapgame-stampbar">
+      <div class="mapgame-stamp-label">🍺 방문 도장</div>
+      <div class="mapgame-stamps" id="mapgameStamps"></div>
+      <div class="mapgame-stamp-count" id="mapgameStampCount">0 / 10</div>
+    </div>
+    <div class="mapgame-discoverbar">
+      <span>🔎 탐험 진행률</span>
+      <span id="mapgameDiscoverCount">0 / 7</span>
+    </div>
+    <div class="mapgame-mission" id="mapgameMission"></div>
+    <div class="mapgame-map-wrap">
+      <svg class="mapgame-district" viewBox="0 0 100 177">
+        <path d="M 14,8 L 78,8 L 92,22 L 92,58 L 56,58 L 56,68 L 47,76 L 47,100 L 47,132 L 57,140 L 57,150 L 47,158 L 24,158 L 10,146 L 10,60 L 14,54 Z"></path>
+        <text class="mg-label" x="46" y="6">도봉로</text>
+        <text class="mg-label" x="97" y="40" transform="rotate(90 97 40)">우이천</text>
+        <text class="mg-label" x="46" y="174">수유동</text>
+        <g transform="translate(92,166)">
+          <polygon class="mg-compass" points="0,-4.5 2,1.8 0,0.4 -2,1.8"></polygon>
+          <text class="mg-compass-n" x="0" y="7">N</text>
+        </g>
+      </svg>
+      <svg class="mapgame-roads" id="mapgameRoads" viewBox="0 0 100 177"></svg>
+      <div class="mapgame-pins" id="mapgamePins"></div>
+    </div>
+    <div class="mapgame-hint">지도 위 장소를 눌러 동네를 둘러보세요. 블루룸에 도착하면 방문 도장을 하나 드려요 (하루 1개, 10개 모으면 생맥주 1잔 무료!)</div>
+  </div>
+</div>
+
+<!-- MAP GAME MODAL -->
+<div id="mapgameModal">
+  <div class="option-box" id="mapgameModalBox">
+    <div class="option-title" id="mapgameModalTitle"></div>
+    <div class="option-sub" id="mapgameModalMsg" style="line-height:1.6;"></div>
+    <div id="mapgameModalReward"></div>
+    <div class="option-cancel" onclick="closeMapGameModal()">닫기</div>
+  </div>
+</div>
+
+<!-- MAP GAME CARD MODAL (인스타 스토리 스타일 스와이프 카드) -->
+<div id="mapgameCardModal">
+  <div class="mgcard-box" id="mgCardBox">
+    <div class="mgcard-close" onclick="closeMapGameCard()">✕</div>
+    <div class="mgcard-pages" id="mgCardPages"></div>
+    <div class="mgcard-dots" id="mgCardDots"></div>
+  </div>
+</div>
+
 <!-- SEARCH -->
 <div id="searchScreen" class="screen">
   <div class="search-input-row">
@@ -1147,23 +1277,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
     <div class="back-btn" onclick="goHome()">← Back</div>
     <div class="list-title">Whisky</div>
   </div>
-  <div class="flight-intro" style="flex-shrink:0;margin:12px 24px 0;">
-    <div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin-bottom:6px;padding-left:2px;">위스키 처음이신가요? · 15ml 샘플러 플라이트</div>
-    <div style="padding:2px 16px;background:#1e2028;border:0.5px solid #2a2c34;border-radius:10px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Speyside 입문 3종 <span style="color:#555;font-size:10px;">발베니12y·맥켈란12y·글렌피딕12y</span></div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">17,000</div><div class="monthly-add-btn" id="addFlightSpeyside" style="width:22px;height:22px;font-size:13px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Islay 스모키 3종 <span style="color:#555;font-size:10px;">아드벡10y·보모어12y·라프로익QC</span></div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">16,500</div><div class="monthly-add-btn" id="addFlightIslay" style="width:22px;height:22px;font-size:13px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;">
-      <div style="font-size:12px;color:#b8b4ac;">Bourbon 스무스 3종 <span style="color:#555;font-size:10px;">메이커스마크·우드포드·포로지스</span></div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">11,000</div><div class="monthly-add-btn" id="addFlightBourbon" style="width:22px;height:22px;font-size:13px;">+</div></div>
-    </div>
-    </div>
-  </div>
   <div class="whisky-tabs" id="whiskyTabs"></div>
   <div class="whisky-list" id="whiskyList"></div>
 </div>
@@ -1191,7 +1304,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
       <div class="monthly-set-name">Dinner Set</div>
       <div class="monthly-set-theme">A complete dinner for two</div>
       <div class="monthly-set-items">
-        채끝 버섯 크림 스테이크<br>
+        버섯 크림 스테이크<br>
         명란 새우 오일 파스타<br>
         하우스 와인 2잔
       </div>
@@ -1275,7 +1388,7 @@ const foods = {
     title: 'Mains',
     items: [
       { en: 'Butter Glazed Sirloin Steak', ko: '살치살 스테이크', price: '₩34,000', img: 'mains_bgss.JPG' },
-      { en: 'Mushroom Cream Scaloppine', ko: '채끝 버섯 크림 스테이크', price: '₩34,000', img: 'mains_mcs.JPG' },
+      { en: 'Mushroom Cream Scaloppine', ko: '버섯 크림 스테이크', price: '₩34,000', img: 'mains_mcs.JPG' },
     ]
   },
   plates: {
@@ -1305,7 +1418,7 @@ const foods = {
       { en: 'Vanilla Ice Cream', ko: '바닐라 아이스크림', price: '₩8,000', img: 'c_s_vic.JPG' },
       { en: 'Marlenka Honey Cake', ko: '말렌카 허니케이크', price: '₩8,000', img: 'c_s_mhc.JPG' },
       { en: 'Blueberry Cheese Canapé', ko: '블루베리 치즈 카나페', price: '₩10,000', img: 'c_s_bcc.JPG' },
-      { en: 'Melon & Jamón', ko: '메론 & 하몽', price: '₩13,000', img: 'c_s_m_j.JPG' },
+      { en: 'Melon & Jamón', ko: '메론 & 하몽', price: '₩12,000', img: 'c_s_m_j.JPG' },
       { en: 'Jerky', ko: '육포', price: '₩15,000', img: 'c_s_j.JPG' },
       { en: 'Mini Cup Ramen (Yukgaejang)', ko: '미니 컵라면 (육개장)', price: '₩3,000', img: '', noimg: true },
       { en: 'Mini Cup Ramen (Shin Ramen)', ko: '미니 컵라면 (신라면)', price: '₩3,000', img: '', noimg: true },
@@ -1945,8 +2058,7 @@ const drinksTextData = {
         { name: 'Coca Cola Zero', ko: '제로 코카콜라', vol: '350ml', glass: 3000 },
         { name: 'Cinderella', ko: '신데렐라', glass: 9000 },
         { name: 'Basil Tomato Ade', ko: '바질토마토 에이드', glass: 9000 },
-        { name: 'Melon Soda', ko: '메론소다', glass: 8000 },
-        { name: 'Cream Soda', ko: '크림소다', glass: 8000 },
+        { name: 'Melon Soda / Cream Soda', ko: '메론소다 / 크림소다', glass: 8000 },
         { name: 'Shirley Temple', ko: '셀리 템플', glass: 8000 },
         { name: 'Americano', ko: '아메리카노', glass: 6000 },
         { name: 'Tea - Earl Grey / Rooibos / Peppermint', ko: '차 – 얼그레이 / 루이보스 / 페퍼민트', glass: 6000 },
@@ -2547,6 +2659,412 @@ function showScreen(id) {
 
 function goHome() { showScreen('home'); }
 
+// ── MAP GAME (수유동 탐험 — 지도 위 핀을 눌러 정보를 보고 도장을 모으는 방식) ──
+// 좌표는 네이버 지역검색 API로 조회한 실제 위경도를 수유역 기준 상대 방위·거리로 환산해
+// 13x23 그리드에 축척 압축한 뒤, 지도 위 퍼센트 좌표로 다시 변환해 핀을 배치합니다.
+//  - 쌍문역: 수유역 기준 동쪽 약 820m, 북쪽 약 1200m
+//  - 강북구청사거리: 수유역 기준 동쪽 약 170m, 북쪽 약 200m (스타벅스·다이소 있는 사거리)
+//  - 적호: 수유역 기준 동쪽 약 280m, 북쪽 약 160m (강북구청사거리 바로 근처 요리주점)
+//  - 미아역: 수유역 기준 동쪽 약 60m, 남쪽 약 1270m
+//  - 광산사거리: 수유역 기준 서쪽 약 230m, 북쪽 약 570m (탐나종합어시장·가마치통닭 있는 사거리)
+//  - 자금객잔: 수유역 기준 동쪽 약 540m, 북쪽 약 380m (번동의 유명 중식당)
+//  - BLUE ROOM: 수유역 기준 서쪽 약 240m, 남쪽 약 110m (직선거리 약 260m)
+const MAPGAME_COLS = 13;
+const MAPGAME_ROWS = 23;
+const MAPGAME_ICONS = { bar: '🐾', station: '🚉', restaurant: '🍜', gov: '🏛️', pub: '🍶', market: '🏮' };
+// labelDir: 라벨 태그를 핀에서 얼마나/어느 방향으로 띄울지 (월드 좌표 단위) — 랜드마크가
+// 좁은 반경에 몰려있어서 라벨끼리 겹치지 않도록 방향을 하나하나 수동으로 잡았습니다.
+const MAPGAME_LANDMARKS = [
+  { id: 'blueroom', name: 'BLUE ROOM', x: 2, y: 12, kind: 'bar', msg: '', final: true, labelDir: [-4, -13] },
+  { id: 'ssangmun', name: '쌍문역', x: 10, y: 2, kind: 'station', msg: '쌍문역 도착! 여기서부터 도봉로를 따라 남쪽으로 쭉 내려가면 다 연결돼요.', final: false, labelDir: [8, -4] },
+  { id: 'jageum', name: '자금객잔', x: 8, y: 8, kind: 'restaurant', msg: '자금객잔 — 번동에서 유명한 중식당이에요. 여기서 군침 한 번 흘리고 가요.', final: false, labelDir: [13, 1],
+    card: {
+      logo: 'jageum_logo.png',
+      category: '중식당 · 번동',
+      tagline: '수유동에서 제대로 차려 먹고 싶은 날 믿고 가는 곳',
+      desc: '고량주 30여 종을 갖춘 정통 중식당이에요. 마라샹궈와 훠궈부터 오마카세 스타일 코스까지 갖춰져 있어서, 그냥 한 끼가 아니라 각 잡고 먹고 싶은 날 딱이에요.',
+      menu: [
+        { name: '해산물 마라샹궈', note: '얼큰하고 깊은 국물, 매운맛 조절도 가능해요' },
+        { name: '훠궈 2인 세트', note: '진하게 우린 육수로 둘이 배부르게 먹기 좋아요' },
+        { name: '연태하이볼', note: '고량주 베이스라 부담 없이 달달, 첫 잔으로 딱이에요' },
+      ],
+      instagram: 'Jagum_suyu',
+      address: '서울 강북구 도봉로98길 33',
+      note: '네이버 예약하고 가면 웰컴주도 줘요',
+    } },
+  { id: 'gwanbuk', name: '강북구청사거리', x: 5, y: 9, kind: 'gov', msg: '강북구청사거리 — 스타벅스·다이소가 있는 동네 중심가, 수유역이랑 코앞이에요.', final: false, labelDir: [-2, -12] },
+  { id: 'jeokho', name: '적호', x: 6, y: 10, kind: 'pub', msg: '적호 — 강북구청사거리 바로 옆 요리주점이에요. 여기서 한 잔 더 땡길 수도 있죠.', final: false, labelDir: [13, 5],
+    card: {
+      logo: 'jeokho_logo.jpg',
+      category: '요리주점 · 번동',
+      tagline: '테이블 4개, 조용한 골목의 프라이빗 술집',
+      desc: '적호(適好) — "적당히 알맞고 좋은 주점"이라는 이름 뜻 그대로예요. 시끌벅적하지 않고 아늑해서, 편하게 오래 앉아있고 싶을 때 가기 좋아요.',
+      menu: [
+        { name: '쇼가야키(생강구이)', note: '매콤 짭짤한 향이 확 올라오는 안주계 에이스' },
+        { name: '수제 감자칩', note: '직접 튀겨서 바삭함이 다름, 맥주 안주로 최고예요' },
+      ],
+      instagram: 'jeokho_86',
+      address: '서울 강북구 한천로132길 6, 1층',
+      note: '테이블이 4개뿐이라 여유 있게 가는 걸 추천해요',
+    } },
+  { id: 'suyu', name: '수유(강북구청)역', x: 4, y: 11, kind: 'station', msg: '수유역 도착! 여기서 골목 하나만 들어가면 블루룸이에요.', final: false, labelDir: [-13, 5] },
+  { id: 'gwangsan', name: '광산사거리', x: 2, y: 7, kind: 'market', msg: '광산사거리 — 탐나종합어시장·가마치통닭이 있는 먹자골목이에요.', final: false, labelDir: [2, -12] },
+  { id: 'mia', name: '미아역', x: 4, y: 21, kind: 'station', msg: '미아역까지 내려왔어요! 이제 다시 블루룸 쪽으로 돌아가봐요.', final: false, labelDir: [13, 0] },
+];
+// 실제 랜드마크 사이의 대략적인 연결 관계 — 지도 위에 얇은 점선으로 이어서 "동네가 이렇게 연결돼있다"는
+// 감각만 살리는 용도 (실제 도로 벡터 데이터까지는 이 환경에서 불러올 수 없어 직선으로 단순화했습니다)
+const MAPGAME_ROAD_CONNECTIONS = [
+  ['ssangmun', 'jageum'], ['jageum', 'gwanbuk'], ['gwanbuk', 'jeokho'], ['gwanbuk', 'suyu'],
+  ['suyu', 'blueroom'], ['suyu', 'gwangsan'], ['suyu', 'mia'],
+];
+const MAPGAME_REWARD_WORDS = ['미드나잇','스모키','벨벳','문라이트','앰버','스타더스트','네온','올리브'];
+
+// Google Apps Script 웹앱 URL을 여기에 붙여넣으면 휴대폰 번호 기반 적립(기기 무관)으로 자동 전환됩니다.
+// 비워두면 지금처럼 이 기기 브라우저에만 저장되는 방식으로 동작해요. (설정 방법은 SETUP_STAMPS.md 참고)
+const MAPGAME_BACKEND_URL = '';
+let mapGamePhone = localStorage.getItem('br_phone') || null;
+
+// 지도 위 핀 렌더링 + 도로 점선 + 탐험 진행률/오늘의 미션
+
+let mapGameDiscovered = JSON.parse(localStorage.getItem('br_discovered') || '[]');
+
+function mapGameTodayMissionId() {
+  const others = MAPGAME_LANDMARKS.filter(l => !l.final);
+  const d = new Date();
+  const start = new Date(d.getFullYear(), 0, 0);
+  const doy = Math.floor((d - start) / 86400000);
+  return others[doy % others.length].id;
+}
+
+// 지도 좌표계: 가로 0~100, 세로 0~177 (지도 박스의 실제 세로 비율에 맞춘 "월드 좌표") —
+// SVG(도로/지형)는 이 값을 그대로 좌표로 쓰고, HTML 핀은 top%로 쓸 때만 /177로 환산합니다.
+// 월드 좌표계: 가로 0~100, 세로 0~177 (지도 박스의 실제 세로 비율에 맞춤) —
+// SVG(도로/지형)는 이 값을 그대로 좌표로 쓰고, HTML 요소는 top%로 쓸 때만 /177로 환산합니다.
+function mapGameWorldPos(l) {
+  return { x: (l.x / (MAPGAME_COLS - 1)) * 76 + 10, y: (l.y / (MAPGAME_ROWS - 1)) * 84 + 8 };
+}
+function mapGameLabelWorldPos(l) {
+  const p = mapGameWorldPos(l);
+  const [dx, dy] = l.labelDir || [0, -13];
+  return { x: p.x + dx, y: p.y + dy };
+}
+function mapGameWorldToCss(w) {
+  return { left: w.x, top: (w.y / 177) * 100 };
+}
+
+function mapGameRenderRoads() {
+  const svg = document.getElementById('mapgameRoads');
+  if (!svg) return;
+  const byId = {};
+  MAPGAME_LANDMARKS.forEach(l => { byId[l.id] = l; });
+  let roadD = '';
+  MAPGAME_ROAD_CONNECTIONS.forEach(([a, b]) => {
+    const A = byId[a], B = byId[b];
+    if (!A || !B) return;
+    const pa = mapGameWorldPos(A), pb = mapGameWorldPos(B);
+    roadD += `M${pa.x},${pa.y} L${pb.x},${pb.y} `;
+  });
+  // 핀(점)과 라벨 태그를 잇는 얇은 리더 라인
+  let leaderD = '';
+  MAPGAME_LANDMARKS.forEach(l => {
+    const p = mapGameWorldPos(l), t = mapGameLabelWorldPos(l);
+    leaderD += `M${p.x},${p.y} L${t.x},${t.y} `;
+  });
+  svg.innerHTML = `<path d="${roadD}" class="mg-road"></path><path d="${leaderD}" class="mg-leader"></path>`;
+}
+
+function mapGameRenderMap() {
+  const wrap = document.getElementById('mapgamePins');
+  if (!wrap) return;
+  const missionId = mapGameTodayMissionId();
+  wrap.innerHTML = '';
+  MAPGAME_LANDMARKS.forEach((l, idx) => {
+    const dotPos = mapGameWorldToCss(mapGameWorldPos(l));
+    const tagPos = mapGameWorldToCss(mapGameLabelWorldPos(l));
+    const visited = mapGameDiscovered.includes(l.id);
+    const isMission = !l.final && l.id === missionId && !visited;
+
+    const dot = document.createElement('div');
+    dot.className = 'mapgame-pin-dot' + (l.final ? ' final' : '') + (visited ? ' visited' : '') + (isMission ? ' mission' : '');
+    dot.style.left = dotPos.left + '%';
+    dot.style.top = dotPos.top + '%';
+    dot.addEventListener('click', () => mapGameOnPinTap(l));
+    wrap.appendChild(dot);
+
+    const tag = document.createElement('div');
+    tag.className = 'mapgame-pin-tag' + (l.final ? ' final' : '');
+    tag.style.left = tagPos.left + '%';
+    tag.style.top = tagPos.top + '%';
+    tag.style.transform = `translate(-50%,-50%) rotate(${idx % 2 === 0 ? -3 : 3}deg)`;
+    const icon = l.final ? '🐾' : (MAPGAME_ICONS[l.kind] || '📍');
+    tag.textContent = `${icon} ${l.name}`;
+    tag.addEventListener('click', () => mapGameOnPinTap(l));
+    wrap.appendChild(tag);
+  });
+  mapGameRenderMission(missionId);
+}
+
+function mapGameRenderMission(missionId) {
+  const el = document.getElementById('mapgameMission');
+  if (!el) return;
+  if (mapGameDiscovered.includes(missionId)) { el.classList.remove('active'); return; }
+  const lm = MAPGAME_LANDMARKS.find(l => l.id === missionId);
+  if (!lm) { el.classList.remove('active'); return; }
+  el.innerHTML = `🔦 <b>오늘의 미션</b> — ${lm.name}을(를) 찾아보세요!`;
+  el.classList.add('active');
+}
+
+function mapGameRenderDiscoverCount() {
+  const el = document.getElementById('mapgameDiscoverCount');
+  if (!el) return;
+  const total = MAPGAME_LANDMARKS.filter(l => !l.final).length;
+  el.textContent = mapGameDiscovered.length + ' / ' + total;
+}
+
+function mapGameOnPinTap(landmark) {
+  if (!mapGameDiscovered.includes(landmark.id)) {
+    mapGameDiscovered.push(landmark.id);
+    localStorage.setItem('br_discovered', JSON.stringify(mapGameDiscovered));
+    mapGameRenderDiscoverCount();
+    mapGameRenderMap();
+  }
+  if (landmark.card) {
+    openMapGameCard(landmark);
+  } else {
+    mapGameShowModal(landmark);
+  }
+}
+
+// 인스타 스토리 스타일 3페이지 스와이프 카드 (로고/설명 → 추천메뉴 → 인스타/주소)
+function mapGameBuildCardPages(landmark) {
+  const c = landmark.card;
+  const menuHtml = c.menu.map(m =>
+    '<div class="mgcard-menu-item"><div class="mgcard-menu-name">' + m.name + '</div><div class="mgcard-menu-note">' + m.note + '</div></div>'
+  ).join('');
+  const page1 =
+    '<div class="mgcard-page">' +
+      '<div class="mgcard-badge">블루룸 픽 · BLUE PICK</div>' +
+      '<div class="mgcard-logo-wrap"><img src="' + c.logo + '" alt="' + landmark.name + '"></div>' +
+      '<div class="mgcard-name">' + landmark.name + '</div>' +
+      '<div class="mgcard-category">' + c.category + '</div>' +
+      '<div class="mgcard-tagline">' + c.tagline + '</div>' +
+      '<div class="mgcard-desc">' + c.desc + '</div>' +
+    '</div>';
+  const page2 =
+    '<div class="mgcard-page">' +
+      '<div class="mgcard-menu-title">블루가 추천하는 <span>메뉴</span></div>' +
+      menuHtml +
+    '</div>';
+  const page3 =
+    '<div class="mgcard-page">' +
+      '<div class="mgcard-info-title">찾아가는 길</div>' +
+      '<div class="mgcard-info-row"><b>INSTA</b><a href="https://instagram.com/' + c.instagram + '" target="_blank" rel="noopener">@' + c.instagram + '</a></div>' +
+      '<div class="mgcard-info-row"><b>주소</b>' + c.address + '</div>' +
+      (c.note ? '<div class="mgcard-note">💬 ' + c.note + '</div>' : '') +
+    '</div>';
+  return page1 + page2 + page3;
+}
+
+function openMapGameCard(landmark) {
+  const pagesEl = document.getElementById('mgCardPages');
+  const dotsEl = document.getElementById('mgCardDots');
+  pagesEl.innerHTML = mapGameBuildCardPages(landmark);
+  pagesEl.scrollLeft = 0;
+  const pageCount = pagesEl.children.length;
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < pageCount; i++) {
+    const d = document.createElement('div');
+    d.className = 'mgcard-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => {
+      pagesEl.scrollTo({ left: pagesEl.clientWidth * i, behavior: 'smooth' });
+    });
+    dotsEl.appendChild(d);
+  }
+  pagesEl.onscroll = () => {
+    const idx = Math.round(pagesEl.scrollLeft / pagesEl.clientWidth);
+    Array.prototype.forEach.call(dotsEl.children, (d, i) => d.classList.toggle('active', i === idx));
+  };
+  // 스와이프가 기본, 좌우 탭으로도 넘어가게 (드래그 시엔 click이 안 붙기 때문에 스크롤과 안 겹침)
+  pagesEl.onclick = (e) => {
+    if (e.target.closest('a')) return;
+    const rect = pagesEl.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const idx = Math.round(pagesEl.scrollLeft / pagesEl.clientWidth);
+    let next = idx;
+    if (x < rect.width * 0.35 && idx > 0) next = idx - 1;
+    else if (x > rect.width * 0.65 && idx < pageCount - 1) next = idx + 1;
+    if (next !== idx) pagesEl.scrollTo({ left: pagesEl.clientWidth * next, behavior: 'smooth' });
+  };
+  document.getElementById('mapgameCardModal').classList.add('active');
+}
+
+function closeMapGameCard() {
+  document.getElementById('mapgameCardModal').classList.remove('active');
+}
+
+function openMapGame() {
+  showScreen('mapGameScreen');
+  mapGameRenderStampBar();
+  mapGameRenderDiscoverCount();
+  mapGameRenderRoads();
+  mapGameRenderMap();
+}
+
+function mapGameRenderDots(stamps) {
+  const wrap = document.getElementById('mapgameStamps');
+  const countEl = document.getElementById('mapgameStampCount');
+  if (!wrap || !countEl) return;
+  wrap.innerHTML = '';
+  for (let i = 0; i < 10; i++) {
+    const d = document.createElement('div');
+    d.className = 'mapgame-stamp-dot' + (i < stamps ? ' filled' : '');
+    wrap.appendChild(d);
+  }
+  countEl.textContent = stamps + ' / 10';
+}
+
+async function mapGameRenderStampBar() {
+  if (MAPGAME_BACKEND_URL && mapGamePhone) {
+    try {
+      const res = await fetch(MAPGAME_BACKEND_URL + '?action=get&phone=' + encodeURIComponent(mapGamePhone));
+      const data = await res.json();
+      mapGameRenderDots(data.count || 0);
+      return;
+    } catch (e) {
+      // 서버 연결 실패 시 마지막으로 알려진 값(로컬 캐시)이라도 보여줌
+    }
+  }
+  const cached = parseInt(localStorage.getItem('br_stamps') || '0', 10);
+  mapGameRenderDots(cached);
+}
+
+function mapGameTodayCode() {
+  const d = new Date();
+  const start = new Date(d.getFullYear(), 0, 0);
+  const doy = Math.floor((d - start) / 86400000);
+  const word = MAPGAME_REWARD_WORDS[doy % MAPGAME_REWARD_WORDS.length];
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return word + '-' + mm + dd;
+}
+
+function mapGameAskPhone() {
+  const input = prompt('방문 도장을 적립하려면 휴대폰 번호를 입력해주세요.\n(다른 기기에서도 같은 번호로 적립 확인이 가능해요)');
+  if (!input) return null;
+  const digits = input.replace(/[^0-9]/g, '');
+  if (digits.length < 9) { alert('휴대폰 번호를 다시 확인해주세요.'); return null; }
+  mapGamePhone = digits;
+  localStorage.setItem('br_phone', digits);
+  return digits;
+}
+
+async function mapGameHandleArrivalLocal() {
+  const todayStr = new Date().toISOString().slice(0, 10);
+  let stamps = parseInt(localStorage.getItem('br_stamps') || '0', 10);
+  const lastDate = localStorage.getItem('br_stamp_date');
+  let msg;
+  if (stamps >= 10) {
+    msg = '도장 10개를 이미 모으셨어요! 아래 리워드 코드를 직원에게 보여주고 초기화해주세요.';
+  } else if (lastDate === todayStr) {
+    msg = '오늘은 이미 방문 도장을 받았어요. 내일 다시 놀러오세요!';
+  } else {
+    stamps += 1;
+    localStorage.setItem('br_stamps', String(stamps));
+    localStorage.setItem('br_stamp_date', todayStr);
+    msg = stamps >= 10 ? '10번째 도장 완성! 아래 리워드 코드를 직원에게 보여주세요 🎉' : '방문 도장을 받았어요! (' + stamps + '/10)';
+  }
+  mapGameRenderDots(stamps);
+  return { msg, stamps };
+}
+
+async function mapGameHandleArrivalRemote() {
+  let phone = mapGamePhone;
+  if (!phone) {
+    phone = mapGameAskPhone();
+    if (!phone) return { msg: '휴대폰 번호 입력을 취소했어요. 도장을 적립하려면 번호가 필요해요.', stamps: null };
+  }
+  try {
+    const res = await fetch(MAPGAME_BACKEND_URL + '?action=stamp&phone=' + encodeURIComponent(phone));
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    localStorage.setItem('br_stamps', String(data.count)); // 오프라인 대비 로컬 캐시
+    let msg;
+    if (data.alreadyToday) {
+      msg = '오늘은 이미 방문 도장을 받았어요. 내일 다시 놀러오세요!';
+    } else if (data.justCompleted) {
+      msg = '10번째 도장 완성! 아래 리워드 코드를 직원에게 보여주세요 🎉';
+    } else if (data.count >= 10) {
+      msg = '도장 10개를 이미 모으셨어요! 아래 리워드 코드를 직원에게 보여주고 초기화해주세요.';
+    } else {
+      msg = '방문 도장을 받았어요! (' + data.count + '/10)';
+    }
+    mapGameRenderDots(data.count);
+    return { msg, stamps: data.count };
+  } catch (e) {
+    return { msg: '서버 연결에 실패했어요. Wi-Fi 상태를 확인하고 다시 시도해주세요.', stamps: null };
+  }
+}
+
+function mapGameHandleArrival() {
+  return MAPGAME_BACKEND_URL ? mapGameHandleArrivalRemote() : mapGameHandleArrivalLocal();
+}
+
+async function mapGameShowModal(landmark) {
+  const rewardEl = document.getElementById('mapgameModalReward');
+  rewardEl.innerHTML = '';
+  document.getElementById('mapgameModalTitle').textContent = landmark.name;
+  let msg = landmark.msg;
+  if (landmark.final) {
+    document.getElementById('mapgameModalMsg').textContent = '적립 중...';
+    document.getElementById('mapgameModal').classList.add('active');
+    const result = await mapGameHandleArrival();
+    msg = result.msg;
+    if (result.stamps !== null && result.stamps >= 10) {
+      const code = mapGameTodayCode();
+      const now = new Date();
+      rewardEl.innerHTML =
+        '<div class="mapgame-reward-code">' +
+          '<div class="mapgame-reward-code-label">REWARD CODE · 생맥주 1잔 무료</div>' +
+          '<div class="mapgame-reward-code-value">' + code + '</div>' +
+          '<div class="mapgame-reward-note">오늘(' + (now.getMonth() + 1) + '월 ' + now.getDate() + '일)만 유효 · 직원에게 이 화면을 보여주세요</div>' +
+        '</div>' +
+        '<div class="mapgame-reset-btn" onclick="mapGameResetStamps()">직원 확인 완료 · 도장 초기화</div>';
+    }
+  }
+  document.getElementById('mapgameModalTitle').textContent = landmark.name;
+  document.getElementById('mapgameModalMsg').textContent = msg;
+  document.getElementById('mapgameModal').classList.add('active');
+}
+
+function closeMapGameModal() {
+  document.getElementById('mapgameModal').classList.remove('active');
+}
+
+async function mapGameResetStamps() {
+  if (MAPGAME_BACKEND_URL && mapGamePhone) {
+    const pin = prompt('직원 확인 PIN을 입력해주세요');
+    if (!pin) return;
+    try {
+      const res = await fetch(MAPGAME_BACKEND_URL + '?action=reset&phone=' + encodeURIComponent(mapGamePhone) + '&pin=' + encodeURIComponent(pin));
+      const data = await res.json();
+      if (data.ok) {
+        localStorage.setItem('br_stamps', '0');
+        mapGameRenderStampBar();
+        closeMapGameModal();
+        alert('초기화 완료!');
+      } else {
+        alert('PIN이 올바르지 않거나 오류가 발생했어요.');
+      }
+    } catch (e) {
+      alert('서버 연결에 실패했어요.');
+    }
+  } else if (confirm('직원 확인 후 도장을 초기화할까요?')) {
+    localStorage.setItem('br_stamps', '0');
+    mapGameRenderStampBar();
+    closeMapGameModal();
+  }
+}
+
 function initMonthlyButtons() {
   const addRisotto = document.getElementById('addRisotto');
   if (addRisotto) addRisotto.addEventListener('click', () => {
@@ -2558,23 +3076,11 @@ function initMonthlyButtons() {
   });
   const addDinnerSet = document.getElementById('addDinnerSet');
   if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
-    addToCart('Dinner Set', '채끝+명란파스타+하우스와인2잔', '₩68,000', 68000);
+    addToCart('Dinner Set', '버섯스테이크+명란파스타+하우스와인2잔', '₩68,000', 68000);
   });
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
     addToCart('Pairing Set', '부르스케타+소뮈르 에르보쥬', '₩93,000', 93000);
-  });
-  const addFlightSpeyside = document.getElementById('addFlightSpeyside');
-  if (addFlightSpeyside) addFlightSpeyside.addEventListener('click', () => {
-    addToCart('Speyside Starter Flight', '발베니12y·맥켈란12y·글렌피딕12y (15ml×3)', '₩17,000', 17000);
-  });
-  const addFlightIslay = document.getElementById('addFlightIslay');
-  if (addFlightIslay) addFlightIslay.addEventListener('click', () => {
-    addToCart('Islay Smoky Flight', '아드벡10y·보모어12y·라프로익QC (15ml×3)', '₩16,500', 16500);
-  });
-  const addFlightBourbon = document.getElementById('addFlightBourbon');
-  if (addFlightBourbon) addFlightBourbon.addEventListener('click', () => {
-    addToCart('Bourbon Smooth Flight', '메이커스마크·우드포드·포로지스 (15ml×3)', '₩11,000', 11000);
   });
 }
 document.addEventListener('DOMContentLoaded', initMonthlyButtons);
