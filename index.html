@@ -1277,6 +1277,27 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1e22; f
     <div class="back-btn" onclick="goHome()">← Back</div>
     <div class="list-title">Whisky</div>
   </div>
+  <div style="flex-shrink:0;margin:12px 24px 0;">
+    <div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin-bottom:6px;padding-left:2px;">위스키 처음이신가요? · 15ml 샘플러 플라이트</div>
+    <div style="padding:2px 16px;background:#1e2028;border:0.5px solid #2a2c34;border-radius:10px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
+      <div style="font-size:12px;color:#b8b4ac;">Speyside 입문 3종 <span style="color:#555;font-size:10px;">발베니12y DoubleWood·맥켈란12y Double Cask·글렌피딕12y</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">17,000</div><div class="monthly-add-btn" id="addFlightSpeyside" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
+      <div style="font-size:12px;color:#b8b4ac;">Islay 스모키 3종 <span style="color:#555;font-size:10px;">아드벡10y·보모어12y·라프로익QC</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">16,500</div><div class="monthly-add-btn" id="addFlightIslay" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
+      <div style="font-size:12px;color:#b8b4ac;">Bourbon 스무스 3종 <span style="color:#555;font-size:10px;">메이커스마크·우드포드·포로지스</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">11,000</div><div class="monthly-add-btn" id="addFlightBourbon" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;">
+      <div style="font-size:12px;color:#b8b4ac;">Korean 기원 3종 <span style="color:#555;font-size:10px;">이글·유니콘·타이거</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">17,500</div><div class="monthly-add-btn" id="addFlightKorean" style="width:22px;height:22px;font-size:13px;">+</div></div>
+    </div>
+    </div>
+  </div>
   <div class="whisky-tabs" id="whiskyTabs"></div>
   <div class="whisky-list" id="whiskyList"></div>
 </div>
@@ -3077,6 +3098,22 @@ function initMonthlyButtons() {
   const addDinnerSet = document.getElementById('addDinnerSet');
   if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
     addToCart('Dinner Set', '버섯스테이크+명란파스타+하우스와인2잔', '₩68,000', 68000);
+  });
+  const addFlightSpeyside = document.getElementById('addFlightSpeyside');
+  if (addFlightSpeyside) addFlightSpeyside.addEventListener('click', () => {
+    addToCart('Speyside Starter Flight', '발베니12y DoubleWood·맥켈란12y Double Cask·글렌피딕12y (15ml×3)', '₩17,000', 17000);
+  });
+  const addFlightIslay = document.getElementById('addFlightIslay');
+  if (addFlightIslay) addFlightIslay.addEventListener('click', () => {
+    addToCart('Islay Smoky Flight', '아드벡10y·보모어12y·라프로익QC (15ml×3)', '₩16,500', 16500);
+  });
+  const addFlightBourbon = document.getElementById('addFlightBourbon');
+  if (addFlightBourbon) addFlightBourbon.addEventListener('click', () => {
+    addToCart('Bourbon Smooth Flight', '메이커스마크·우드포드·포로지스 (15ml×3)', '₩11,000', 11000);
+  });
+  const addFlightKorean = document.getElementById('addFlightKorean');
+  if (addFlightKorean) addFlightKorean.addEventListener('click', () => {
+    addToCart('Korean Ki One Flight', '이글·유니콘·타이거 (15ml×3)', '₩17,500', 17500);
   });
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
