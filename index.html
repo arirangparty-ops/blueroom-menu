@@ -94,7 +94,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 }
 .menu-card:active { opacity: 0.65; }
 .menu-clickable { cursor: pointer; flex: 1; min-width: 0; }
-.menu-thumb-wrap { position: relative; width: 100%; height: 0; padding-top: 75%; background: #1a1b20; cursor: pointer; border: 0.5px solid #2a2c32; overflow: hidden; }
+.menu-thumb-wrap { position: relative; width: 100%; height: 0; padding-top: 100%; background: #1a1b20; cursor: pointer; border: 0.5px solid #2a2c32; overflow: hidden; }
 .menu-thumb { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .menu-info-row { display: flex; align-items: center; padding: 9px 0 0; cursor: pointer; }
 .menu-info-row > * + * { margin-left: 8px; }
@@ -144,6 +144,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 
 
 /* ── WHISKY ── */
+.whisky-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
 .whisky-tabs {
   display: flex;
   overflow-x: auto;
@@ -177,8 +183,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   font-weight: 600;
 }
 .whisky-list {
-  flex: 1;
-  overflow-y: auto;
   padding: 18px 40px 80px;
   background: #15161a;
 }
@@ -1194,7 +1198,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     <div class="back-btn" onclick="goHome()">← Back</div>
     <div class="list-title">Whisky</div>
   </div>
-  <div style="flex-shrink:0;margin:12px 24px 0;">
+  <div class="whisky-scroll">
+  <div style="margin:12px 24px 0;">
     <div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin-bottom:6px;padding-left:2px;">위스키 처음이신가요? · 15ml 샘플러 플라이트</div>
     <div style="padding:2px 0;background:transparent;border-top:0.5px solid #2a2c32;border-bottom:0.5px solid #2a2c32;border-radius:0;">
     <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
@@ -1225,6 +1230,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   </div>
   <div class="whisky-tabs" id="whiskyTabs"></div>
   <div class="whisky-list" id="whiskyList"></div>
+  </div>
 </div>
 
 <!-- MONTHLY -->
@@ -2692,7 +2698,7 @@ function showFoodCategory(cat) {
     } else {
       card.innerHTML = `
         <div class="menu-thumb-wrap">
-          <img class="menu-thumb" src="${item.img}" alt="${item.ko}" onerror="this.style.visibility='hidden'">
+          <img class="menu-thumb" src="thumbs/${item.img}" alt="${item.ko}" onerror="this.src='${item.img}'">
         </div>
         <div class="menu-info-row menu-add-area">
           <div class="menu-info">
