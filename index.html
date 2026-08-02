@@ -45,7 +45,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 .home-sections { width: 88%; max-width: 860px; display: flex; margin-bottom: 4px; }
 .home-sections > * + * { margin-left: 28px; }
 .home-section { flex: 1; }
-.section-label { font-size: 10px; letter-spacing: 0.32em; color: #55575f; text-transform: uppercase; margin-bottom: 4px; padding-left: 2px; font-weight: 600; }
+.section-label { font-size: 10px; letter-spacing: 0.32em; color: #6b8fc4; text-transform: uppercase; margin-bottom: 4px; padding-left: 2px; font-weight: 600; }
 .cat-grid { display: flex; flex-direction: column; }
 .cat-btn {
   background: transparent;
@@ -1215,16 +1215,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">19,000</div><div class="monthly-add-btn" id="addFlightBourbon" style="width:22px;height:22px;font-size:13px;margin-left:8px;">+</div></div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Korean 기원 3종 <span style="color:#555;font-size:10px;">이글·유니콘·타이거</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">17,500</div><div class="monthly-add-btn" id="addFlightKorean" style="width:22px;height:22px;font-size:13px;margin-left:8px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
       <div style="font-size:12px;color:#b8b4ac;">Sherry·Peat·Bourbon 3종 <span style="color:#555;font-size:10px;">맥켈란12y 셰리오크·아드벡10y·와일드터키 레어브리드</span></div>
       <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">18,000</div><div class="monthly-add-btn" id="addFlightSherryPeatBourbon" style="width:22px;height:22px;font-size:13px;margin-left:8px;">+</div></div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;">
-      <div style="font-size:12px;color:#b8b4ac;">Balvenie 샘플러 <span style="color:#555;font-size:10px;">12y·12y Single Barrel·14y Caribbean Cask</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">27,000</div><div class="monthly-add-btn" id="addFlightBalvenie" style="width:22px;height:22px;font-size:13px;margin-left:8px;">+</div></div>
+      <div style="font-size:12px;color:#b8b4ac;">Korean 기원 3종 <span class="monthly-set-badge" style="margin-left:4px;">MADE IN KOREA</span><br><span style="color:#555;font-size:10px;">이글·유니콘·타이거</span></div>
+      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">17,500</div><div class="monthly-add-btn" id="addFlightKorean" style="width:22px;height:22px;font-size:13px;margin-left:8px;">+</div></div>
     </div>
     </div>
   </div>
@@ -2632,10 +2628,6 @@ function initMonthlyButtons() {
   const addFlightSherryPeatBourbon = document.getElementById('addFlightSherryPeatBourbon');
   if (addFlightSherryPeatBourbon) addFlightSherryPeatBourbon.addEventListener('click', () => {
     addToCart('Sherry · Peat · Bourbon Flight', '맥켈란12y 셰리오크·아드벡10y·와일드터키 레어브리드 (15ml×3)', '₩18,000', 18000);
-  });
-  const addFlightBalvenie = document.getElementById('addFlightBalvenie');
-  if (addFlightBalvenie) addFlightBalvenie.addEventListener('click', () => {
-    addToCart('Balvenie Sampler', '12y·12y Single Barrel·14y Caribbean Cask (15ml×3)', '₩27,000', 27000);
   });
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
