@@ -93,15 +93,28 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   transition: opacity 0.15s;
 }
 .menu-card:active { opacity: 0.65; }
+.menu-category-header {
+  grid-column: 1 / -1;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.22em; color: #6b8fc4;
+  text-transform: uppercase;
+  padding-bottom: 8px; margin-top: 6px;
+  border-bottom: 0.5px solid #2a2c32;
+  cursor: default;
+}
+.menu-category-header:first-child { margin-top: 0; }
 .menu-clickable { cursor: pointer; flex: 1; min-width: 0; }
 .menu-thumb-wrap { position: relative; width: 100%; height: 0; padding-top: 100%; background: #1a1b20; cursor: pointer; border: 0.5px solid #2a2c32; overflow: hidden; }
 .menu-thumb { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.menu-info-row { display: flex; align-items: center; padding: 9px 0 0; cursor: pointer; }
+.menu-info-row { display: flex; align-items: flex-end; padding: 9px 0 0; cursor: pointer; }
 .menu-info-row > * + * { margin-left: 8px; }
 .menu-info-row:active { opacity: 0.7; }
 .menu-info { min-width: 0; flex: 1; }
 .menu-en { font-size: 10.5px; color: #5a5c64; letter-spacing: 0.04em; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .menu-ko { font-size: 13px; color: #c8c4bc; font-weight: 600; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.menu-desc-preview {
+  font-size: 10.5px; color: #6a6c74; line-height: 1.45; margin-bottom: 6px;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
 .menu-price { font-size: 12px; color: #6a6c74; }
 .menu-price-original { font-size: 9px; color: #444; text-decoration: line-through; margin-bottom: 1px; }
 .menu-price-discounted { color: #6b9ae8; font-weight: 600; }
@@ -308,6 +321,32 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 .dtext-single-price { font-size: 14px; color: #b8b4ac; padding-top: 1px; }
 .dtext-price-original-strike { font-size: 9px; color: #555; text-decoration: line-through; margin-bottom: 1px; }
 .dtext-price-discounted { color: #6b9ae8; font-weight: 600; }
+
+
+/* ── FOOD DETAIL ── */
+.food-detail-scroll { flex: 1; overflow-y: auto; background: #15161a; }
+.food-detail-photo { position: relative; width: 100%; height: 0; padding-top: 125%; background: #1a1b20; overflow: hidden; }
+.food-detail-photo img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.food-detail-info { padding: 20px 24px 0; }
+.food-detail-en { font-size: 11px; color: #5a5c64; letter-spacing: 0.06em; margin-bottom: 4px; }
+.food-detail-ko { font-size: 19px; font-weight: 600; color: #ddd8d0; letter-spacing: 0.02em; margin-bottom: 14px; }
+.food-detail-price-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 0.5px solid #24262c; }
+.food-detail-price-original { font-size: 11px; color: #444; text-decoration: line-through; margin-right: 8px; }
+.food-detail-price { font-size: 16px; color: #6b9ae8; font-weight: 600; }
+.food-detail-add-btn {
+  width: 30px; height: 30px; flex-shrink: 0;
+  background: transparent; border: 1px solid #4a7cc4; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #6b9ae8; font-size: 16px; cursor: pointer;
+}
+.food-detail-add-btn:active { opacity: 0.5; }
+.food-detail-desc { padding: 18px 24px; font-size: 13px; line-height: 1.7; color: #a8a4a0; border-bottom: 0.5px solid #24262c; }
+.food-detail-pairing { padding: 4px 24px 40px; }
+.food-detail-pairing-row { display: flex; padding: 10px 0; border-bottom: 0.5px solid #24262c; }
+.food-detail-pairing-row:last-child { border-bottom: none; }
+.food-detail-pairing-label { width: 66px; flex-shrink: 0; font-size: 10px; letter-spacing: 0.1em; color: #55575f; text-transform: uppercase; padding-top: 1px; }
+.food-detail-pairing-value { font-size: 12.5px; color: #b8b4ac; line-height: 1.5; }
+.food-detail-pairing-value > div + div { margin-top: 3px; }
 
 
 /* ── SEARCH ── */
@@ -781,6 +820,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   }
   .menu-en { font-size: 11px; }
   .menu-ko { font-size: 13px; }
+  .menu-desc-preview { font-size: 10px; }
   .menu-price { font-size: 12px; }
 
   /* 위스키 탭 */
@@ -790,6 +830,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   .whisky-list { padding: 16px 16px 80px; }
   .whisky-brand-name { font-size: 15px; }
   .whisky-ctg { font-size: 13px; }
+
+  /* 푸드 상세 */
+  .food-detail-photo { padding-top: 100%; }
+  .food-detail-info { padding: 16px 18px 0; }
+  .food-detail-desc { padding: 16px 18px; }
+  .food-detail-pairing { padding: 4px 18px 40px; }
   .whisky-price { font-size: 13px; }
   .whisky-price-col { min-width: 60px; }
 
@@ -1288,16 +1334,16 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 요리</div>
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <div>
-          <div class="monthly-simple-name">White Mushroom Cream Risotto</div>
-          <div class="monthly-simple-sub">양송이 크림 리조또</div>
+          <div class="monthly-simple-name">Carbonara</div>
+          <div class="monthly-simple-sub">까르보나라</div>
         </div>
         <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
           <div>
-            <div class="monthly-simple-original">₩24,000</div>
-            <div class="monthly-simple-special">₩22,000</div>
+            <div class="monthly-simple-original">₩18,000</div>
+            <div class="monthly-simple-special">₩16,000</div>
             <div class="monthly-simple-badge">August Only</div>
           </div>
-          <div class="monthly-add-btn" id="addRisotto" style="margin-left:10px;">+</div>
+          <div class="monthly-add-btn" id="addCarbonara" style="margin-left:10px;">+</div>
         </div>
       </div>
     </div>
@@ -1306,20 +1352,44 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 한 잔</div>
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <div>
-          <div class="monthly-simple-name">Guinness Microdraught (生)</div>
-          <div class="monthly-simple-sub">기네스 마이크로 드래프트</div>
+          <div class="monthly-simple-name">Hendrick's GinTonic</div>
+          <div class="monthly-simple-sub">헨드릭스 진토닉</div>
         </div>
         <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
           <div>
-            <div class="monthly-simple-original">₩14,000</div>
-            <div class="monthly-simple-special">₩12,000</div>
+            <div class="monthly-simple-original">₩12,000</div>
+            <div class="monthly-simple-special">₩10,000</div>
             <div class="monthly-simple-badge">August Only</div>
           </div>
-          <div class="monthly-add-btn" id="addGuinness" style="margin-left:10px;">+</div>
+          <div class="monthly-add-btn" id="addHendricks" style="margin-left:10px;">+</div>
         </div>
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- FOOD DETAIL -->
+<div id="foodDetailScreen" class="screen">
+  <div class="list-header">
+    <div class="back-btn" onclick="backFromFoodDetail()">← Back</div>
+    <div class="list-title" id="foodDetailTitle"></div>
+  </div>
+  <div class="food-detail-scroll">
+    <div class="food-detail-photo" id="foodDetailPhotoWrap"></div>
+    <div class="food-detail-info">
+      <div class="food-detail-en" id="foodDetailEn"></div>
+      <div class="food-detail-ko" id="foodDetailKo"></div>
+      <div class="food-detail-price-row">
+        <div>
+          <span class="food-detail-price-original" id="foodDetailPriceOriginal" style="display:none;"></span>
+          <span class="food-detail-price" id="foodDetailPrice"></span>
+        </div>
+        <div class="food-detail-add-btn" id="foodDetailAddBtn">+</div>
+      </div>
+    </div>
+    <div class="food-detail-desc" id="foodDetailDesc" style="display:none;"></div>
+    <div class="food-detail-pairing" id="foodDetailPairing"></div>
   </div>
 </div>
 
@@ -1335,39 +1405,73 @@ const foods = {
   mains: {
     title: 'Mains',
     items: [
-      { en: 'Butter Glazed Sirloin Steak', ko: '살치살 스테이크', price: '₩34,000', img: 'mains_bgss.JPG' },
-      { en: 'Mushroom Cream Scaloppine', ko: '버섯 크림 스테이크', price: '₩36,000', img: 'mains_mcs.JPG' },
+      { en: 'Butter Glazed Sirloin Steak', ko: '살치살 스테이크', price: '₩34,000', img: 'mains_bgss.JPG',
+        desc: '육향 가득한 살치살과 브라운 버터로 완성한 매시드 포테이토, 앤초비 버터로 깊이를 더한 시그니처 스테이크',
+        pairing: { wine: ["레드 · 샤토 르 부르디요 (Château Le Bourdillot)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+      { en: 'Mushroom Cream Scaloppine', ko: '버섯 크림 스테이크', price: '₩36,000', img: 'mains_mcs.JPG',
+        desc: '살치살을 이탈리아식 스칼로피네로 구워내고, 다양한 버섯이 어우러진 진한 향의 크림소스로 입안 가득 깊은 풍미를 채워주는 블루룸의 메인 요리',
+        pairing: { wine: ["레드 · 샤토 르 부르디요 (Château Le Bourdillot)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["쉐리 위스키 (Sherry Whiskey)"] } },
     ]
   },
   plates: {
     title: 'Plates',
     items: [
-      { en: 'White Mushroom Cream Risotto', ko: '양송이 크림 리조또', price: '₩22,000', originalPrice: '₩24,000', img: 'plates_wmcr.JPG' },
-      { en: 'Bruschetta', ko: '부르스케타', price: '₩20,000', img: 'plates_b.JPG' },
-      { en: 'Roasted Napa Steak', ko: '알배추 스테이크', price: '₩15,000', img: 'plates_rns.JPG' },
+      { en: 'White Mushroom Cream Risotto', ko: '양송이 크림 리조또', price: '₩24,000', img: 'plates_wmcr.JPG',
+        desc: '잘 구운 스테이크와 함께 즐기는 부드럽고 진한 리조또, 그리고 향을 더해주는 화이트 머쉬룸으로 완성한 부드러운 풍미',
+        pairing: { wine: ["레드 · 르뷔우 트루폴리에 (Red / Le Vieux Truffolier)"], cocktail: ["아마레토 사워 (Amaretto Sour)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["버팔로 트레이스 하이볼 (Buffalo Trace Highball)"] } },
+      { en: 'Bruschetta', ko: '부르스케타', price: '₩20,000', img: 'plates_b.JPG',
+        desc: '바삭하게 구운 호밀빵 위에 딜 크림치즈를 바르고, 신선한 아보카도와 그라브락스 연어를 올린 오픈 샌드위치. 토마토와 적양파가 산뜻함을 더하고, 딜과 엑스트라버진 올리브오일, 레몬이 마무리하는 가볍지만 깊은 풍미의 시그니처 브루스케타.',
+        pairing: { wine: ["오이스터 베이 소비뇽 블랑 (Oyster Bay Sauvignon Blanc)"], cocktail: ["진 토닉 (Gin Tonic)"], whisky: ["글렌모렌지 더 오리지널 12y (Glenmorangie The Original 12y)"], highball: ["산토리 하이볼 (Suntory Highball)"] } },
+      { en: 'Roasted Napa Steak', ko: '알배추 스테이크', price: '₩15,000', img: 'plates_rns.JPG',
+        desc: '국내산 남도 알배추를 은은하게 구워 풍미를 끌어올리고, 직접 만든 진한 드레싱과 바삭한 베이컨을 더한 이탈리안 스타일의 배추 스테이크 샐러드.',
+        pairing: { wine: ["오이스터 베이 소비뇽 블랑 (Oyster Bay Sauvignon Blanc)"], cocktail: ["아페롤 스프리츠 (Aperol Spritz)"], whisky: ["글렌피딕 15 (Glenfiddich 15)"], highball: ["히비키 하이볼 (Hibiki Highball)"] } },
     ]
   },
   pasta: {
     title: 'Pasta',
     items: [
-      { en: 'Perilla Oil & Seaweed Cold Pasta', ko: '들기름 감태 냉파스타', price: '₩23,000', img: 'pasta_poscp.JPG' },
-      { en: 'Garlic Butter Anchovy Pasta', ko: '갈릭 버터 엔초비 파스타', price: '₩21,000', img: 'pasta_gbap.JPG' },
-      { en: 'Mentaiko Shrimp Oil Pasta', ko: '명란 새우 오일 파스타', price: '₩19,000', img: 'pasta_msop.JPG' },
-      { en: 'Zucchini Basil Pasta', ko: '애호박 바질 파스타', price: '₩18,000', img: 'pasta_zbp.JPG' },
+      { en: 'Carbonara', ko: '까르보나라', price: '₩16,000', originalPrice: '₩18,000', img: 'pasta_ca.JPG',
+        desc: '노른자와 그라나파다노 치즈로 진하게 유화시킨 크림에 바삭하게 구운 베이컨을 더하고, 후추와 페퍼론치노로 알싸함을 살린 클래식 까르보나라',
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["아마레토 사워 (Amaretto Sour)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+      { en: 'Garlic Butter Anchovy Pasta', ko: '갈릭 버터 엔초비 파스타', price: '₩21,000', img: 'pasta_gbap.JPG',
+        desc: '마늘칩과 엔초비를 노릇하게 볶아 깊은 감칠맛을 끌어올리고, 버터를 넉넉히 더해 완성한 갈릭버터 파스타',
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["드라이 마티니 (Dry Martini)"], whisky: ["버번 위스키 (Bourbon Whisky)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+      { en: 'Mentaiko Shrimp Oil Pasta', ko: '명란 새우 오일 파스타', price: '₩19,000', img: 'pasta_msop.JPG',
+        desc: '탱글한 새우와 짭조름한 명란, 향긋한 재료가 오일에 어우러진 감칠맛 가득한 파스타',
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
+      { en: 'Zucchini Basil Pasta', ko: '애호박 바질 파스타', price: '₩18,000', img: 'pasta_zbp.JPG',
+        desc: '애호박과 신선한 바질이 어우러진 가볍고 신선하면서도 감칠맛이 터지는 풍미의 파스타',
+        pairing: { wine: ["화이트 · 소뮈르 에르보쥬 (White / Saumur Domaine Des Herbauges)"], cocktail: ["프레시 라임 모히토 (Fresh Lime Mojito)"], whisky: ["아이리시 위스키 (Irish Whiskey)"], highball: ["글렌모렌지 하이볼 (Glenmorangie Highball)"] } },
     ]
   },
 
   cheese: {
     title: 'Cheese & Snacks',
     items: [
-      { en: 'Herb Baked Brie', ko: '브리치즈 구이', price: '₩13,000', img: 'c_s_hbb.JPG' },
-      { en: 'Cheese Plate', ko: '치즈 플레이트', price: '₩21,000', img: 'c_s_cp.JPG' },
-      { en: 'Yuzu Cream Cheese & Fruits', ko: '유자 크림치즈 & 과일', price: '₩19,000', img: 'c_s_ycc_f.JPG' },
-      { en: 'Vanilla Ice Cream', ko: '바닐라 아이스크림', price: '₩8,000', img: 'c_s_vic.JPG' },
-      { en: 'Marlenka Honey Cake', ko: '말렌카 허니케이크', price: '₩8,000', img: 'c_s_mhc.JPG' },
-      { en: 'Blueberry Cheese Canapé', ko: '블루베리 치즈 카나페', price: '₩10,000', img: 'c_s_bcc.JPG' },
-      { en: 'Melon & Jamón', ko: '메론 & 하몽', price: '₩12,000', img: 'c_s_m_j.JPG' },
-      { en: 'Jerky', ko: '육포', price: '₩15,000', img: 'c_s_j.JPG' },
+      { en: 'Herb Baked Brie', ko: '브리치즈 구이', price: '₩13,000', img: 'c_s_hbb.JPG',
+        desc: '프랑스산 브리치즈를 부드럽게 구워, 향긋한 바질과 허브, 고소한 견과류와 톡 터지는 구운 토마토를 곁들인 따뜻한 치즈 플레이트.',
+        pairing: { wine: ["오이스터 베이 소비뇽 블랑 (Oyster Bay Sauvignon Blanc)"], cocktail: ["진 토닉 (Gin Tonic)"], whisky: ["우드포드 리저브 (Woodford Reserve)"], highball: ["히비키 하이볼 (Hibiki Highball)"] } },
+      { en: 'Cheese Plate', ko: '치즈 플레이트', price: '₩21,000', img: 'c_s_cp.JPG',
+        desc: '브라운, 콜비잭, 페퍼잭, 스모크 등 여섯 가지 치즈와 3종의 햄, 바삭하게 구운 호밀빵으로 구성된 정통 치즈 플레이트',
+        pairing: { wine: ["레드 · 프레스티지 르 세르 (Red / Prestige Le Serre)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)"], cocktail: ["네그로니 (Negroni)"], whisky: ["스페이사이드 싱글 몰트 위스키 (Speyside Single Malt Whisky)"], highball: ["글렌피딕 15 하이볼 (Glenfiddich 15 Highball)"] } },
+      { en: 'Yuzu Cream Cheese & Fruits', ko: '유자 크림치즈 & 과일', price: '₩19,000', img: 'c_s_ycc_f.JPG',
+        desc: '홈메이드 유자 크림치즈와 제철 과일, 바삭한 크래커를 함께 즐기는 디저트. 상큼한 유자 향과 부드러운 크림의 균형이 돋보이는 가볍지만 인상적인 마무리.',
+        pairing: { wine: ["스파클링 · 도멘 데 에르보쥬 루미네상스 N/V (Domaine Des Herbauges Luminescence N/V)"], cocktail: ["프렌치 커넥션 (French Connection)"], whisky: ["글렌피딕 15 (Glenfiddich 15)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+      { en: 'Vanilla Ice Cream', ko: '바닐라 아이스크림', price: '₩8,000', img: 'c_s_vic.JPG',
+        desc: '위스키와 함께 즐길 때 새로운 디저트 경험이 완성됩니다.',
+        pairing: { wine: ["스파클링 · 브뤼, 펀 키스 (Sparkling / Brut, Fun Kiss)"], cocktail: ["아이리시 커피 (Irish Coffee)"], whisky: ["버번 위스키 · 와일드터키, 버팔로트레이스 (Bourbon Whiskey: Wild Turkey, Buffalo Trace)"], highball: ["버팔로 트레이스 하이볼 (Buffalo Trace Highball)"] } },
+      { en: 'Marlenka Honey Cake', ko: '말렌카 허니케이크', price: '₩8,000', img: 'c_s_mhc.JPG',
+        desc: '체코 전통 디저트인 허니케이크, 꿀과 크림의 진한 단맛이 어우러져 부드럽게 퍼지는 달콤한 풍미를 선사합니다.',
+        pairing: { wine: ["레드 · 프레스티지 르 세르 (Red / Prestige Le Serre)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)"], cocktail: ["에스프레소 마티니 (Espresso Martini)"], whisky: ["쉐리 캐스크 위스키 (Sherried Whisky)"], highball: ["아벨라워 12 하이볼 (Aberlour 12 Highball)"] } },
+      { en: 'Blueberry Cheese Canapé', ko: '블루베리 치즈 카나페', price: '₩10,000', img: 'c_s_bcc.JPG',
+        desc: '부드럽고 진한 수제 블루베리 치즈를 바삭한 크래커 위에 올리고, 킥 토마토로 산뜻함을 더한 달콤하고 짭조름한 한입 카나페',
+        pairing: { wine: ["레드 · 샤토 르 부르디요 (Red / Château Le Bourdillot)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)", "스파클링 · 브뤼, 펀 키스 (Sparkling / Brut, Fun Kiss)"], cocktail: ["블루베리 모히토 (Blueberry Mojito)"], whisky: ["아이리시 위스키 · 스페이사이드 위스키 (Irish Whiskey / Speyside Whisky)"], highball: ["제임슨 진저 하이볼 (Jameson Ginger Highball)"] } },
+      { en: 'Melon & Jamón', ko: '메론 & 하몽', price: '₩13,000', img: 'c_s_m_j.JPG',
+        desc: '달콤한 메론과 짭짤한 하몽의 클래식 조합, 입안에서 상반된 두 가지 풍미가 만나 깔끔한 스타터로 즐기기에 완벽합니다. (메론&하몽은 계절에 따라 변경될 수 있습니다)',
+        pairing: { wine: ["스파클링 · 도멘 데 에르보쥬 루미네상스 N/V (Domaine Des Herbauges Luminescence N/V)"], cocktail: ["아페롤 스프리츠 (Aperol Spritz)"], whisky: ["블렌디드 위스키 (Blended Whisky)"], highball: ["몽키 숄더 하이볼 (Monkey Shoulder Highball)"] } },
+      { en: 'Jerky', ko: '육포', price: '₩15,000', img: 'c_s_j.JPG',
+        desc: '짭조름하고 쫄깃한 식감이 술맛을 돋우는 전통적인 바 스낵',
+        pairing: { wine: ["레드 · 르뷔우 트루폴리에 (Red / Le Vieux Truffolier)"], cocktail: ["맨해튼 (Manhattan)"], whisky: ["버번 · 라이 위스키 (Bourbon Whiskey / Rye Whiskey)"], highball: ["와일드 터키 하이볼 (Wild Turkey Highball)"] } },
       { en: 'Mini Cup Ramen (Yukgaejang)', ko: '미니 컵라면 (육개장)', price: '₩3,000', img: '', noimg: true },
       { en: 'Mini Cup Ramen (Shin Ramen)', ko: '미니 컵라면 (신라면)', price: '₩3,000', img: '', noimg: true },
       { en: 'Mini Cup Ramen (Jjajang)', ko: '미니 컵라면 (짜장범벅)', price: '₩3,000', img: '', noimg: true },
@@ -1862,7 +1966,7 @@ const drinksTextData = {
     sections: {
       'Sparkling · Porto · House': [
         { header: 'HOUSE', items: [
-          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9000 },
+          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9500 },
           { name: 'House White', ko: '하우스 화이트 와인', grape: '', alc: '', country: '', bottle: 9500 },
           { name: 'House Porto', ko: '하우스 포트 와인', grape: '', alc: '', country: '', bottle: 13000 },
         ]},
@@ -1880,7 +1984,7 @@ const drinksTextData = {
       ],
       'White': [
         { header: 'WHITE WINE', items: [
-          { name: "Moulin d'Argent Chardonnay", ko: '물랑 다르장 샤르도네', grape: 'Chardonnay', alc: '12%', country: 'FRANCE · Loire AOP', bottle: 39000 },
+          { name: "Moulin d'Argent Chardonnay", ko: '물랑 다르장 샤르도네', grape: 'Chardonnay', alc: '12%', country: 'FRANCE · Loire AOP', bottle: 40000 },
           { name: 'Chateau Haute – Brande Moelleux', ko: '샤또 오뜨 브랑드 모엘루', grape: 'Sauvignon Blanc · Sémillon', alc: '14%', country: 'FRANCE · Bordeaux', bottle: 41000 },
           { name: 'Saumur Domaine Des Herbuages', ko: '소뮈르 에르보쥬', grape: 'Chenin Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 78000 },
           { name: 'Stephane Brocard Macon–Villages', ko: '마콩 빌라쥬', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 80000 },
@@ -1894,8 +1998,8 @@ const drinksTextData = {
       ],
       'Red': [
         { header: 'RED WINE', items: [
-          { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 38000 },
-          { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 38000 },
+          { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 39000 },
+          { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 39000 },
           { name: 'Chateau Tour Sivadon', ko: '샤또 뚜르 시바동', grape: 'Merlot · Cabernet Sauvignon', alc: '13.5%', country: 'FRANCE · Bordeaux Graves', bottle: 60000 },
           { name: 'Chateau Le Bourdillot', ko: '샤또 르 부르디요', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 68000 },
           { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 75000 },
@@ -1921,6 +2025,7 @@ const drinksTextData = {
       'Modern': [
         { header: 'MODERN COCKTAIL', items: [
           { name: 'Cocoberry', ko: '코코베리', desc: '', glass: 10000 },
+          { name: 'Peach Crush', ko: '피치크러쉬', desc: '', glass: 9000 },
           { name: 'Cassis Frappe', ko: '카시스 프라페', desc: '', glass: 11000 },
           { name: 'June Bug', ko: '준 벅', desc: '', glass: 12000 },
           { name: '玉蒲團', ko: '옥보단', desc: '', glass: 12000 },
@@ -1935,7 +2040,7 @@ const drinksTextData = {
           { name: 'Kalua Milk', ko: '깔루아 밀크', desc: '', glass: 9000 },
           { name: 'JackCoke', ko: '잭콕', desc: '', glass: 9000 },
           { name: 'GinTonic', ko: '진토닉', desc: '', glass: 9000 },
-          { name: "Hendrick's GinTonic", ko: '헨드릭스 진토닉', desc: '', glass: 11000 },
+          { name: "Hendrick's GinTonic", ko: '헨드릭스 진토닉', desc: '', glass: 12000 },
           { name: 'White Russian', ko: '화이트 러시안', desc: '', glass: 10000 },
           { name: 'Black Russian', ko: '블랙 러시안', desc: '', glass: 10000 },
           { name: 'Cuba Libre', ko: '쿠바 리브레', desc: '', glass: 10000 },
@@ -1945,7 +2050,7 @@ const drinksTextData = {
           { name: 'Cosmopolitan', ko: '코스모폴리탄', desc: '', glass: 11000 },
           { name: 'Piña Colada', ko: '피나 콜라다', desc: '', glass: 12000 },
           { name: 'Long Island Iced Tea', ko: '롱티', desc: '', glass: 12000 },
-          { name: 'Espresso Martini', ko: '에스프레소 마티니', desc: '', glass: 14000 },
+          { name: 'Espresso Martini', ko: '에스프레소 마티니', desc: '', glass: 12000 },
           { name: 'Lime Mojito', ko: '생라임 모히또', desc: '', glass: 12000 },
           { name: 'Limoncello Mojito', ko: '리몬첼로 모히또', desc: '', glass: 12000 },
           { name: 'Margarita', ko: '마가리타', desc: '', glass: 12000 },
@@ -1958,6 +2063,7 @@ const drinksTextData = {
           { name: 'Old Fashioned', ko: '올드 패션드', desc: '', glass: 14000 },
           { name: 'Negroni', ko: '네그로니', desc: '', glass: 14000 },
           { name: 'Dry Martini', ko: '드라이 마티니', desc: '', glass: 14000 },
+          { name: 'Gimlet', ko: '김렛', desc: '', glass: 13000 },
         ]},
       ],
     }
@@ -1979,7 +2085,7 @@ const drinksTextData = {
       { header: 'BEER', items: [
         { name: 'Budweiser (生)', ko: '버드와이저', vol: '330ml', glass: 8000 },
         { name: 'Suntory Premium (生)', ko: '산토리 프리미엄', vol: '380ml', glass: 10000 },
-        { name: 'Guinness Microdraught (生)', ko: '기네스 마이크로 드래프트', vol: '558ml', glass: 12000, originalGlass: 14000 },
+        { name: 'Guinness Microdraught (生)', ko: '기네스 마이크로 드래프트', vol: '558ml', glass: 14000 },
         { name: "Blonde L'Anecdote", ko: '블롱드 라넥도트', vol: '330ml', glass: 16000 },
         { name: 'Rochefort 10', ko: '로슈포르10', vol: '330ml', glass: 14000 },
         { name: 'Westmalle Tripel', ko: '베스트말러 트리펠', vol: '330ml', glass: 12000 },
@@ -1987,6 +2093,7 @@ const drinksTextData = {
         { name: 'Corona', ko: '코로나', vol: '330ml', glass: 8000 },
         { name: 'Kirin', ko: '기린', vol: '330ml', glass: 7000 },
         { name: 'Hoegaarden', ko: '호가든', vol: '330ml', glass: 7000 },
+        { name: 'Yantai Beer', ko: '연태맥주', vol: '330ml', glass: 10000 },
       ]},
       { header: 'SOJU', items: [
         { name: '一品眞露', ko: '일품 진로', vol: '375ml', glass: 31000 },
@@ -2597,13 +2704,13 @@ function goHome() { showScreen('home'); }
 
 
 function initMonthlyButtons() {
-  const addRisotto = document.getElementById('addRisotto');
-  if (addRisotto) addRisotto.addEventListener('click', () => {
-    addToCart('White Mushroom Cream Risotto', '양송이 크림 리조또', '₩22,000', 22000);
+  const addCarbonara = document.getElementById('addCarbonara');
+  if (addCarbonara) addCarbonara.addEventListener('click', () => {
+    addToCart('Carbonara', '까르보나라', '₩16,000', 16000);
   });
-  const addGuinness = document.getElementById('addGuinness');
-  if (addGuinness) addGuinness.addEventListener('click', () => {
-    addToCart('Guinness Microdraught (生)', '기네스 마이크로 드래프트', '₩12,000', 12000);
+  const addHendricks = document.getElementById('addHendricks');
+  if (addHendricks) addHendricks.addEventListener('click', () => {
+    addToCart("Hendrick's GinTonic", '헨드릭스 진토닉', '₩10,000', 10000);
   });
   const addDinnerSet = document.getElementById('addDinnerSet');
   if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
@@ -2665,54 +2772,128 @@ function parseMultiPrice(priceStr) {
   return choices.length > 1 ? choices : null;
 }
 
+const foodCatOrder = ['mains', 'plates', 'pasta', 'cheese'];
+
 function showFoodCategory(cat) {
-  const data = foods[cat];
-  document.getElementById('listTitle').textContent = data.title;
+  const orderedCats = [cat, ...foodCatOrder.filter(c => c !== cat)];
+  document.getElementById('listTitle').textContent = 'Food';
   const grid = document.getElementById('menuGrid');
   grid.innerHTML = '';
-  data.items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'menu-card';
-    if (item.noimg) {
-      card.innerHTML = `
-        <div class="menu-info-row menu-add-area" style="padding: 16px 12px; flex: 1;">
-          <div class="menu-info">
-            <div class="menu-en">${item.en}</div>
-            <div class="menu-ko">${item.ko}</div>
-            <div class="menu-price">${item.price}</div>
+  orderedCats.forEach(c => {
+    const data = foods[c];
+    const header = document.createElement('div');
+    header.className = 'menu-category-header';
+    header.textContent = data.title;
+    grid.appendChild(header);
+    data.items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'menu-card';
+      if (item.noimg) {
+        card.innerHTML = `
+          <div class="menu-info-row menu-add-area" style="padding: 16px 12px; flex: 1;">
+            <div class="menu-info">
+              <div class="menu-en">${item.en}</div>
+              <div class="menu-ko">${item.ko}</div>
+              <div class="menu-price">${item.price}</div>
+            </div>
+            <div class="add-btn-inline">+</div>
+          </div>`;
+        const addArea = card.querySelector('.menu-add-area');
+        addArea.addEventListener('click', () => {
+          handleFoodAdd(item.en, item.ko, item.price);
+        });
+      } else {
+        card.innerHTML = `
+          <div class="menu-thumb-wrap">
+            <img class="menu-thumb" src="thumbs/${item.img}" alt="${item.ko}" onerror="this.src='${item.img}'">
           </div>
-          <div class="add-btn-inline">+</div>
-        </div>`;
-      const addArea = card.querySelector('.menu-add-area');
-      addArea.addEventListener('click', () => {
-        handleFoodAdd(item.en, item.ko, item.price);
-      });
-    } else {
-      card.innerHTML = `
-        <div class="menu-thumb-wrap">
-          <img class="menu-thumb" src="thumbs/${item.img}" alt="${item.ko}" onerror="this.src='${item.img}'">
-        </div>
-        <div class="menu-info-row menu-add-area">
-          <div class="menu-info">
-            <div class="menu-en">${item.en}</div>
-            <div class="menu-ko">${item.ko}</div>
-            ${item.originalPrice ? `<div class="menu-price-original">${item.originalPrice}</div>` : ''}
-            <div class="menu-price${item.originalPrice ? ' menu-price-discounted' : ''}">${item.price}</div>
-          </div>
-          <div class="add-btn-inline">+</div>
-        </div>`;
-      const addArea = card.querySelector('.menu-add-area');
-      const thumbWrap = card.querySelector('.menu-thumb-wrap');
-      addArea.addEventListener('click', () => {
-        handleFoodAdd(item.en, item.ko, item.price);
-      });
-      thumbWrap.addEventListener('click', () => {
-        showDetail(item.img, data.items, data.items.indexOf(item));
-      });
-    }
-    grid.appendChild(card);
+          <div class="menu-info-row menu-add-area">
+            <div class="menu-info">
+              <div class="menu-en">${item.en}</div>
+              <div class="menu-ko">${item.ko}</div>
+              ${item.desc ? `<div class="menu-desc-preview">${item.desc}</div>` : ''}
+              ${item.originalPrice ? `<div class="menu-price-original">${item.originalPrice}</div>` : ''}
+              <div class="menu-price${item.originalPrice ? ' menu-price-discounted' : ''}">${item.price}</div>
+            </div>
+            <div class="add-btn-inline">+</div>
+          </div>`;
+        const addArea = card.querySelector('.menu-add-area');
+        const thumbWrap = card.querySelector('.menu-thumb-wrap');
+        addArea.addEventListener('click', () => {
+          handleFoodAdd(item.en, item.ko, item.price);
+        });
+        thumbWrap.addEventListener('click', () => {
+          showFoodDetail(item, c);
+        });
+      }
+      grid.appendChild(card);
+    });
   });
   showScreen('menuList');
+  grid.scrollTop = 0;
+  requestAnimationFrame(() => { grid.scrollTop = 0; });
+}
+
+let currentFoodCategory = null;
+
+function showFoodDetail(item, cat) {
+  currentFoodCategory = cat;
+  document.getElementById('foodDetailTitle').textContent = item.ko;
+  document.getElementById('foodDetailEn').textContent = item.en;
+  document.getElementById('foodDetailKo').textContent = item.ko;
+
+  const photoWrap = document.getElementById('foodDetailPhotoWrap');
+  photoWrap.innerHTML = `<img src="thumbs/${item.img}" alt="${item.ko}" onerror="this.src='${item.img}'">`;
+
+  const origEl = document.getElementById('foodDetailPriceOriginal');
+  if (item.originalPrice) {
+    origEl.textContent = item.originalPrice;
+    origEl.style.display = '';
+  } else {
+    origEl.style.display = 'none';
+  }
+  document.getElementById('foodDetailPrice').textContent = item.price;
+
+  const addBtn = document.getElementById('foodDetailAddBtn');
+  addBtn.onclick = () => handleFoodAdd(item.en, item.ko, item.price);
+
+  const descEl = document.getElementById('foodDetailDesc');
+  if (item.desc) {
+    descEl.textContent = item.desc;
+    descEl.style.display = '';
+  } else {
+    descEl.style.display = 'none';
+  }
+
+  const pairingEl = document.getElementById('foodDetailPairing');
+  pairingEl.innerHTML = '';
+  if (item.pairing) {
+    const labels = { wine: 'Wine', cocktail: 'Cocktail', whisky: 'Whisky', highball: 'Highball' };
+    Object.keys(labels).forEach(key => {
+      const values = item.pairing[key];
+      if (values && values.length) {
+        const row = document.createElement('div');
+        row.className = 'food-detail-pairing-row';
+        row.innerHTML = `
+          <div class="food-detail-pairing-label">${labels[key]}</div>
+          <div class="food-detail-pairing-value">${values.map(v => `<div>${v}</div>`).join('')}</div>`;
+        pairingEl.appendChild(row);
+      }
+    });
+  }
+
+  showScreen('foodDetailScreen');
+  const scrollEl = document.querySelector('.food-detail-scroll');
+  scrollEl.scrollTop = 0;
+  requestAnimationFrame(() => { scrollEl.scrollTop = 0; });
+}
+
+function backFromFoodDetail() {
+  if (currentFoodCategory) {
+    showFoodCategory(currentFoodCategory);
+  } else {
+    goHome();
+  }
 }
 
 function showDrinksCategory(cat) {
