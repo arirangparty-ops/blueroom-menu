@@ -2829,11 +2829,16 @@ function showFoodCategory(cat) {
           </div>`;
         const addArea = card.querySelector('.menu-add-area');
         const thumbWrap = card.querySelector('.menu-thumb-wrap');
+        const addBtn = card.querySelector('.add-btn-inline');
         addArea.addEventListener('click', () => {
-          handleFoodAdd(item.en, item.ko, item.price);
+          showFoodDetail(item, c);
         });
         thumbWrap.addEventListener('click', () => {
           showFoodDetail(item, c);
+        });
+        addBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleFoodAdd(item.en, item.ko, item.price);
         });
       }
       grid.appendChild(card);
