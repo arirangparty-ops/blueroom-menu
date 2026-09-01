@@ -886,7 +886,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     <div class="monthly-left">
       <div class="monthly-dot"></div>
       <div>
-        <div class="monthly-label">August Special</div>
+        <div class="monthly-label">September Special</div>
         <div class="monthly-title">이달의 메뉴</div>
       </div>
     </div>
@@ -1285,15 +1285,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 <div id="monthly" class="screen">
   <div class="list-header">
     <div class="back-btn" onclick="goHome()">← Back</div>
-    <div class="list-title">August Special</div>
+    <div class="list-title">September Special</div>
   </div>
   <div class="monthly-content">
 
     <!-- 헤더 -->
     <div class="monthly-header-card">
-      <div class="monthly-month">August 2026</div>
+      <div class="monthly-month">September 2026</div>
       <div class="monthly-headline">이달의 블루룸</div>
-      <div class="monthly-desc">8월 한정 스페셜 메뉴</div>
+      <div class="monthly-desc">9월 한정 스페셜 메뉴</div>
     </div>
 
     <!-- 이달의 세트 -->
@@ -1312,7 +1312,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div class="monthly-set-price-row">
         <div class="monthly-set-original">₩74,000</div>
         <div class="monthly-set-special">₩70,000</div>
-        <div class="monthly-set-badge">August Only</div>
+        <div class="monthly-set-badge">September Only</div>
         <div class="monthly-add-btn on-blue" id="addDinnerSet">+</div>
       </div>
     </div>
@@ -1322,13 +1322,13 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div class="monthly-set-name">Pairing Set</div>
       <div class="monthly-set-theme">Food & Wine Pairing</div>
       <div class="monthly-set-items">
-        치즈 플레이트<br>
+        브리치즈 구이<br>
         소뮈르 에르보쥬 1병
       </div>
       <div class="monthly-set-price-row">
-        <div class="monthly-set-original">₩99,000</div>
-        <div class="monthly-set-special">₩94,000</div>
-        <div class="monthly-set-badge">August Only</div>
+        <div class="monthly-set-original">₩91,000</div>
+        <div class="monthly-set-special">₩86,000</div>
+        <div class="monthly-set-badge">September Only</div>
         <div class="monthly-add-btn on-blue" id="addPairingSet">+</div>
       </div>
     </div>
@@ -1340,16 +1340,16 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 요리</div>
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <div>
-          <div class="monthly-simple-name">Carbonara</div>
-          <div class="monthly-simple-sub">까르보나라</div>
+          <div class="monthly-simple-name">Basil Tomato Pasta</div>
+          <div class="monthly-simple-sub">바질 토마토 파스타</div>
         </div>
         <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
           <div>
-            <div class="monthly-simple-original">₩18,000</div>
-            <div class="monthly-simple-special">₩16,000</div>
-            <div class="monthly-simple-badge">August Only</div>
+            <div class="monthly-simple-original">₩19,000</div>
+            <div class="monthly-simple-special">₩17,000</div>
+            <div class="monthly-simple-badge">September Only</div>
           </div>
-          <div class="monthly-add-btn" id="addCarbonara" style="margin-left:10px;">+</div>
+          <div class="monthly-add-btn" id="addBasilTomatoPasta" style="margin-left:10px;">+</div>
         </div>
       </div>
     </div>
@@ -1365,7 +1365,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
           <div>
             <div class="monthly-simple-original">₩12,000</div>
             <div class="monthly-simple-special">₩10,000</div>
-            <div class="monthly-simple-badge">August Only</div>
+            <div class="monthly-simple-badge">September Only</div>
           </div>
           <div class="monthly-add-btn" id="addHendricks" style="margin-left:10px;">+</div>
         </div>
@@ -1442,10 +1442,10 @@ const foods = {
   pasta: {
     title: 'Pasta',
     items: [
-      { en: 'Carbonara', ko: '까르보나라', price: '₩16,000', originalPrice: '₩18,000', img: 'pasta_ca.JPG',
+      { en: 'Carbonara', ko: '까르보나라', price: '₩18,000', img: 'pasta_ca.JPG',
         desc: '노른자와 그라나파다노 치즈로 진하게 유화시킨 크림에 바삭하게 구운 베이컨을 더하고, 후추와 페퍼론치노로 알싸함을 살린 클래식 까르보나라',
         pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["아마레토 사워 (Amaretto Sour)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
-      { en: 'Basil Tomato Pasta', ko: '바질 토마토 파스타', price: '₩19,000', img: 'pasta_bt.JPG',
+      { en: 'Basil Tomato Pasta', ko: '바질 토마토 파스타', price: '₩17,000', originalPrice: '₩19,000', img: 'pasta_bt.JPG',
         desc: '토마토 소스에 탱글한 오징어와 새우를 더하고, 방울토마토와 신선한 바질 향을 얹어 완성한 깔끔하고 시원한 토마토 해산물 파스타',
         pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["프레시 라임 모히토 (Fresh Lime Mojito)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
       { en: 'Mentaiko Shrimp Oil Pasta', ko: '명란 새우 오일 파스타', price: '₩19,000', img: 'pasta_msop.JPG',
@@ -2720,9 +2720,9 @@ function goHome() { showScreen('home'); }
 
 
 function initMonthlyButtons() {
-  const addCarbonara = document.getElementById('addCarbonara');
-  if (addCarbonara) addCarbonara.addEventListener('click', () => {
-    addToCart('Carbonara', '까르보나라', '₩16,000', 16000);
+  const addBasilTomatoPasta = document.getElementById('addBasilTomatoPasta');
+  if (addBasilTomatoPasta) addBasilTomatoPasta.addEventListener('click', () => {
+    addToCart('Basil Tomato Pasta', '바질 토마토 파스타', '₩17,000', 17000);
   });
   const addHendricks = document.getElementById('addHendricks');
   if (addHendricks) addHendricks.addEventListener('click', () => {
@@ -2754,7 +2754,7 @@ function initMonthlyButtons() {
   });
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
-    addToCart('Pairing Set', '치즈플레이트+소뮈르 에르보쥬', '₩94,000', 94000);
+    addToCart('Pairing Set', '브리치즈 구이+소뮈르 에르보쥬', '₩86,000', 86000);
   });
 }
 document.addEventListener('DOMContentLoaded', initMonthlyButtons);
