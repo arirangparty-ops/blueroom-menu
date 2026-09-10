@@ -321,6 +321,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 .dtext-single-price { font-size: 14px; color: #b8b4ac; padding-top: 1px; }
 .dtext-price-original-strike { font-size: 9px; color: #555; text-decoration: line-through; margin-bottom: 1px; }
 .dtext-price-discounted { color: #6b9ae8; font-weight: 600; }
+.dtext-taste-axis { margin-top: 6px; max-width: 130px; }
+.dtext-taste-axis-row { margin-bottom: 5px; }
+.dtext-taste-axis-row:last-child { margin-bottom: 0; }
+.dtext-taste-axis-labels { display: flex; justify-content: space-between; font-size: 8px; color: #4a4c52; letter-spacing: 0.03em; margin-bottom: 3px; }
+.dtext-taste-axis-track { position: relative; height: 2px; background: #2a2c32; border-radius: 1px; }
+.dtext-taste-axis-dot { position: absolute; top: 50%; width: 6px; height: 6px; margin-top: -3px; margin-left: -3px; border-radius: 50%; background: #6b9ae8; }
+.dtext-flavor-tags { display: flex; flex-wrap: wrap; margin-top: 6px; }
+.dtext-flavor-tags > * { margin-right: 5px; margin-bottom: 5px; }
+.dtext-flavor-tag { font-size: 9px; padding: 2px 8px; border-radius: 8px; letter-spacing: 0.02em; white-space: nowrap; }
 
 
 /* ── FOOD DETAIL ── */
@@ -520,6 +529,31 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 .option-choice-label { font-size: 11px; color: #999; letter-spacing: 0.05em; }
 .option-choice-price { font-size: 13px; color: #ddd8d0; }
 .option-cancel { text-align: center; font-size: 11px; color: #666; margin-top: 12px; cursor: pointer; padding: 6px; }
+
+/* cocktail detail modal */
+#cocktailDetailModal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: none; z-index: 300;
+}
+#cocktailDetailModal.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cocktail-detail-box {
+  background: #1a1b20; border: 0.5px solid #2c2e34; border-radius: 2px;
+  padding: 22px 20px 18px; width: 260px;
+  margin: auto;
+  position: relative;
+  text-align: center;
+}
+.cocktail-detail-close { position: absolute; top: 12px; right: 14px; font-size: 14px; color: #666; cursor: pointer; }
+.cocktail-detail-name { font-size: 15px; color: #ddd8d0; font-weight: 600; }
+.cocktail-detail-ko { font-size: 11px; color: #666; margin-top: 2px; margin-bottom: 8px; }
+.cocktail-detail-tags { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.cocktail-detail-tags > * { margin: 3px; }
 
 /* ── GUIDE ── */
 .guide-body {
@@ -1069,6 +1103,17 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     <div class="option-sub" id="optionSub"></div>
     <div id="optionChoices"></div>
     <div class="option-cancel" onclick="closeOptionModal()">취소</div>
+  </div>
+</div>
+
+<!-- COCKTAIL DETAIL MODAL -->
+<div id="cocktailDetailModal">
+  <div class="cocktail-detail-box">
+    <div class="cocktail-detail-close" onclick="closeCocktailDetail()">✕</div>
+    <div class="cocktail-detail-name" id="cocktailDetailName"></div>
+    <div class="cocktail-detail-ko" id="cocktailDetailKo"></div>
+    <div id="cocktailDetailChart"></div>
+    <div class="cocktail-detail-tags" id="cocktailDetailTags"></div>
   </div>
 </div>
 
@@ -1981,45 +2026,45 @@ const drinksTextData = {
     sections: {
       'Sparkling · Porto · House': [
         { header: 'HOUSE', items: [
-          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9500 },
-          { name: 'House White', ko: '하우스 화이트 와인', grape: '', alc: '', country: '', bottle: 9500 },
-          { name: 'House Porto', ko: '하우스 포트 와인', grape: '', alc: '', country: '', bottle: 13000 },
+          { name: 'House Red', ko: '하우스 레드 와인', grape: '', alc: '', country: '', bottle: 9500, dry: 20, body: 45 },
+          { name: 'House White', ko: '하우스 화이트 와인', grape: '', alc: '', country: '', bottle: 9500, dry: 15, body: 25 },
+          { name: 'House Porto', ko: '하우스 포트 와인', grape: '', alc: '', country: '', bottle: 13000, dry: 85, body: 55 },
         ]},
         { header: 'SPARKLING', items: [
-          { name: 'Brut, Fun Kiss', ko: '브뤼 펀 키스', grape: 'Chardonnay · Aligoté', alc: '11.5%', country: 'FRANCE · Bourgogne', bottle: 46000 },
-          { name: "T' SPOT Brut", ko: '티스팟 브뤼', grape: 'Chardonnay', alc: '11.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 70000, soldOut: true },
-          { name: 'Domaine Des Herbuages Luminescence', ko: '도멘 데 에르보쥬, 루미네상스', grape: 'Chardonnay · Grolleau Gris · Melon de Bourgogne', alc: '12.5%', country: 'FRANCE · Loire', bottle: 75000 },
-          { name: 'Piper-Heidsieck Cuvee Brut', ko: '파이퍼 하이직 뀌베 브뤼', grape: 'Pinot Noir · Pinot Meunier · Chardonnay', alc: '12%', country: 'FRANCE · Champagne', bottle: 170000 },
-          { name: 'Dom Perignon Vintage 2015', ko: '돔 페리뇽 빈티지 2015', grape: 'Chardonnay · Pinot Noir', alc: '12.5%', country: 'FRANCE · Champagne', bottle: 880000 },
+          { name: 'Brut, Fun Kiss', ko: '브뤼 펀 키스', grape: 'Chardonnay · Aligoté', alc: '11.5%', country: 'FRANCE · Bourgogne', bottle: 46000, dry: 10, body: 25 },
+          { name: "T' SPOT Brut", ko: '티스팟 브뤼', grape: 'Chardonnay', alc: '11.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 70000, dry: 10, body: 25, soldOut: true },
+          { name: 'Domaine Des Herbuages Luminescence', ko: '도멘 데 에르보쥬, 루미네상스', grape: 'Chardonnay · Grolleau Gris · Melon de Bourgogne', alc: '12.5%', country: 'FRANCE · Loire', bottle: 75000, dry: 12, body: 25 },
+          { name: 'Piper-Heidsieck Cuvee Brut', ko: '파이퍼 하이직 뀌베 브뤼', grape: 'Pinot Noir · Pinot Meunier · Chardonnay', alc: '12%', country: 'FRANCE · Champagne', bottle: 170000, dry: 8, body: 30 },
+          { name: 'Dom Perignon Vintage 2015', ko: '돔 페리뇽 빈티지 2015', grape: 'Chardonnay · Pinot Noir', alc: '12.5%', country: 'FRANCE · Champagne', bottle: 880000, dry: 8, body: 35 },
         ]},
         { header: 'PORTO', items: [
-          { name: 'Kopke Fine Tawny', ko: '콥케 파인 토니', grape: 'Touriga Franca · Touriga Nacional · Tinta Roriz', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 43000 },
-          { name: 'Quinta da Corta Late Bottled Vintage', ko: '퀸타 다 코타 LBV', grape: 'Touriga Franca · Touriga Nacional · Tinta Cão · Tinta Roriz · Tinta Barroca', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 90000 },
+          { name: 'Kopke Fine Tawny', ko: '콥케 파인 토니', grape: 'Touriga Franca · Touriga Nacional · Tinta Roriz', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 43000, dry: 90, body: 55 },
+          { name: 'Quinta da Corta Late Bottled Vintage', ko: '퀸타 다 코타 LBV', grape: 'Touriga Franca · Touriga Nacional · Tinta Cão · Tinta Roriz · Tinta Barroca', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 90000, dry: 88, body: 60 },
         ]},
       ],
       'White': [
         { header: 'WHITE WINE', items: [
-          { name: "Moulin d'Argent Chardonnay", ko: '물랑 다르장 샤르도네', grape: 'Chardonnay', alc: '12%', country: 'FRANCE · Loire AOP', bottle: 40000 },
-          { name: 'Chateau Haute – Brande Moelleux', ko: '샤또 오뜨 브랑드 모엘루', grape: 'Sauvignon Blanc · Sémillon', alc: '14%', country: 'FRANCE · Bordeaux', bottle: 41000 },
-          { name: 'Babich Marlborough Sauvignon Blanc', ko: '베비치 말보로 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '12%', country: 'NEW ZEALAND · Marlborough', bottle: 70000 },
-          { name: 'Saumur Domaine Des Herbuages', ko: '소뮈르 에르보쥬', grape: 'Chenin Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 78000 },
-          { name: 'Stephane Brocard Macon–Villages', ko: '마콩 빌라쥬', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 80000 },
-          { name: 'Babich Black Label Marlborough Sauvignon Blanc', ko: '베비치 블랙라벨 말보로 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '12%', country: 'NEW ZEALAND · Marlborough', bottle: 82000 },
-          { name: 'Oyster Bay Sauvignon Blanc', ko: '오이스터베이 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '13%', country: 'NEW ZEALAND · Marlborough', bottle: 90000 },
-          { name: "T' SPOT Blanc", ko: '티스팟 블랑', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 100000 },
-          { name: 'Domaine Carroy Pouilly–Fume', ko: '도멘 카로이 푸이–퓌메', grape: 'Sauvignon Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 110000 },
-          { name: 'Cloudy Bay Sauvignon Blanc', ko: '클라우디베이 소비뇽블랑', grape: 'Sauvignon Blanc', alc: '13–13.5%', country: 'NEW ZEALAND · Marlborough', bottle: 120000 },
+          { name: "Moulin d'Argent Chardonnay", ko: '물랑 다르장 샤르도네', grape: 'Chardonnay', alc: '12%', country: 'FRANCE · Loire AOP', bottle: 40000, dry: 20, body: 40 },
+          { name: 'Chateau Haute – Brande Moelleux', ko: '샤또 오뜨 브랑드 모엘루', grape: 'Sauvignon Blanc · Sémillon', alc: '14%', country: 'FRANCE · Bordeaux', bottle: 41000, dry: 55, body: 45 },
+          { name: 'Babich Marlborough Sauvignon Blanc', ko: '베비치 말보로 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '12%', country: 'NEW ZEALAND · Marlborough', bottle: 70000, dry: 12, body: 30 },
+          { name: 'Saumur Domaine Des Herbuages', ko: '소뮈르 에르보쥬', grape: 'Chenin Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 78000, dry: 25, body: 35 },
+          { name: 'Stephane Brocard Macon–Villages', ko: '마콩 빌라쥬', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 80000, dry: 15, body: 45 },
+          { name: 'Babich Black Label Marlborough Sauvignon Blanc', ko: '베비치 블랙라벨 말보로 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '12%', country: 'NEW ZEALAND · Marlborough', bottle: 82000, dry: 10, body: 30 },
+          { name: 'Oyster Bay Sauvignon Blanc', ko: '오이스터베이 소비뇽 블랑', grape: 'Sauvignon Blanc', alc: '13%', country: 'NEW ZEALAND · Marlborough', bottle: 90000, dry: 12, body: 30 },
+          { name: "T' SPOT Blanc", ko: '티스팟 블랑', grape: 'Chardonnay', alc: '13.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 100000, dry: 15, body: 45 },
+          { name: 'Domaine Carroy Pouilly–Fume', ko: '도멘 카로이 푸이–퓌메', grape: 'Sauvignon Blanc', alc: '13.5%', country: 'FRANCE · Loire', bottle: 110000, dry: 10, body: 35 },
+          { name: 'Cloudy Bay Sauvignon Blanc', ko: '클라우디베이 소비뇽블랑', grape: 'Sauvignon Blanc', alc: '13–13.5%', country: 'NEW ZEALAND · Marlborough', bottle: 120000, dry: 12, body: 35 },
         ]},
       ],
       'Red': [
         { header: 'RED WINE', items: [
-          { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 39000 },
-          { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 39000 },
-          { name: 'Chateau Tour Sivadon', ko: '샤또 뚜르 시바동', grape: 'Merlot · Cabernet Sauvignon', alc: '13.5%', country: 'FRANCE · Bordeaux Graves', bottle: 60000 },
-          { name: 'Chateau Le Bourdillot', ko: '샤또 르 부르디요', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 68000 },
-          { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 75000 },
-          { name: 'La Closerie De Malescasse', ko: '라 크롤제리 드 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 114000 },
-          { name: 'Chateau Malescasse', ko: '샤또 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 125000 },
+          { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 39000, dry: 15, body: 55 },
+          { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 39000, dry: 15, body: 55 },
+          { name: 'Chateau Tour Sivadon', ko: '샤또 뚜르 시바동', grape: 'Merlot · Cabernet Sauvignon', alc: '13.5%', country: 'FRANCE · Bordeaux Graves', bottle: 60000, dry: 12, body: 60 },
+          { name: 'Chateau Le Bourdillot', ko: '샤또 르 부르디요', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 68000, dry: 12, body: 62 },
+          { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 75000, dry: 12, body: 62 },
+          { name: 'La Closerie De Malescasse', ko: '라 크롤제리 드 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 114000, dry: 10, body: 68 },
+          { name: 'Chateau Malescasse', ko: '샤또 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 125000, dry: 10, body: 70 },
         ]},
       ],
     }
@@ -2030,55 +2075,55 @@ const drinksTextData = {
     sections: {
       'Signature': [
         { header: 'BLUE ROOM SIGNATURE', items: [
-          { name: 'Brown Sugar', ko: '브라운 슈거', desc: 'Creamy · Sweet · Coffee · Milk · Cheese · Vanilla', glass: 12000 },
-          { name: 'Saturn', ko: '새턴', desc: 'Ice cream · Sweet · Nuts · Cherry', glass: 12000 },
-          { name: 'Green day', ko: '그린데이', desc: 'Basil · Fresh · Citrus', glass: 13000 },
-          { name: 'Rotten Tomatoes', ko: '로튼 토마토', desc: 'Tomato · Basil · Fresh', glass: 13000 },
-          { name: 'Cigarettes After Sex', ko: '시가렛 애프터 섹스', desc: 'Smoky · Bitter · Fruity · Sweet', glass: 13000 },
+          { name: 'Brown Sugar', ko: '브라운 슈거', desc: 'Creamy · Sweet · Coffee · Milk · Cheese · Vanilla', glass: 12000, tags: [{label:'크리미',cat:'creamy'},{label:'스위트',cat:'sweet'},{label:'스모키',cat:'smoky'}], radar: {sweet:8,sour:1,bitter:2,strong:4,body:8} },
+          { name: 'Saturn', ko: '새턴', desc: 'Ice cream · Sweet · Nuts · Cherry', glass: 12000, tags: [{label:'스위트',cat:'sweet'},{label:'프루티',cat:'fruity'},{label:'크리미',cat:'creamy'}], radar: {sweet:7,sour:4,bitter:1,strong:5,body:5} },
+          { name: 'Green day', ko: '그린데이', desc: 'Basil · Fresh · Citrus', glass: 13000, tags: [{label:'허브',cat:'herbal'},{label:'새콤',cat:'sour'}], radar: {sweet:4,sour:6,bitter:1,strong:5,body:3} },
+          { name: 'Rotten Tomatoes', ko: '로튼 토마토', desc: 'Tomato · Basil · Fresh', glass: 13000, tags: [{label:'허브',cat:'herbal'},{label:'프루티',cat:'fruity'}], radar: {sweet:3,sour:5,bitter:2,strong:5,body:4} },
+          { name: 'Cigarettes After Sex', ko: '시가렛 애프터 섹스', desc: 'Smoky · Bitter · Fruity · Sweet', glass: 13000, tags: [{label:'스모키',cat:'smoky'},{label:'비터',cat:'bitter'},{label:'프루티',cat:'fruity'}], radar: {sweet:4,sour:3,bitter:6,strong:7,body:5} },
         ]},
       ],
       'Modern': [
         { header: 'MODERN COCKTAIL', items: [
-          { name: 'Peach Crush', ko: '피치크러쉬', desc: '', glass: 9000 },
-          { name: 'Cocoberry', ko: '코코베리', desc: '', glass: 10000 },
-          { name: 'Cassis Frappe', ko: '카시스 프라페', desc: '', glass: 11000 },
-          { name: 'June Bug', ko: '준 벅', desc: '', glass: 12000 },
-          { name: '玉蒲團', ko: '옥보단', desc: '', glass: 12000 },
-          { name: 'Sex on the Beach', ko: '섹스 온 더 비치', desc: '', glass: 12000 },
-          { name: 'Malibu Summer Rose', ko: '말리부 써머로즈', desc: '', glass: 12000 },
-          { name: 'Midori Sour', ko: '미도리 사워', desc: '', glass: 12000 },
-          { name: 'Catharsis', ko: '카타르시스', desc: '', glass: 13000 },
+          { name: 'Peach Crush', ko: '피치크러쉬', desc: '', glass: 9000, tags: [{label:'프루티',cat:'fruity'},{label:'스위트',cat:'sweet'}], radar: {sweet:7,sour:4,bitter:1,strong:3,body:3} },
+          { name: 'Cocoberry', ko: '코코베리', desc: '', glass: 10000, tags: [{label:'프루티',cat:'fruity'},{label:'스위트',cat:'sweet'},{label:'크리미',cat:'creamy'}], radar: {sweet:7,sour:3,bitter:1,strong:3,body:5} },
+          { name: 'Cassis Frappe', ko: '카시스 프라페', desc: '', glass: 11000, tags: [{label:'프루티',cat:'fruity'},{label:'새콤',cat:'sour'}], radar: {sweet:6,sour:5,bitter:1,strong:3,body:3} },
+          { name: 'June Bug', ko: '준 벅', desc: '', glass: 12000, tags: [{label:'프루티',cat:'fruity'},{label:'크리미',cat:'creamy'},{label:'스위트',cat:'sweet'}], radar: {sweet:7,sour:3,bitter:1,strong:4,body:5} },
+          { name: '玉蒲團', ko: '옥보단', desc: '', glass: 12000, tags: [{label:'프루티',cat:'fruity'},{label:'스위트',cat:'sweet'}], radar: {sweet:7,sour:3,bitter:1,strong:4,body:4} },
+          { name: 'Sex on the Beach', ko: '섹스 온 더 비치', desc: '', glass: 12000, tags: [{label:'프루티',cat:'fruity'},{label:'새콤',cat:'sour'}], radar: {sweet:6,sour:5,bitter:1,strong:4,body:3} },
+          { name: 'Malibu Summer Rose', ko: '말리부 써머로즈', desc: '', glass: 12000, tags: [{label:'프루티',cat:'fruity'},{label:'크리미',cat:'creamy'}], radar: {sweet:6,sour:4,bitter:1,strong:4,body:4} },
+          { name: 'Midori Sour', ko: '미도리 사워', desc: '', glass: 12000, tags: [{label:'프루티',cat:'fruity'},{label:'새콤',cat:'sour'}], radar: {sweet:6,sour:6,bitter:1,strong:4,body:3} },
+          { name: 'Catharsis', ko: '카타르시스', desc: '', glass: 13000, tags: [{label:'프루티',cat:'fruity'},{label:'새콤',cat:'sour'}], radar: {sweet:5,sour:6,bitter:2,strong:5,body:3} },
         ]},
       ],
       'Classic': [
         { header: 'CLASSIC COCKTAIL', items: [
-          { name: 'Kalua Milk', ko: '깔루아 밀크', desc: '', glass: 9000 },
-          { name: 'JackCoke', ko: '잭콕', desc: '', glass: 9000 },
-          { name: 'GinTonic', ko: '진토닉', desc: '', glass: 9000 },
-          { name: 'White Russian', ko: '화이트 러시안', desc: '', glass: 10000 },
-          { name: 'Black Russian', ko: '블랙 러시안', desc: '', glass: 10000 },
-          { name: 'Cuba Libre', ko: '쿠바 리브레', desc: '', glass: 10000 },
-          { name: 'Tequila Sunrise', ko: '데킬라 선라이즈', desc: '', glass: 11000 },
-          { name: 'Blue Sapphire', ko: '블루 사파이어', desc: '', glass: 11000 },
-          { name: 'Daiquiri', ko: '다이키리', desc: '', glass: 11000 },
-          { name: 'Cosmopolitan', ko: '코스모폴리탄', desc: '', glass: 11000 },
-          { name: "Hendrick's GinTonic", ko: '헨드릭스 진토닉', desc: '', glass: 12000 },
-          { name: 'Piña Colada', ko: '피나 콜라다', desc: '', glass: 12000 },
-          { name: 'Long Island Iced Tea', ko: '롱티', desc: '', glass: 12000 },
-          { name: 'Espresso Martini', ko: '에스프레소 마티니', desc: '', glass: 12000 },
-          { name: 'Lime Mojito', ko: '생라임 모히또', desc: '', glass: 12000 },
-          { name: 'Limoncello Mojito', ko: '리몬첼로 모히또', desc: '', glass: 12000 },
-          { name: 'Margarita', ko: '마가리타', desc: '', glass: 12000 },
-          { name: 'God Father', ko: '갓 파더', desc: '', glass: 12000 },
-          { name: 'French Connection', ko: '프렌치 커넥션', desc: '', glass: 12000 },
-          { name: 'Amaretto Sour', ko: '아마레또 사워', desc: '', glass: 13000 },
-          { name: 'Parision', ko: '파리지앵', desc: '', glass: 13000 },
-          { name: 'Manhattan', ko: '맨하탄', desc: '', glass: 13000 },
-          { name: 'Faust', ko: '파우스트', desc: '', glass: 13000 },
-          { name: 'Gimlet', ko: '김렛', desc: '', glass: 13000 },
-          { name: 'Old Fashioned', ko: '올드 패션드', desc: '', glass: 14000 },
-          { name: 'Negroni', ko: '네그로니', desc: '', glass: 14000 },
-          { name: 'Dry Martini', ko: '드라이 마티니', desc: '', glass: 14000 },
+          { name: 'Kalua Milk', ko: '깔루아 밀크', desc: '', glass: 9000, tags: [{label:'크리미',cat:'creamy'},{label:'스모키',cat:'smoky'}], radar: {sweet:7,sour:1,bitter:2,strong:3,body:7} },
+          { name: 'JackCoke', ko: '잭콕', desc: '', glass: 9000, tags: [{label:'스모키',cat:'smoky'},{label:'스위트',cat:'sweet'}], radar: {sweet:5,sour:1,bitter:2,strong:6,body:4} },
+          { name: 'GinTonic', ko: '진토닉', desc: '', glass: 9000, tags: [{label:'허브',cat:'herbal'},{label:'새콤',cat:'sour'}], radar: {sweet:2,sour:4,bitter:3,strong:5,body:2} },
+          { name: 'White Russian', ko: '화이트 러시안', desc: '', glass: 10000, tags: [{label:'크리미',cat:'creamy'},{label:'스모키',cat:'smoky'}], radar: {sweet:7,sour:1,bitter:2,strong:5,body:8} },
+          { name: 'Black Russian', ko: '블랙 러시안', desc: '', glass: 10000, tags: [{label:'스모키',cat:'smoky'},{label:'스위트',cat:'sweet'}], radar: {sweet:5,sour:1,bitter:3,strong:7,body:4} },
+          { name: 'Cuba Libre', ko: '쿠바 리브레', desc: '', glass: 10000, tags: [{label:'스위트',cat:'sweet'},{label:'새콤',cat:'sour'}], radar: {sweet:5,sour:3,bitter:2,strong:5,body:3} },
+          { name: 'Tequila Sunrise', ko: '데킬라 선라이즈', desc: '', glass: 11000, tags: [{label:'프루티',cat:'fruity'},{label:'새콤',cat:'sour'}], radar: {sweet:6,sour:4,bitter:1,strong:5,body:3} },
+          { name: 'Blue Sapphire', ko: '블루 사파이어', desc: '', glass: 11000, tags: [{label:'프루티',cat:'fruity'},{label:'새콤',cat:'sour'}], radar: {sweet:6,sour:5,bitter:1,strong:5,body:3} },
+          { name: 'Daiquiri', ko: '다이키리', desc: '', glass: 11000, tags: [{label:'새콤',cat:'sour'},{label:'프루티',cat:'fruity'}], radar: {sweet:4,sour:6,bitter:1,strong:6,body:3} },
+          { name: 'Cosmopolitan', ko: '코스모폴리탄', desc: '', glass: 11000, tags: [{label:'새콤',cat:'sour'},{label:'프루티',cat:'fruity'}], radar: {sweet:4,sour:6,bitter:1,strong:6,body:3} },
+          { name: "Hendrick's GinTonic", ko: '헨드릭스 진토닉', desc: '', glass: 12000, tags: [{label:'허브',cat:'herbal'},{label:'새콤',cat:'sour'}], radar: {sweet:2,sour:4,bitter:3,strong:5,body:2} },
+          { name: 'Piña Colada', ko: '피나 콜라다', desc: '', glass: 12000, tags: [{label:'크리미',cat:'creamy'},{label:'프루티',cat:'fruity'}], radar: {sweet:7,sour:3,bitter:1,strong:4,body:7} },
+          { name: 'Long Island Iced Tea', ko: '롱티', desc: '', glass: 12000, tags: [{label:'새콤',cat:'sour'},{label:'스모키',cat:'smoky'}], radar: {sweet:4,sour:4,bitter:2,strong:9,body:4} },
+          { name: 'Espresso Martini', ko: '에스프레소 마티니', desc: '', glass: 12000, tags: [{label:'스모키',cat:'smoky'},{label:'비터',cat:'bitter'}], radar: {sweet:5,sour:1,bitter:5,strong:6,body:5} },
+          { name: 'Lime Mojito', ko: '생라임 모히또', desc: '', glass: 12000, tags: [{label:'허브',cat:'herbal'},{label:'새콤',cat:'sour'}], radar: {sweet:5,sour:6,bitter:1,strong:4,body:2} },
+          { name: 'Limoncello Mojito', ko: '리몬첼로 모히또', desc: '', glass: 12000, tags: [{label:'허브',cat:'herbal'},{label:'새콤',cat:'sour'}], radar: {sweet:6,sour:6,bitter:1,strong:4,body:2} },
+          { name: 'Margarita', ko: '마가리타', desc: '', glass: 12000, tags: [{label:'새콤',cat:'sour'},{label:'프루티',cat:'fruity'}], radar: {sweet:4,sour:7,bitter:1,strong:6,body:3} },
+          { name: 'God Father', ko: '갓 파더', desc: '', glass: 12000, tags: [{label:'스모키',cat:'smoky'},{label:'크리미',cat:'creamy'}], radar: {sweet:5,sour:1,bitter:2,strong:7,body:5} },
+          { name: 'French Connection', ko: '프렌치 커넥션', desc: '', glass: 12000, tags: [{label:'스모키',cat:'smoky'},{label:'크리미',cat:'creamy'}], radar: {sweet:5,sour:1,bitter:2,strong:7,body:5} },
+          { name: 'Amaretto Sour', ko: '아마레또 사워', desc: '', glass: 13000, tags: [{label:'새콤',cat:'sour'},{label:'크리미',cat:'creamy'}], radar: {sweet:5,sour:6,bitter:1,strong:5,body:4} },
+          { name: 'Parision', ko: '파리지앵', desc: '', glass: 13000, tags: [{label:'허브',cat:'herbal'},{label:'프루티',cat:'fruity'}], radar: {sweet:4,sour:3,bitter:3,strong:6,body:3} },
+          { name: 'Manhattan', ko: '맨하탄', desc: '', glass: 13000, tags: [{label:'스모키',cat:'smoky'},{label:'비터',cat:'bitter'}], radar: {sweet:4,sour:1,bitter:5,strong:8,body:5} },
+          { name: 'Faust', ko: '파우스트', desc: '', glass: 13000, tags: [{label:'비터',cat:'bitter'},{label:'허브',cat:'herbal'}], radar: {sweet:3,sour:2,bitter:6,strong:7,body:5} },
+          { name: 'Gimlet', ko: '김렛', desc: '', glass: 13000, tags: [{label:'새콤',cat:'sour'},{label:'허브',cat:'herbal'}], radar: {sweet:3,sour:6,bitter:1,strong:6,body:2} },
+          { name: 'Old Fashioned', ko: '올드 패션드', desc: '', glass: 14000, tags: [{label:'스모키',cat:'smoky'},{label:'비터',cat:'bitter'}], radar: {sweet:4,sour:1,bitter:6,strong:8,body:5} },
+          { name: 'Negroni', ko: '네그로니', desc: '', glass: 14000, tags: [{label:'비터',cat:'bitter'},{label:'허브',cat:'herbal'}], radar: {sweet:3,sour:1,bitter:8,strong:7,body:4} },
+          { name: 'Dry Martini', ko: '드라이 마티니', desc: '', glass: 14000, tags: [{label:'허브',cat:'herbal'},{label:'비터',cat:'bitter'}], radar: {sweet:1,sour:1,bitter:5,strong:9,body:2} },
         ]},
       ],
     }
@@ -2263,6 +2308,17 @@ function showCognacText() {
   showScreen('cognacText');
 }
 
+const FLAVOR_TAG_COLORS = {
+  sweet: { bg: '#332a1a', fg: '#c9a35a' },
+  sour: { bg: '#1f3328', fg: '#5ccf9a' },
+  bitter: { bg: '#2f2530', fg: '#b48fd4' },
+  smoky: { bg: '#3a2a1f', fg: '#d99a5c' },
+  fruity: { bg: '#3a2028', fg: '#d47a94' },
+  creamy: { bg: '#33302a', fg: '#c9bfa8' },
+  herbal: { bg: '#223326', fg: '#7fbf7f' },
+  spicy: { bg: '#3a2020', fg: '#d47a7a' },
+};
+
 function renderWineTabs() {
   const tabs = document.getElementById('wineTabs');
   tabs.innerHTML = '';
@@ -2288,10 +2344,22 @@ function renderWineBody() {
       const div = document.createElement('div');
       div.className = 'dtext-item';
       let sub = [item.grape, item.country, item.alc].filter(Boolean).join(' · ');
+      const taste = (item.dry !== undefined && item.body !== undefined) ? `
+        <div class="dtext-taste-axis">
+          <div class="dtext-taste-axis-row">
+            <div class="dtext-taste-axis-labels"><span>Dry</span><span>Sweet</span></div>
+            <div class="dtext-taste-axis-track"><div class="dtext-taste-axis-dot" style="left:${item.dry}%;"></div></div>
+          </div>
+          <div class="dtext-taste-axis-row">
+            <div class="dtext-taste-axis-labels"><span>Light</span><span>Full</span></div>
+            <div class="dtext-taste-axis-track"><div class="dtext-taste-axis-dot" style="left:${item.body}%;"></div></div>
+          </div>
+        </div>` : '';
       div.innerHTML = `<div>
         <div class="dtext-item-name">${item.name}</div>
         ${item.ko ? `<div class="dtext-item-ko">${item.ko}</div>` : ''}
         ${sub ? `<div class="dtext-item-sub">${sub}</div>` : ''}
+        ${taste}
       </div>
       <div style="display:flex;align-items:center;">
         <div class="dtext-single-price${item.soldOut ? ' sold-out-text' : ''}">${item.bottle ? item.bottle.toLocaleString() : ''}</div>
@@ -2339,10 +2407,11 @@ function renderCocktailBody() {
     sec.items.forEach(item => {
       const div = document.createElement('div');
       div.className = 'dtext-item';
+      const flavorTags = (item.tags && item.tags.length) ? `<div class="dtext-flavor-tags">${item.tags.map(t => `<span class="dtext-flavor-tag" style="background:${FLAVOR_TAG_COLORS[t.cat].bg};color:${FLAVOR_TAG_COLORS[t.cat].fg};">${t.label}</span>`).join('')}</div>` : '';
       div.innerHTML = `<div>
         <div class="dtext-item-name">${item.name}</div>
         ${item.ko ? `<div class="dtext-item-ko">${item.ko}</div>` : ''}
-        ${item.desc ? `<div class="dtext-item-sub">${item.desc}</div>` : ''}
+        ${flavorTags}
       </div>
       <div style="display:flex;align-items:center;">
         <div class="dtext-single-price">${item.glass ? item.glass.toLocaleString() : ''}</div>
@@ -2350,10 +2419,13 @@ function renderCocktailBody() {
       </div>`;
       const addBtn = div.querySelector('.dtext-cocktail-add');
       if (addBtn) {
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
           addToCart(item.name, item.ko || '', '₩' + item.glass.toLocaleString(), item.glass);
         });
       }
+      div.style.cursor = 'pointer';
+      div.addEventListener('click', () => openCocktailDetail(item));
       body.appendChild(div);
     });
   });
@@ -2679,6 +2751,49 @@ function openOptionModal(name, ko, choices) {
 function closeOptionModal() {
   document.getElementById('optionModal').classList.remove('active');
   pendingOptionItem = null;
+}
+
+// ── COCKTAIL RADAR DETAIL ──
+function cocktailRadarSVG(radar) {
+  const axes = [['sweet', 'Sweet'], ['sour', 'Sour'], ['bitter', 'Bitter'], ['strong', 'Strong'], ['body', 'Body']];
+  const cx = 100, cy = 100, maxR = 62;
+  const angleStep = 360 / axes.length;
+  const startAngle = -90;
+  const pt = (r, i) => {
+    const ang = (startAngle + i * angleStep) * Math.PI / 180;
+    return [cx + r * Math.cos(ang), cy + r * Math.sin(ang)];
+  };
+  let grid = '';
+  [0.25, 0.5, 0.75, 1].forEach(frac => {
+    const pts = axes.map((_, i) => pt(maxR * frac, i).join(',')).join(' ');
+    grid += `<polygon points="${pts}" fill="none" stroke="#2a2c32" stroke-width="1"/>`;
+  });
+  let axisLines = '';
+  let labels = '';
+  axes.forEach((a, i) => {
+    const [x, y] = pt(maxR, i);
+    axisLines += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#2a2c32" stroke-width="1"/>`;
+    const [lx, ly] = pt(maxR + 16, i);
+    labels += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#777">${a[1]}</text>`;
+  });
+  const dataPts = axes.map((a, i) => pt(maxR * ((radar[a[0]] || 0) / 10), i).join(',')).join(' ');
+  const dataPoly = `<polygon points="${dataPts}" fill="#6b9ae8" fill-opacity="0.28" stroke="#6b9ae8" stroke-width="1.5"/>`;
+  return `<svg viewBox="0 0 200 200" width="200" height="200">${grid}${axisLines}${dataPoly}${labels}</svg>`;
+}
+
+function openCocktailDetail(item) {
+  document.getElementById('cocktailDetailName').textContent = item.name;
+  document.getElementById('cocktailDetailKo').textContent = item.ko || '';
+  document.getElementById('cocktailDetailChart').innerHTML = item.radar ? cocktailRadarSVG(item.radar) : '';
+  const tagsEl = document.getElementById('cocktailDetailTags');
+  tagsEl.innerHTML = (item.tags && item.tags.length)
+    ? item.tags.map(t => `<span class="dtext-flavor-tag" style="background:${FLAVOR_TAG_COLORS[t.cat].bg};color:${FLAVOR_TAG_COLORS[t.cat].fg};">${t.label}</span>`).join('')
+    : '';
+  document.getElementById('cocktailDetailModal').classList.add('active');
+}
+
+function closeCocktailDetail() {
+  document.getElementById('cocktailDetailModal').classList.remove('active');
 }
 
 
