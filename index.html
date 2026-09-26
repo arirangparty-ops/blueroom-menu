@@ -1378,7 +1378,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     </div>
 
     <!-- 이달의 요리 / 한 잔 -->
-    <div class="monthly-section-title" style="margin-top:6px;">이달의 요리 · 한 잔</div>
+    <div class="monthly-section-title" style="margin-top:6px;">이달의 요리</div>
 
     <div class="monthly-simple-card2">
       <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 요리</div>
@@ -1394,24 +1394,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
             <div class="monthly-simple-badge">September Only</div>
           </div>
           <div class="monthly-add-btn" id="addBasilTomatoPasta" style="margin-left:10px;">+</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="monthly-simple-card2">
-      <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 한 잔</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div>
-          <div class="monthly-simple-name">Hendrick's GinTonic</div>
-          <div class="monthly-simple-sub">헨드릭스 진토닉</div>
-        </div>
-        <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
-          <div>
-            <div class="monthly-simple-original">₩12,000</div>
-            <div class="monthly-simple-special">₩10,000</div>
-            <div class="monthly-simple-badge">September Only</div>
-          </div>
-          <div class="monthly-add-btn" id="addHendricks" style="margin-left:10px;">+</div>
         </div>
       </div>
     </div>
@@ -1785,7 +1767,6 @@ const whiskyData = {
       { ctg: 'CS', shot: 12000, bottle: 230000 },
     ]},
     { brand: 'Buffalo Trace', ko: '버팔로 트레이스', items: [
-      { ctg: '375ml', shot: 7000, bottle: 75000 },
       { ctg: '750ml', shot: 7000, bottle: 120000 },
     ]},
     { brand: 'Wild Turkey', ko: '와일드 터키', items: [
@@ -1804,12 +1785,12 @@ const whiskyData = {
       { ctg: 'Bourbon', shot: 10000, bottle: 185000 },
     ]},
     { brand: '1792', ko: '1792', items: [
-      { ctg: 'Small batch', shot: 11000, bottle: 200000 },
+      { ctg: 'Small batch', shot: 13000, bottle: 200000 },
       { ctg: 'Bottled In Bond', shot: 14000, bottle: 270000 },
       { ctg: 'Sweet Wheat', shot: 18000, bottle: 350000 },
       { ctg: '12y', shot: 19000, bottle: 380000 },
       { ctg: 'Full Proof', shot: 20000, bottle: 400000 },
-      { ctg: 'Single Barrel', shot: 23000, bottle: 450000 },
+      { ctg: 'Single Barrel', shot: 25000, bottle: 450000 },
     ]},
     { brand: 'Willet', ko: '윌렛', items: [
       { ctg: 'Rye', shot: 21000, bottle: 420000 },
@@ -2042,7 +2023,7 @@ const drinksTextData = {
           { name: 'Dom Perignon Vintage 2015', ko: '돔 페리뇽 빈티지 2015', grape: 'Chardonnay · Pinot Noir', alc: '12.5%', country: 'FRANCE · Champagne', bottle: 880000, dry: 8, body: 35 },
         ]},
         { header: 'PORTO', items: [
-          { name: 'Kopke Fine Tawny', ko: '콥케 파인 토니', grape: 'Touriga Franca · Touriga Nacional · Tinta Roriz', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 43000, dry: 90, body: 55 },
+          { name: 'Kopke Fine Ruby', ko: '콥케 파인 루비', grape: 'Touriga Franca · Touriga Nacional · Tinta Roriz', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 43000, dry: 90, body: 55 },
           { name: 'Quinta da Corta Late Bottled Vintage', ko: '퀸타 다 코타 LBV', grape: 'Touriga Franca · Touriga Nacional · Tinta Cão · Tinta Roriz · Tinta Barroca', alc: '19.5%', country: 'PORTUGAL · Douro', bottle: 90000, dry: 88, body: 60 },
         ]},
       ],
@@ -2064,7 +2045,6 @@ const drinksTextData = {
         { header: 'RED WINE', items: [
           { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 39000, dry: 15, body: 55 },
           { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 39000, dry: 15, body: 55 },
-          { name: 'Chateau Tour Sivadon', ko: '샤또 뚜르 시바동', grape: 'Merlot · Cabernet Sauvignon', alc: '13.5%', country: 'FRANCE · Bordeaux Graves', bottle: 60000, dry: 12, body: 60 },
           { name: 'Chateau Le Bourdillot', ko: '샤또 르 부르디요', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 68000, dry: 12, body: 62 },
           { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 75000, dry: 12, body: 62 },
           { name: 'La Closerie De Malescasse', ko: '라 크롤제리 드 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 114000, dry: 10, body: 68 },
@@ -2079,13 +2059,14 @@ const drinksTextData = {
       { header: 'SIGNATURE', items: [
         { name: 'Rotten Tomatoes', ko: '로튼 토마토', desc: '', glass: 14000, tags: [{label:'허브',cat:'herbal'},{label:'프루티',cat:'fruity'}], radar: {sweet:4,sour:5,bitter:1,strong:4,body:3} },
         { name: 'Cigarettes After Sex', ko: '시가렛 애프터 섹스', desc: '', glass: 16000, tags: [{label:'스모키',cat:'smoky'},{label:'비터',cat:'bitter'},{label:'스위트',cat:'sweet'}], radar: {sweet:5,sour:2,bitter:5,strong:8,body:6} },
+        { name: 'English Tea', ko: '잉글리쉬 티', desc: '', glass: 18000, tags: [{label:'허브',cat:'herbal'}], radar: {sweet:3,sour:1,bitter:3,strong:5,body:3} },
+        { name: '灰色と青', ko: '잿빛과 푸름', desc: '', glass: 16000, tags: [{label:'허브',cat:'herbal'},{label:'스위트',cat:'sweet'},{label:'비터',cat:'bitter'}], radar: {sweet:5,sour:1,bitter:5,strong:5,body:4} },
       ]},
       { header: 'COCKTAIL', items: [
         { name: 'GinTonic', ko: '진토닉', desc: '', glass: 10000, tags: [{label:'허브',cat:'herbal'},{label:'사워',cat:'sour'}], radar: {sweet:2,sour:4,bitter:3,strong:5,body:2} },
         { name: 'JackCoke', ko: '잭콕', desc: '', glass: 10000, tags: [{label:'스모키',cat:'smoky'},{label:'스위트',cat:'sweet'}], radar: {sweet:5,sour:1,bitter:2,strong:5,body:3} },
         { name: 'Kahlua Milk', ko: '깔루아 밀크', desc: '', glass: 10000, tags: [{label:'크리미',cat:'creamy'},{label:'스위트',cat:'sweet'},{label:'스모키',cat:'smoky'}], radar: {sweet:8,sour:1,bitter:2,strong:3,body:7} },
-        { name: 'White Russian', ko: '화이트 러시안', desc: '', glass: 10000, tags: [{label:'스위트',cat:'sweet'},{label:'크리미',cat:'creamy'},{label:'스모키',cat:'smoky'}], radar: {sweet:6,sour:1,bitter:2,strong:6,body:6} },
-        { name: "Hendrick's GinTonic", ko: '헨드릭스 진토닉', desc: '', glass: 10000, originalGlass: 12000, tags: [{label:'허브',cat:'herbal'},{label:'사워',cat:'sour'}], radar: {sweet:2,sour:4,bitter:3,strong:5,body:2} },
+        { name: 'White Russian', ko: '화이트 러시안', desc: '', glass: 12000, tags: [{label:'스위트',cat:'sweet'},{label:'크리미',cat:'creamy'},{label:'스모키',cat:'smoky'}], radar: {sweet:6,sour:1,bitter:2,strong:6,body:6} },
         { name: 'Black Russian', ko: '블랙 러시안', desc: '', glass: 12000, tags: [{label:'스위트',cat:'sweet'},{label:'스모키',cat:'smoky'}], radar: {sweet:5,sour:1,bitter:3,strong:7,body:4} },
         { name: 'Cuba Libre', ko: '쿠바 리브레', desc: '', glass: 12000, tags: [{label:'스위트',cat:'sweet'},{label:'사워',cat:'sour'}], radar: {sweet:5,sour:3,bitter:2,strong:5,body:3} },
         { name: 'Peach Crush', ko: '피치크러시', desc: '', glass: 12000, tags: [{label:'프루티',cat:'fruity'},{label:'스위트',cat:'sweet'},{label:'사워',cat:'sour'}], radar: {sweet:6,sour:4,bitter:1,strong:3,body:3} },
@@ -2117,20 +2098,14 @@ const drinksTextData = {
   beer: {
     title: 'Highball & Beer',
     sections: [
-      { header: 'HIGHBALL', items: [
-        { name: '烟台 Highball', ko: '연태 하이볼', glass: 9000 },
-        { name: 'Jameson Highball', ko: '제임슨 하이볼', glass: 9000 },
-        { name: 'Red Label Highball', ko: '레드라벨 하이볼', glass: 9000 },
-        { name: 'Suntory Highball', ko: '산토리 하이볼', glass: 9000 },
-        { name: 'Jim Beam Highball', ko: '짐빔 하이볼', glass: 9000 },
-        { name: 'Earl Grey Highball', ko: '얼그레이 하이볼', glass: 10000 },
-        { name: "Maker's Mark Highball", ko: '메이커스 마크 하이볼', glass: 10000 },
-        { name: 'Monkey Shoulder Highball', ko: '몽키숄더 하이볼', glass: 11000 },
-        { name: 'Laphroaig Highball', ko: '라프로익 하이볼', glass: 14000 },
+      { header: 'HIGHBALL', note: '모든 위스키 하이볼로 변경시 3,000 추가 가능', items: [
+        { name: 'Suntory Highball', ko: '산토리 하이볼', glass: 10000 },
+        { name: 'Jim Beam Highball', ko: '짐빔 하이볼', glass: 10000 },
+        { name: 'Whisky Highball', ko: '위스키 하이볼', glass: 11000 },
       ]},
       { header: 'BEER', items: [
         { name: 'Budweiser (生)', ko: '버드와이저', vol: '330ml', glass: 8000 },
-        { name: 'Suntory Premium (生)', ko: '산토리 프리미엄', vol: '380ml', glass: 10000 },
+        { name: 'Stella Artois (生)', ko: '스텔라', vol: '330ml', glass: 9000 },
         { name: 'Yantai Beer (生)', ko: '연태맥주', vol: '330ml', glass: 10000 },
         { name: 'Guinness Microdraught (生)', ko: '기네스 마이크로 드래프트', vol: '558ml', glass: 14000 },
         { name: 'Kirin', ko: '기린', vol: '330ml', glass: 7000 },
@@ -2142,9 +2117,8 @@ const drinksTextData = {
         { name: "Blonde L'Anecdote", ko: '블롱드 라넥도트', vol: '330ml', glass: 16000 },
       ]},
       { header: 'SOJU', items: [
-        { name: '一品眞露', ko: '일품 진로', vol: '375ml', glass: 31000 },
-        { name: '火堯', ko: '화요', vol: '375ml', glass: 31000 },
-        { name: 'Saero', ko: '새로', vol: '330ml', glass: 6000 },
+        { name: '一品眞露', ko: '일품 진로', vol: '375ml', glass: 35000 },
+        { name: '火堯', ko: '화요', vol: '375ml', glass: 35000 },
       ]},
     ]
   },
@@ -2451,6 +2425,12 @@ function showBeerText() {
     h.className = 'dtext-section-header';
     h.textContent = sec.header;
     body.appendChild(h);
+    if (sec.note) {
+      const noteEl = document.createElement('div');
+      noteEl.style.cssText = 'font-size:10px;letter-spacing:0.05em;color:#6b9ae8;margin:-4px 0 8px;padding-left:2px;';
+      noteEl.textContent = sec.note;
+      body.appendChild(noteEl);
+    }
     sec.items.forEach(item => {
       const div = document.createElement('div');
       div.className = 'dtext-item';
@@ -2813,10 +2793,6 @@ function initMonthlyButtons() {
   const addBasilTomatoPasta = document.getElementById('addBasilTomatoPasta');
   if (addBasilTomatoPasta) addBasilTomatoPasta.addEventListener('click', () => {
     addToCart('Basil Tomato Pasta', '바질 토마토 파스타', '₩17,000', 17000);
-  });
-  const addHendricks = document.getElementById('addHendricks');
-  if (addHendricks) addHendricks.addEventListener('click', () => {
-    addToCart("Hendrick's GinTonic", '헨드릭스 진토닉', '₩10,000', 10000);
   });
   const addDinnerSet = document.getElementById('addDinnerSet');
   if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
