@@ -535,6 +535,40 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 .option-choice-price { font-size: 15px; color: #ddd8d0; }
 .option-cancel { text-align: center; font-size: 12px; color: #666; margin-top: 14px; cursor: pointer; padding: 8px; }
 
+/* monthly popup (shown on home load) */
+#monthlyPopupModal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.65);
+  display: none; z-index: 400;
+}
+#monthlyPopupModal.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.monthly-popup-box {
+  background: #1a1b20; border: 0.5px solid #2c2e34; border-radius: 2px;
+  padding: 26px 22px 20px; width: 290px;
+  margin: auto;
+  position: relative;
+}
+.monthly-popup-close { position: absolute; top: 14px; right: 16px; font-size: 14px; color: #666; cursor: pointer; }
+.monthly-popup-label { font-size: 10px; letter-spacing: 0.28em; color: #6b9ae8; text-transform: uppercase; margin-bottom: 6px; }
+.monthly-popup-title { font-size: 18px; color: #ece8e0; font-weight: 400; margin-bottom: 16px; }
+.monthly-popup-item { padding: 10px 0; border-top: 0.5px solid #24262c; }
+.monthly-popup-item:first-of-type { border-top: none; }
+.monthly-popup-item-name { font-size: 13px; color: #ddd8d0; font-weight: 500; }
+.monthly-popup-item-sub { font-size: 11px; color: #666; margin-top: 2px; }
+.monthly-popup-item-price { margin-top: 4px; }
+.monthly-popup-price-original { font-size: 10px; color: #444; text-decoration: line-through; display: inline-block; margin-right: 6px; }
+.monthly-popup-price-special { font-size: 13px; color: #6b9ae8; font-weight: 600; display: inline-block; }
+.monthly-popup-cta {
+  margin-top: 18px; text-align: center; font-size: 12px; color: #6b9ae8;
+  border: 1px solid #4a7cc4; border-radius: 2px; padding: 10px; cursor: pointer; letter-spacing: 0.05em;
+}
+.monthly-popup-cta:active { opacity: 0.6; }
+
 /* cocktail detail modal */
 #cocktailDetailModal {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -917,6 +951,36 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 </head>
 <body>
 
+<!-- MONTHLY POPUP -->
+<div id="monthlyPopupModal" onclick="if(event.target===this) closeMonthlyPopup();">
+  <div class="monthly-popup-box">
+    <div class="monthly-popup-close" onclick="closeMonthlyPopup()">✕</div>
+    <div class="monthly-popup-label">October Special</div>
+    <div class="monthly-popup-title">이달의 메뉴 안내</div>
+
+    <div class="monthly-popup-item">
+      <div class="monthly-popup-item-name">Dinner Set</div>
+      <div class="monthly-popup-item-sub">살치살 스테이크 + 갈릭 버터 엔초비 파스타 + 샤또 오뜨 브란드 or 소뮈르 에르보쥬</div>
+      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩133,000</span><span class="monthly-popup-price-special">₩120,000</span></div>
+    </div>
+    <div class="monthly-popup-item">
+      <div class="monthly-popup-item-name">Pairing Set</div>
+      <div class="monthly-popup-item-sub">브리치즈 구이 + 소뮈르 에르보쥬 1병</div>
+      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩91,000</span><span class="monthly-popup-price-special">₩78,000</span></div>
+    </div>
+    <div class="monthly-popup-item">
+      <div class="monthly-popup-item-name">이달의 위스키 · 1792 Small batch</div>
+      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩13,000</span><span class="monthly-popup-price-special">₩11,000</span></div>
+    </div>
+    <div class="monthly-popup-item">
+      <div class="monthly-popup-item-name">이달의 위스키 · 1792 Single Barrel</div>
+      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩25,000</span><span class="monthly-popup-price-special">₩23,000</span></div>
+    </div>
+
+    <div class="monthly-popup-cta" onclick="closeMonthlyPopup(); showScreen('monthly');">이달의 메뉴 보러가기</div>
+  </div>
+</div>
+
 <!-- HOME -->
 <div id="home" class="screen active">
   <img class="home-logo-img" src="blueroom_logo.PNG" alt="BLUE ROOM">
@@ -925,7 +989,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     <div class="monthly-left">
       <div class="monthly-dot"></div>
       <div>
-        <div class="monthly-label">September Special</div>
+        <div class="monthly-label">October Special</div>
         <div class="monthly-title">이달의 메뉴</div>
       </div>
     </div>
@@ -1300,31 +1364,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     <div class="list-title">Whisky</div>
   </div>
   <div class="whisky-scroll">
-  <div style="margin:12px 24px 0;">
-    <div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin-bottom:6px;padding-left:2px;">위스키 처음이신가요? · 15ml 샘플러 플라이트</div>
-    <div style="padding:2px 0;background:transparent;border-top:0.5px solid #2a2c32;border-bottom:0.5px solid #2a2c32;border-radius:0;">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Speyside 입문 3종 <span style="color:#555;font-size:10px;">발베니12y DoubleWood·맥켈란12y Double Cask·글렌피딕12y</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">18,500</div><div class="monthly-add-btn" id="addFlightSpeyside" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Islay 스모키 3종 <span style="color:#555;font-size:10px;">아드벡10y·라가불린8y·라프로익 QC</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">19,500</div><div class="monthly-add-btn" id="addFlightIslay" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Bourbon 3종 <span style="color:#555;font-size:10px;">엔젤스엔비·와일드터키 레어브리드·러셀스 싱글배럴 라이</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">20,000</div><div class="monthly-add-btn" id="addFlightBourbon" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #2a2c32;">
-      <div style="font-size:12px;color:#b8b4ac;">Sherry·Peat·Bourbon 3종 <span style="color:#555;font-size:10px;">맥켈란12y 셰리오크·아드벡10y·와일드터키 레어브리드</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">19,500</div><div class="monthly-add-btn" id="addFlightSherryPeatBourbon" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;">
-      <div style="font-size:12px;color:#b8b4ac;">Korean 기원 3종 <span class="monthly-set-badge" style="margin-left:4px;">MADE IN KOREA</span><br><span style="color:#555;font-size:10px;">이글·유니콘·타이거</span></div>
-      <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;"><div style="font-size:12px;color:#b8b4ac;">19,000</div><div class="monthly-add-btn" id="addFlightKorean" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div></div>
-    </div>
-    </div>
-  </div>
   <div class="whisky-tabs" id="whiskyTabs"></div>
   <div class="whisky-list" id="whiskyList"></div>
   </div>
@@ -1334,15 +1373,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 <div id="monthly" class="screen">
   <div class="list-header">
     <div class="back-btn" onclick="goHome()">← Back</div>
-    <div class="list-title">September Special</div>
+    <div class="list-title">October Special</div>
   </div>
   <div class="monthly-content">
 
     <!-- 헤더 -->
     <div class="monthly-header-card">
-      <div class="monthly-month">September 2026</div>
+      <div class="monthly-month">October 2026</div>
       <div class="monthly-headline">이달의 블루룸</div>
-      <div class="monthly-desc">9월 한정 스페셜 메뉴</div>
+      <div class="monthly-desc">10월 한정 스페셜 메뉴</div>
     </div>
 
     <!-- 이달의 세트 -->
@@ -1355,13 +1394,13 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div class="monthly-set-items">
         살치살 스테이크<br>
         갈릭 버터 엔초비 파스타<br>
-        하우스 와인 2잔 (레드 or 화이트)
+        샤또 오뜨 브란드 or 소뮈르 에르보쥬 (택1)
       </div>
       <div class="monthly-set-note">음료 변경 가능 (직원 문의)</div>
       <div class="monthly-set-price-row">
-        <div class="monthly-set-original">₩74,000</div>
-        <div class="monthly-set-special">₩70,000</div>
-        <div class="monthly-set-badge">September Only</div>
+        <div class="monthly-set-original">₩133,000</div>
+        <div class="monthly-set-special">₩120,000</div>
+        <div class="monthly-set-badge">October Only</div>
         <div class="monthly-add-btn on-blue" id="addDinnerSet">+</div>
       </div>
     </div>
@@ -1376,32 +1415,14 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       </div>
       <div class="monthly-set-price-row">
         <div class="monthly-set-original">₩91,000</div>
-        <div class="monthly-set-special">₩86,000</div>
-        <div class="monthly-set-badge">September Only</div>
+        <div class="monthly-set-special">₩78,000</div>
+        <div class="monthly-set-badge">October Only</div>
         <div class="monthly-add-btn on-blue" id="addPairingSet">+</div>
       </div>
     </div>
 
-    <!-- 이달의 요리 / 위스키 -->
-    <div class="monthly-section-title" style="margin-top:6px;">이달의 요리 · 위스키</div>
-
-    <div class="monthly-simple-card2">
-      <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 요리</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div>
-          <div class="monthly-simple-name">Basil Tomato Pasta</div>
-          <div class="monthly-simple-sub">바질 토마토 파스타</div>
-        </div>
-        <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
-          <div>
-            <div class="monthly-simple-original">₩19,000</div>
-            <div class="monthly-simple-special">₩17,000</div>
-            <div class="monthly-simple-badge">September Only</div>
-          </div>
-          <div class="monthly-add-btn" id="addBasilTomatoPasta" style="margin-left:10px;">+</div>
-        </div>
-      </div>
-    </div>
+    <!-- 이달의 위스키 -->
+    <div class="monthly-section-title" style="margin-top:6px;">이달의 위스키</div>
 
     <div class="monthly-simple-card2">
       <div style="font-size:9px;letter-spacing:0.2em;color:#4a6090;margin-bottom:6px;">이달의 위스키</div>
@@ -1414,7 +1435,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
           <div>
             <div class="monthly-simple-original">₩13,000</div>
             <div class="monthly-simple-special">₩11,000</div>
-            <div class="monthly-simple-badge">September Only</div>
+            <div class="monthly-simple-badge">October Only</div>
           </div>
           <div class="monthly-add-btn" id="addWhisky1792Small" style="margin-left:10px;">+</div>
         </div>
@@ -1428,7 +1449,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
           <div>
             <div class="monthly-simple-original">₩25,000</div>
             <div class="monthly-simple-special">₩23,000</div>
-            <div class="monthly-simple-badge">September Only</div>
+            <div class="monthly-simple-badge">October Only</div>
           </div>
           <div class="monthly-add-btn" id="addWhisky1792Single" style="margin-left:10px;">+</div>
         </div>
@@ -1480,9 +1501,6 @@ const foods = {
       { en: 'Butter Glazed Sirloin Steak', ko: '살치살 스테이크', price: '₩34,000', img: 'mains_bgss.JPG',
         desc: '육향 가득한 살치살과 브라운 버터로 완성한 매시드 포테이토, 앤초비 버터로 깊이를 더한 시그니처 스테이크',
         pairing: { wine: ["레드 · 샤토 르 부르디요 (Château Le Bourdillot)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
-      { en: 'Mushroom Cream Scaloppine', ko: '버섯 크림 스테이크', price: '₩36,000', img: 'mains_mcs.JPG',
-        desc: '이탈리아식 스칼로피네로 구워낸 스테이크에, 다양한 버섯이 어우러진 진한 향의 크림소스로 입안 가득 깊은 풍미를 채워주는 블루룸의 메인 요리',
-        pairing: { wine: ["레드 · 샤토 르 부르디요 (Château Le Bourdillot)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["쉐리 위스키 (Sherry Whiskey)"] } },
     ]
   },
   plates: {
@@ -1502,7 +1520,7 @@ const foods = {
       { en: 'Carbonara', ko: '까르보나라', price: '₩18,000', img: 'pasta_ca.JPG',
         desc: '노른자와 그라나파다노 치즈로 진하게 유화시킨 크림에 바삭하게 구운 베이컨을 더하고, 후추와 페퍼론치노로 알싸함을 살린 클래식 까르보나라',
         pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["아마레토 사워 (Amaretto Sour)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
-      { en: 'Basil Tomato Pasta', ko: '바질 토마토 파스타', price: '₩17,000', originalPrice: '₩19,000', img: 'pasta_bt.JPG',
+      { en: 'Basil Tomato Pasta', ko: '바질 토마토 파스타', price: '₩19,000', img: 'pasta_bt.JPG',
         desc: '토마토 소스에 탱글한 오징어와 새우를 더하고, 방울토마토와 신선한 바질 향을 얹어 완성한 깔끔하고 시원한 토마토 해산물 파스타',
         pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["프레시 라임 모히토 (Fresh Lime Mojito)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
       { en: 'Mentaiko Shrimp Oil Pasta', ko: '명란 새우 오일 파스타', price: '₩19,000', img: 'pasta_msop.JPG',
@@ -1661,7 +1679,6 @@ const whiskyData = {
     { brand: 'Bowmore', ko: '보모어', items: [
       { ctg: '12y', shot: 11000, bottle: 185000 },
       { ctg: '15y', shot: 17000, bottle: 330000 },
-      { ctg: '18y Deep & Complex', shot: 23000, bottle: 460000, soldOut: true },
     ]},
     { brand: 'Lagavulin', ko: '라가볼린', items: [
       { ctg: '8y', shot: 14000, bottle: 270000 },
@@ -1684,10 +1701,8 @@ const whiskyData = {
     ]},
     { brand: 'Octomore', ko: '옥토모어', items: [
       { ctg: '10.1', shot: 46000, bottle: 920000 },
-      { ctg: '13.3', shot: 61000, bottle: 1250000, soldOut: true },
       { ctg: '14.1', shot: 46000, bottle: 920000 },
       { ctg: '14.2', shot: 46000, bottle: 950000 },
-      { ctg: '14.3', shot: 56000, bottle: 1150000, soldOut: true },
       { ctg: '15.1', shot: 46000, bottle: 920000 },
       { ctg: '15.2', shot: 49000, bottle: 1000000 },
     ]},
@@ -1904,8 +1919,55 @@ const whiskyData = {
   ],
 };
 
-const whiskyTabs = ['Blended','Speyside','Islay','Highland','Islands','Japanese','Independent','Bourbon','Korean','Irish','Taiwan'];
-let currentWhiskyTab = 'Blended';
+const samplerFlights = [
+  { category: '위스키', items: [
+    { label: '입문자', desc: '글렌모렌지 Original · 맥켈란 12y 셰리 · 부나하벤 12y', price: 19000 },
+    { label: '셰리캐스크 중급', desc: '글렌알라키 15y · 아벨라워 아부나드 · 시그나토리 16y 글렌토커스', price: 36000 },
+    { label: '버번캐스크 중급', desc: '발베니 싱글배럴 · 시그나토리 12y 글렌오드 · 기원 Batch(cs)', price: 30000 },
+    { label: '피트중급', desc: '보모어 15y · 아란 Marchrie Moor (cs) · 라가불린 16y', price: 29000 },
+    { label: '셰리캐스크 고급', desc: '맥켈란 18y · 아벨라워 18y · 시그나토리 17y 타니닉', price: 64000 },
+    { label: '피트고급', desc: '부나하벤 18y · 옥토모어 14.1 · 아드벡 우가다일', price: 55000 },
+  ]},
+  { category: '버번', items: [
+    { label: '버번 입문', desc: '와일드터키 레어브리드 · 이글레어 · 잭다니엘 싱글배럴', price: 18000 },
+    { label: '버번 고급', desc: '부커스 · 와일드터키 16y 골드포일 · 블랑톤', price: 66000 },
+  ]},
+  { category: '재패니즈', items: [
+    { label: '산토리 코스', desc: '하쿠슈 DR · 히비키 블렌더스초이스 · 야마자키 12y', price: 44000 },
+    { label: '닛카 코스', desc: '류카 · 니카 요이치 · 니카 타케츠루', price: 32000 },
+  ]},
+  { category: '코냑', items: [
+    { label: '꼬냑 입문', desc: '레미마틴 VSOP · 라뇨사브랑 VSOP · 헤네시 VSOP', price: 20000 },
+    { label: '꼬냑 코스', desc: '라뇨사브랑 리저브 · 라뇨사브랑 XO · 헤네시 XO', price: 54000 },
+  ]},
+];
+
+function renderSamplerTab() {
+  const list = document.getElementById('whiskyList');
+  list.innerHTML = `<div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin:12px 0 6px;padding-left:2px;">15ml 샘플러 (올 하프)</div>` +
+    samplerFlights.map(group => `
+    <div style="font-size:10px;letter-spacing:0.12em;color:#55575f;margin:10px 0 2px;text-transform:uppercase;">${group.category}</div>
+    <div style="padding:2px 0;background:transparent;border-top:0.5px solid #2a2c32;border-bottom:0.5px solid #2a2c32;border-radius:0;">
+      ${group.items.map((item, idx) => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;${idx < group.items.length - 1 ? 'border-bottom:0.5px solid #2a2c32;' : ''}">
+        <div style="font-size:12px;color:#b8b4ac;">${item.label} <span style="color:#555;font-size:10px;">${item.desc}</span></div>
+        <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
+          <div style="font-size:12px;color:#b8b4ac;">${item.price.toLocaleString()}</div>
+          <div class="monthly-add-btn sampler-add-btn" data-category="${group.category}" data-label="${item.label}" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div>
+        </div>
+      </div>`).join('')}
+    </div>`).join('');
+  list.querySelectorAll('.sampler-add-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = samplerFlights.find(g => g.category === btn.dataset.category);
+      const item = group.items.find(i => i.label === btn.dataset.label);
+      addToCart(group.category + ' 샘플러 - ' + item.label, item.desc + ' (15ml×3)', '₩' + item.price.toLocaleString(), item.price);
+    });
+  });
+}
+
+const whiskyTabs = ['Sampler','Blended','Speyside','Islay','Highland','Islands','Japanese','Independent','Bourbon','Korean','Irish','Taiwan'];
+let currentWhiskyTab = 'Sampler';
 
 function showWhisky() {
   const tabs = document.getElementById('whiskyTabs');
@@ -1924,6 +1986,7 @@ function showWhisky() {
 function renderWhiskyList(tab) {
   const list = document.getElementById('whiskyList');
   list.innerHTML = '';
+  if (tab === 'Sampler') { renderSamplerTab(); return; }
   const brands = whiskyData[tab] || [];
   brands.forEach(brand => {
     const div = document.createElement('div');
@@ -2001,12 +2064,8 @@ const drinksTextData = {
         { brand: 'Jose Cuervo', ko: '호세 쿠엘보', items: [
           { ctg: 'Especial', shot: 6000, bottle: 90000 },
         ]},
-        { brand: 'Patron', ko: '패트론', items: [
-          { ctg: 'Anejo', shot: 19000, bottle: 390000, soldOut: true },
-        ]},
         { brand: 'Clase Azul', ko: '클라세 아줄', items: [
           { ctg: 'Plata', shot: 32000, bottle: 650000 },
-          { ctg: 'Reposado', shot: 36000, bottle: 740000, soldOut: true },
         ]},
       ]},
       { title: 'VODKA', items: [
@@ -2026,9 +2085,6 @@ const drinksTextData = {
         ]},
         { brand: 'Tanqueray', ko: '탱커레이', items: [
           { ctg: 'London Dry Gin', shot: 6000, bottle: 100000 },
-        ]},
-        { brand: 'Faubourg Paris Gin', ko: '포부르그 드 파리 진', items: [
-          { ctg: '', shot: 8000, bottle: 120000, soldOut: true },
         ]},
       ]},
       { title: 'SPIRITS', items: [
@@ -2050,7 +2106,6 @@ const drinksTextData = {
         ]},
         { header: 'SPARKLING', items: [
           { name: 'Brut, Fun Kiss', ko: '브뤼 펀 키스', grape: 'Chardonnay · Aligoté', alc: '11.5%', country: 'FRANCE · Bourgogne', bottle: 46000, dry: 10, body: 25 },
-          { name: "T' SPOT Brut", ko: '티스팟 브뤼', grape: 'Chardonnay', alc: '11.5%', country: 'FRANCE · Mâcon Bourgogne', bottle: 70000, dry: 10, body: 25, soldOut: true },
           { name: 'Domaine Des Herbuages Luminescence', ko: '도멘 데 에르보쥬, 루미네상스', grape: 'Chardonnay · Grolleau Gris · Melon de Bourgogne', alc: '12.5%', country: 'FRANCE · Loire', bottle: 75000, dry: 12, body: 25 },
           { name: 'Piper-Heidsieck Cuvee Brut', ko: '파이퍼 하이직 뀌베 브뤼', grape: 'Pinot Noir · Pinot Meunier · Chardonnay', alc: '12%', country: 'FRANCE · Champagne', bottle: 170000, dry: 8, body: 30 },
           { name: 'Dom Perignon Vintage 2015', ko: '돔 페리뇽 빈티지 2015', grape: 'Chardonnay · Pinot Noir', alc: '12.5%', country: 'FRANCE · Champagne', bottle: 880000, dry: 8, body: 35 },
@@ -2079,7 +2134,7 @@ const drinksTextData = {
           { name: 'Prestige Le Serre', ko: '프레스티지 르 세르', grape: 'Grenache · Red · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône AOP', bottle: 39000, dry: 15, body: 55 },
           { name: 'Le Vieux Truffolier', ko: '르 뷰우 트루폴리에', grape: 'Grenache · Carignan · Syrah', alc: '14%', country: 'FRANCE · Côtes du Rhône', bottle: 39000, dry: 15, body: 55 },
           { name: 'Chateau Le Bourdillot', ko: '샤또 르 부르디요', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 68000, dry: 12, body: 62 },
-          { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 75000, dry: 12, body: 62 },
+          { name: 'Chateau Haute Brande', ko: '샤또 오뜨 브란드', grape: 'Merlot · Cabernet Sauvignon', alc: '13%', country: 'FRANCE · Bordeaux Graves', bottle: 78000, dry: 12, body: 62 },
           { name: 'La Closerie De Malescasse', ko: '라 크롤제리 드 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 114000, dry: 10, body: 68 },
           { name: 'Chateau Malescasse', ko: '샤또 말레스까스', grape: 'Merlot · Cabernet Sauvignon · Petit Verdot', alc: '13.5%', country: 'FRANCE · Bordeaux', bottle: 125000, dry: 10, body: 70 },
         ]},
@@ -2353,10 +2408,14 @@ function renderWineBody() {
         <div class="dtext-item-name">${item.name}</div>
         ${item.ko ? `<div class="dtext-item-ko">${item.ko}</div>` : ''}
         ${sub ? `<div class="dtext-item-sub">${sub}</div>` : ''}
+        ${item.monthly ? '<div class="monthly-price-tag" style="margin-top:3px;">이 달의 와인</div>' : ''}
         ${taste}
       </div>
       <div style="display:flex;align-items:center;">
-        <div class="dtext-single-price${item.soldOut ? ' sold-out-text' : ''}">${item.bottle ? item.bottle.toLocaleString() : ''}</div>
+        <div style="text-align:right;">
+          ${item.originalBottle ? `<div class="dtext-price-original-strike">${item.originalBottle.toLocaleString()}</div>` : ''}
+          <div class="dtext-single-price${item.originalBottle ? ' dtext-price-discounted' : ''}${item.soldOut ? ' sold-out-text' : ''}">${item.bottle ? item.bottle.toLocaleString() : ''}</div>
+        </div>
         ${item.bottle ? (item.soldOut ? '<span class="sold-out-badge">SOLD OUT</span>' : '<div class="dtext-add-btn dtext-wine-add">+</div>') : ''}
       </div>`;
       const addBtn = div.querySelector('.dtext-wine-add');
@@ -2524,7 +2583,7 @@ function buildSearchIndex() {
   Object.keys(drinksTextData.wine.sections).forEach(tabName => {
     drinksTextData.wine.sections[tabName].forEach(sec => {
       sec.items.forEach(item => {
-        idx.push({ name: item.name, ko: item.ko, price: item.bottle ? '₩' + item.bottle.toLocaleString() : '', soldOut: item.soldOut || false, cat: 'Wine · ' + tabName, type: 'wine', tab: tabName });
+        idx.push({ name: item.name, ko: item.ko, price: item.bottle ? '₩' + item.bottle.toLocaleString() : '', originalPrice: item.originalBottle ? '₩' + item.originalBottle.toLocaleString() : undefined, soldOut: item.soldOut || false, cat: 'Wine · ' + tabName, type: 'wine', tab: tabName });
       });
     });
   });
@@ -2746,6 +2805,18 @@ function closeOptionModal() {
   pendingOptionItem = null;
 }
 
+function openMonthlyPopup() {
+  const modal = document.getElementById('monthlyPopupModal');
+  if (modal) modal.classList.add('active');
+}
+function closeMonthlyPopup() {
+  const modal = document.getElementById('monthlyPopupModal');
+  if (modal) modal.classList.remove('active');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(openMonthlyPopup, 300);
+});
+
 // ── COCKTAIL RADAR DETAIL ──
 function cocktailRadarSVG(radar) {
   const axes = [['sweet', 'Sweet'], ['sour', 'Sour'], ['bitter', 'Bitter'], ['strong', 'Strong'], ['body', 'Body']];
@@ -2828,10 +2899,6 @@ function goHome() { showScreen('home'); }
 
 
 function initMonthlyButtons() {
-  const addBasilTomatoPasta = document.getElementById('addBasilTomatoPasta');
-  if (addBasilTomatoPasta) addBasilTomatoPasta.addEventListener('click', () => {
-    addToCart('Basil Tomato Pasta', '바질 토마토 파스타', '₩17,000', 17000);
-  });
   const addWhisky1792Small = document.getElementById('addWhisky1792Small');
   if (addWhisky1792Small) addWhisky1792Small.addEventListener('click', () => {
     addToCart('1792 Small batch', '1792', '₩11,000', 11000);
@@ -2842,31 +2909,11 @@ function initMonthlyButtons() {
   });
   const addDinnerSet = document.getElementById('addDinnerSet');
   if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
-    addToCart('Dinner Set', '살치살스테이크+갈릭엔초비파스타+하우스와인2잔', '₩70,000', 70000);
-  });
-  const addFlightSpeyside = document.getElementById('addFlightSpeyside');
-  if (addFlightSpeyside) addFlightSpeyside.addEventListener('click', () => {
-    addToCart('Speyside Starter Flight', '발베니12y DoubleWood·맥켈란12y Double Cask·글렌피딕12y (15ml×3)', '₩18,500', 18500);
-  });
-  const addFlightIslay = document.getElementById('addFlightIslay');
-  if (addFlightIslay) addFlightIslay.addEventListener('click', () => {
-    addToCart('Islay Smoky Flight', '아드벡10y·라가불린8y·라프로익 QC (15ml×3)', '₩19,500', 19500);
-  });
-  const addFlightBourbon = document.getElementById('addFlightBourbon');
-  if (addFlightBourbon) addFlightBourbon.addEventListener('click', () => {
-    addToCart('Bourbon Flight', '엔젤스엔비·와일드터키 레어브리드·러셀스 싱글배럴 라이 (15ml×3)', '₩20,000', 20000);
-  });
-  const addFlightKorean = document.getElementById('addFlightKorean');
-  if (addFlightKorean) addFlightKorean.addEventListener('click', () => {
-    addToCart('Korean Ki One Flight', '이글·유니콘·타이거 (15ml×3)', '₩19,000', 19000);
-  });
-  const addFlightSherryPeatBourbon = document.getElementById('addFlightSherryPeatBourbon');
-  if (addFlightSherryPeatBourbon) addFlightSherryPeatBourbon.addEventListener('click', () => {
-    addToCart('Sherry · Peat · Bourbon Flight', '맥켈란12y 셰리오크·아드벡10y·와일드터키 레어브리드 (15ml×3)', '₩19,500', 19500);
+    addToCart('Dinner Set', '살치살스테이크+갈릭엔초비파스타+샤또오뜨브란드 or 소뮈르에르보쥬', '₩120,000', 120000);
   });
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
-    addToCart('Pairing Set', '브리치즈 구이+소뮈르 에르보쥬', '₩86,000', 86000);
+    addToCart('Pairing Set', '브리치즈 구이+소뮈르 에르보쥬', '₩78,000', 78000);
   });
 }
 document.addEventListener('DOMContentLoaded', initMonthlyButtons);
