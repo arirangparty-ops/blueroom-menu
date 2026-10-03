@@ -547,27 +547,54 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   align-items: center;
   justify-content: center;
 }
+@keyframes monthlyPopupIn {
+  from { opacity: 0; transform: scale(0.92) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
 .monthly-popup-box {
-  background: #1a1b20; border: 0.5px solid #2c2e34; border-radius: 2px;
-  padding: 26px 22px 20px; width: 290px;
+  background: #1a1b20;
+  border: 1px solid #4a7cc4;
+  border-radius: 6px;
+  padding: 0 0 20px; width: 300px;
   margin: auto;
   position: relative;
+  box-shadow: 0 0 0 1px rgba(107,154,232,0.15), 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(74,124,196,0.25);
+  animation: monthlyPopupIn 0.35s cubic-bezier(.2,.9,.3,1.2);
+  overflow: hidden;
 }
-.monthly-popup-close { position: absolute; top: 14px; right: 16px; font-size: 14px; color: #666; cursor: pointer; }
-.monthly-popup-label { font-size: 10px; letter-spacing: 0.28em; color: #6b9ae8; text-transform: uppercase; margin-bottom: 6px; }
-.monthly-popup-title { font-size: 18px; color: #ece8e0; font-weight: 400; margin-bottom: 16px; }
-.monthly-popup-item { padding: 10px 0; border-top: 0.5px solid #24262c; }
-.monthly-popup-item:first-of-type { border-top: none; }
-.monthly-popup-item-name { font-size: 13px; color: #ddd8d0; font-weight: 500; }
-.monthly-popup-item-sub { font-size: 11px; color: #666; margin-top: 2px; }
-.monthly-popup-item-price { margin-top: 4px; }
-.monthly-popup-price-original { font-size: 10px; color: #444; text-decoration: line-through; display: inline-block; margin-right: 6px; }
-.monthly-popup-price-special { font-size: 13px; color: #6b9ae8; font-weight: 600; display: inline-block; }
+.monthly-popup-close {
+  position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: #ccc; cursor: pointer; z-index: 2;
+}
+.monthly-popup-header {
+  background: linear-gradient(135deg, #2a4a7c, #1a2d4a);
+  padding: 22px 22px 16px;
+  position: relative;
+}
+.monthly-popup-label {
+  font-size: 10px; letter-spacing: 0.3em; color: #9cc0f5; text-transform: uppercase; margin-bottom: 8px;
+  font-weight: 700;
+}
+.monthly-popup-title { font-size: 21px; color: #fff; font-weight: 700; letter-spacing: 0.01em; }
+.monthly-popup-body { padding: 4px 22px 0; }
+.monthly-popup-item {
+  padding: 12px 10px; margin-top: 10px;
+  background: #212329; border-radius: 4px; border-left: 3px solid #6b9ae8;
+}
+.monthly-popup-item:first-child { margin-top: 14px; }
+.monthly-popup-item-name { font-size: 13px; color: #ece8e0; font-weight: 700; }
+.monthly-popup-item-sub { font-size: 11px; color: #777; margin-top: 3px; line-height: 1.4; }
+.monthly-popup-item-price { margin-top: 6px; }
+.monthly-popup-price-original { font-size: 10px; color: #555; text-decoration: line-through; display: inline-block; margin-right: 6px; }
+.monthly-popup-price-special { font-size: 15px; color: #7fb0ff; font-weight: 800; display: inline-block; }
 .monthly-popup-cta {
-  margin-top: 18px; text-align: center; font-size: 12px; color: #6b9ae8;
-  border: 1px solid #4a7cc4; border-radius: 2px; padding: 10px; cursor: pointer; letter-spacing: 0.05em;
+  margin: 18px 22px 0; text-align: center; font-size: 13px; color: #fff; font-weight: 700;
+  background: linear-gradient(135deg, #5a8de0, #3a6cc0);
+  border-radius: 4px; padding: 13px; cursor: pointer; letter-spacing: 0.03em;
+  box-shadow: 0 4px 14px rgba(74,124,196,0.4);
 }
-.monthly-popup-cta:active { opacity: 0.6; }
+.monthly-popup-cta:active { opacity: 0.75; }
 
 /* cocktail detail modal */
 #cocktailDetailModal {
@@ -955,29 +982,33 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 <div id="monthlyPopupModal" onclick="if(event.target===this) closeMonthlyPopup();">
   <div class="monthly-popup-box">
     <div class="monthly-popup-close" onclick="closeMonthlyPopup()">✕</div>
-    <div class="monthly-popup-label">October Special</div>
-    <div class="monthly-popup-title">이달의 메뉴 안내</div>
-
-    <div class="monthly-popup-item">
-      <div class="monthly-popup-item-name">Dinner Set</div>
-      <div class="monthly-popup-item-sub">살치살 스테이크 + 갈릭 버터 엔초비 파스타 + 샤또 오뜨 브란드 or 소뮈르 에르보쥬</div>
-      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩133,000</span><span class="monthly-popup-price-special">₩120,000</span></div>
-    </div>
-    <div class="monthly-popup-item">
-      <div class="monthly-popup-item-name">Pairing Set</div>
-      <div class="monthly-popup-item-sub">브리치즈 구이 + 소뮈르 에르보쥬 1병</div>
-      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩91,000</span><span class="monthly-popup-price-special">₩78,000</span></div>
-    </div>
-    <div class="monthly-popup-item">
-      <div class="monthly-popup-item-name">이달의 위스키 · 1792 Small batch</div>
-      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩13,000</span><span class="monthly-popup-price-special">₩11,000</span></div>
-    </div>
-    <div class="monthly-popup-item">
-      <div class="monthly-popup-item-name">이달의 위스키 · 1792 Single Barrel</div>
-      <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩25,000</span><span class="monthly-popup-price-special">₩23,000</span></div>
+    <div class="monthly-popup-header">
+      <div class="monthly-popup-label">★ October Special ★</div>
+      <div class="monthly-popup-title">이달의 메뉴 안내</div>
     </div>
 
-    <div class="monthly-popup-cta" onclick="closeMonthlyPopup(); showScreen('monthly');">이달의 메뉴 보러가기</div>
+    <div class="monthly-popup-body">
+      <div class="monthly-popup-item">
+        <div class="monthly-popup-item-name">Dinner Set</div>
+        <div class="monthly-popup-item-sub">살치살 스테이크 + 갈릭 버터 엔초비 파스타 + 샤또 오뜨 브란드 or 소뮈르 에르보쥬</div>
+        <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩133,000</span><span class="monthly-popup-price-special">₩120,000</span></div>
+      </div>
+      <div class="monthly-popup-item">
+        <div class="monthly-popup-item-name">Pairing Set</div>
+        <div class="monthly-popup-item-sub">브리치즈 구이 + 소뮈르 에르보쥬 1병</div>
+        <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩91,000</span><span class="monthly-popup-price-special">₩78,000</span></div>
+      </div>
+      <div class="monthly-popup-item">
+        <div class="monthly-popup-item-name">이달의 위스키 · 1792 Small batch</div>
+        <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩13,000</span><span class="monthly-popup-price-special">₩11,000</span></div>
+      </div>
+      <div class="monthly-popup-item">
+        <div class="monthly-popup-item-name">이달의 위스키 · 1792 Single Barrel</div>
+        <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩25,000</span><span class="monthly-popup-price-special">₩23,000</span></div>
+      </div>
+    </div>
+
+    <div class="monthly-popup-cta" onclick="closeMonthlyPopup(); showScreen('monthly');">이달의 메뉴 보러가기 →</div>
   </div>
 </div>
 
@@ -3077,7 +3108,7 @@ function backFromFoodDetail() {
 }
 
 function showDrinksCategory(cat) {
-  if (cat === 'whisky') { currentWhiskyTab = 'Blended'; showWhisky(); return; }
+  if (cat === 'whisky') { currentWhiskyTab = 'Sampler'; showWhisky(); return; }
   if (cat === 'cognac') { showCognacText(); return; }
   if (cat === 'wine') { showWineText(); return; }
   if (cat === 'cocktail') { showCocktailText(); return; }
