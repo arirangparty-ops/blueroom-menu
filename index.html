@@ -615,6 +615,20 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
   position: relative;
   text-align: center;
 }
+.cd-cards { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 12px; margin: auto; }
+.cd-cards > .cocktail-detail-box { margin: 0; }
+.cd-sketch-card { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 36px 8px 14px; position: relative;
+  background: radial-gradient(circle at 50% 42%, #272a33 0%, #1d1f25 55%, #1a1b20 100%); border-top: 2px solid #4a7cc4; }
+.cd-sketch-card.show { display: flex; }
+.cd-card-label { position: absolute; top: 12px; left: 16px; font-size: 9px; letter-spacing: 0.3em; color: #6b8fc4; text-transform: uppercase; }
+.cd-sketch-art { width: 100%; flex: 1; min-height: 210px; display: flex; align-items: center; justify-content: center; }
+.cd-sketch-floor { width: 70%; height: 12px; margin-top: 6px; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(107,154,232,0.22) 0%, rgba(107,154,232,0) 70%); }
+.cd-divider { border-top: 0.5px solid #26282e; margin: 14px 2px 0; }
+.cd-price-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 4px 0; }
+.cd-price-label { font-size: 9px; letter-spacing: 0.25em; color: #55575f; }
+.cd-price { font-size: 16px; color: #ddd8d0; font-weight: 500; }
+.cd-sketch-art svg { width: 70%; max-height: 190px; height: auto; }
+#cocktailDetailChart svg { width: 100%; max-width: 232px; height: auto; }
 .cocktail-detail-close { position: absolute; top: 12px; right: 14px; font-size: 14px; color: #666; cursor: pointer; }
 .cocktail-detail-name { font-size: 15px; color: #ddd8d0; font-weight: 600; }
 .cocktail-detail-ko { font-size: 11px; color: #666; margin-top: 2px; margin-bottom: 8px; }
@@ -990,12 +1004,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
     <div class="monthly-popup-body">
       <div class="monthly-popup-item">
         <div class="monthly-popup-item-name">Dinner Set</div>
-        <div class="monthly-popup-item-sub">살치살 스테이크 + 갈릭 버터 엔초비 파스타 + 샤또 오뜨 브란드 or 소뮈르 에르보쥬</div>
+        <div class="monthly-popup-item-sub">살치살 스테이크 + 갈릭 버터 엔초비 파스타 + 레드 · 샤또 오뜨 브란드 or 화이트 · 소뮈르 에르보쥬</div>
         <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩133,000</span><span class="monthly-popup-price-special">₩120,000</span></div>
       </div>
       <div class="monthly-popup-item">
         <div class="monthly-popup-item-name">Pairing Set</div>
-        <div class="monthly-popup-item-sub">브리치즈 구이 + 소뮈르 에르보쥬 1병</div>
+        <div class="monthly-popup-item-sub">브리치즈 구이 + 화이트 · 소뮈르 에르보쥬 1병</div>
         <div class="monthly-popup-item-price"><span class="monthly-popup-price-original">₩91,000</span><span class="monthly-popup-price-special">₩78,000</span></div>
       </div>
       <div class="monthly-popup-item">
@@ -1207,12 +1221,21 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 
 <!-- COCKTAIL DETAIL MODAL -->
 <div id="cocktailDetailModal" onclick="if(event.target===this) closeCocktailDetail();">
-  <div class="cocktail-detail-box">
-    <div class="cocktail-detail-close" onclick="closeCocktailDetail()">✕</div>
-    <div class="cocktail-detail-name" id="cocktailDetailName"></div>
-    <div class="cocktail-detail-ko" id="cocktailDetailKo"></div>
-    <div id="cocktailDetailChart"></div>
-    <div class="cocktail-detail-tags" id="cocktailDetailTags"></div>
+  <div class="cd-cards" onclick="if(event.target===this) closeCocktailDetail();">
+    <div class="cocktail-detail-box cd-sketch-card" id="cocktailSketchCard">
+      <div class="cd-card-label" id="cocktailSketchLabel"></div>
+      <div class="cd-sketch-art" id="cocktailSketchArt"></div>
+      <div class="cd-sketch-floor"></div>
+    </div>
+    <div class="cocktail-detail-box">
+      <div class="cocktail-detail-close" onclick="closeCocktailDetail()">✕</div>
+      <div class="cocktail-detail-name" id="cocktailDetailName"></div>
+      <div class="cocktail-detail-ko" id="cocktailDetailKo"></div>
+      <div id="cocktailDetailChart"></div>
+      <div class="cocktail-detail-tags" id="cocktailDetailTags"></div>
+      <div class="cd-divider"></div>
+      <div class="cd-price-row"><span class="cd-price-label">GLASS</span><span class="cd-price" id="cocktailDetailPrice"></span></div>
+    </div>
   </div>
 </div>
 
@@ -1425,7 +1448,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div class="monthly-set-items">
         살치살 스테이크<br>
         갈릭 버터 엔초비 파스타<br>
-        샤또 오뜨 브란드 or 소뮈르 에르보쥬 (택1)
+        레드 · 샤또 오뜨 브란드 or 화이트 · 소뮈르 에르보쥬 (택1)
       </div>
       <div class="monthly-set-note">음료 변경 가능 (직원 문의)</div>
       <div class="monthly-set-price-row">
@@ -1442,7 +1465,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
       <div class="monthly-set-theme">Food & Wine Pairing</div>
       <div class="monthly-set-items">
         브리치즈 구이<br>
-        소뮈르 에르보쥬 1병
+        화이트 · 소뮈르 에르보쥬 1병
       </div>
       <div class="monthly-set-price-row">
         <div class="monthly-set-original">₩91,000</div>
@@ -1524,7 +1547,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #15161a; f
 </div>
 
 <script>
-const IMG_V = 'v3'; // 사진 파일을 교체할 때마다 이 값을 바꾸면 브라우저 캐시 문제 없이 새 사진이 바로 반영됨
+const IMG_V = 'v5'; // 사진 파일을 교체할 때마다 이 값을 바꾸면 브라우저 캐시 문제 없이 새 사진이 바로 반영됨
 const foods = {
   mains: {
     title: 'Mains',
@@ -1952,20 +1975,23 @@ const whiskyData = {
 
 const samplerFlights = [
   { category: '위스키', items: [
-    { label: '입문자', desc: '글렌모렌지 Original · 맥켈란 12y 셰리 · 부나하벤 12y', price: 19000 },
-    { label: '셰리캐스크 중급', desc: '글렌알라키 15y · 아벨라워 아부나드 · 시그나토리 16y 글렌토커스', price: 36000 },
-    { label: '버번캐스크 중급', desc: '발베니 싱글배럴 · 시그나토리 12y 글렌오드 · 기원 Batch(cs)', price: 30000 },
-    { label: '피트중급', desc: '보모어 15y · 아란 Marchrie Moor (cs) · 라가불린 16y', price: 29000 },
-    { label: '셰리캐스크 고급', desc: '맥켈란 18y · 아벨라워 18y · 시그나토리 17y 타니닉', price: 64000 },
-    { label: '피트고급', desc: '부나하벤 18y · 옥토모어 14.1 · 아드벡 우가다일', price: 55000 },
+    { level: '입문', label: '입문자', desc: '글렌모렌지 Original · 맥켈란 12y 셰리 · 부나하벤 12y', price: 19000 },
+    { level: '초급', label: '셰리캐스크', desc: '시그나토리 9y 벤네비스 · 글렌드로냑 12y · 달모어 12y', price: 20000 },
+    { level: '초급', label: '버번캐스크', desc: '글렌그란트 12y · 글렌글라사 에볼루션 · 아란 쿼터캐스크', price: 18000 },
+    { level: '초급', label: '피트', desc: '아드벡 10y · 라프로익 10y · 보모어 12y', price: 16000 },
+    { level: '중급', label: '셰리캐스크', desc: '글렌알라키 15y · 아벨라워 아부나흐 · 시그나토리 16y 글렌토커스', price: 36000 },
+    { level: '중급', label: '버번캐스크', desc: '발베니 싱글배럴 · 시그나토리 12y 글렌오드 · 기원 Batch(cs)', price: 30000 },
+    { level: '중급', label: '피트', desc: '보모어 15y · 아란 Marchrie Moor (cs) · 라가불린 16y', price: 29000 },
+    { level: '고급', label: '셰리캐스크', desc: '맥켈란 18y · 아벨라워 18y · 시그나토리 17y 타니닉', price: 64000 },
+    { level: '고급', label: '피트', desc: '부나하벤 18y · 옥토모어 14.1 · 아드벡 우가다일', price: 55000 },
   ]},
   { category: '버번', items: [
-    { label: '버번 입문', desc: '와일드터키 레어브리드 · 이글레어 · 잭다니엘 싱글배럴', price: 18000 },
-    { label: '버번 고급', desc: '부커스 · 와일드터키 16y 골드포일 · 블랑톤', price: 66000 },
+    { level: '입문', label: '버번 입문', desc: '와일드터키 레어브리드 · 이글레어 · 잭다니엘 싱글배럴', price: 18000 },
+    { level: '고급', label: '버번 고급', desc: '부커스 · 와일드터키 16y 골드포일 · 블랑톤', price: 66000 },
   ]},
   { category: '재패니즈', items: [
-    { label: '산토리 코스', desc: '하쿠슈 DR · 히비키 블렌더스초이스 · 야마자키 12y', price: 44000 },
-    { label: '닛카 코스', desc: '류카 · 니카 요이치 · 니카 타케츠루', price: 32000 },
+    { label: '재패니즈 클래식', desc: '니카 타케츠루 · 히비키 블렌더스초이스 · 야마자키 12y', price: 41000 },
+    { label: '재패니즈 크래프트', desc: '류카 · 니카 요이치 · 하쿠슈 DR', price: 35000 },
   ]},
   { category: '코냑', items: [
     { label: '꼬냑 입문', desc: '레미마틴 VSOP · 라뇨사브랑 VSOP · 헤네시 VSOP', price: 20000 },
@@ -1975,24 +2001,31 @@ const samplerFlights = [
 
 function renderSamplerTab() {
   const list = document.getElementById('whiskyList');
-  list.innerHTML = `<div style="font-size:10px;letter-spacing:0.15em;color:#6b9ae8;margin:12px 0 6px;padding-left:2px;">15ml 샘플러 (올 하프)</div>` +
-    samplerFlights.map(group => `
-    <div style="font-size:10px;letter-spacing:0.12em;color:#55575f;margin:10px 0 2px;text-transform:uppercase;">${group.category}</div>
+  list.innerHTML = `<div style="font-size:12px;letter-spacing:0.15em;color:#6b9ae8;margin:12px 0 6px;padding-left:2px;">15ml 샘플러</div>` +
+    samplerFlights.map((group, gi) => `
+    <div style="font-size:13px;letter-spacing:0.12em;color:#8a8c94;margin:14px 0 4px;text-transform:uppercase;">${group.category}</div>
     <div style="padding:2px 0;background:transparent;border-top:0.5px solid #2a2c32;border-bottom:0.5px solid #2a2c32;border-radius:0;">
-      ${group.items.map((item, idx) => `
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;${idx < group.items.length - 1 ? 'border-bottom:0.5px solid #2a2c32;' : ''}">
-        <div style="font-size:12px;color:#b8b4ac;">${item.label} <span style="color:#555;font-size:10px;">${item.desc}</span></div>
+      ${group.items.map((item, idx) => {
+        const prev = group.items[idx - 1];
+        const levelHeader = (item.level && (!prev || prev.level !== item.level))
+          ? `<div style="display:inline-block;font-size:11px;letter-spacing:0.15em;color:#6b9ae8;border:1px solid #4a7cc4;border-radius:2px;padding:2px 9px;margin:10px 0 2px;">${item.level}</div>`
+          : '';
+        return `${levelHeader}
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;${idx < group.items.length - 1 ? 'border-bottom:0.5px solid #2a2c32;' : ''}">
+        <div style="min-width:0;"><div style="font-size:14px;color:#c8c4bc;font-weight:600;">${item.label}</div><div style="color:#7a766e;font-size:12px;line-height:1.5;margin-top:2px;">${item.desc}</div></div>
         <div style="display:flex;align-items:center;flex-shrink:0;margin-left:10px;">
-          <div style="font-size:12px;color:#b8b4ac;">${item.price.toLocaleString()}</div>
-          <div class="monthly-add-btn sampler-add-btn" data-category="${group.category}" data-label="${item.label}" style="width:28px;height:28px;font-size:15px;margin-left:8px;">+</div>
+          <div style="font-size:14px;color:#b8b4ac;">${item.price.toLocaleString()}</div>
+          <div class="monthly-add-btn sampler-add-btn" data-gi="${gi}" data-ii="${idx}" style="width:30px;height:30px;font-size:17px;margin-left:10px;">+</div>
         </div>
-      </div>`).join('')}
+      </div>`;
+      }).join('')}
     </div>`).join('');
   list.querySelectorAll('.sampler-add-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const group = samplerFlights.find(g => g.category === btn.dataset.category);
-      const item = group.items.find(i => i.label === btn.dataset.label);
-      addToCart(group.category + ' 샘플러 - ' + item.label, item.desc + ' (15ml×3)', '₩' + item.price.toLocaleString(), item.price);
+      const group = samplerFlights[parseInt(btn.dataset.gi)];
+      const item = group.items[parseInt(btn.dataset.ii)];
+      const name = group.category + ' 샘플러 - ' + (item.level && !item.label.includes(item.level) ? item.level + ' ' : '') + item.label;
+      addToCart(name, item.desc + ' (15ml×3)', '₩' + item.price.toLocaleString(), item.price);
     });
   });
 }
@@ -2846,6 +2879,19 @@ function closeMonthlyPopup() {
 }
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(openMonthlyPopup, 300);
+  // 로고 더블탭/더블클릭 → 팝업 다시 열기
+  const logo = document.querySelector('.home-logo-img');
+  if (logo) {
+    logo.style.touchAction = 'manipulation';
+    logo.style.webkitUserSelect = 'none';
+    logo.style.webkitTouchCallout = 'none';
+    let lastTap = 0;
+    logo.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastTap < 450) { openMonthlyPopup(); lastTap = 0; }
+      else { lastTap = now; }
+    });
+  }
 });
 
 // ── COCKTAIL RADAR DETAIL ──
@@ -2876,10 +2922,24 @@ function cocktailRadarSVG(radar) {
   return `<svg viewBox="0 0 200 200" width="200" height="200">${grid}${axisLines}${dataPoly}${labels}</svg>`;
 }
 
+const COCKTAIL_SKETCHES = {
+  'English Tea': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 100 250 215"><defs><linearGradient id="hbliq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7d6"/><stop offset="0.55" stop-color="#ffe6bf"/><stop offset="1" stop-color="#ffc99a"/></linearGradient><linearGradient id="matcha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9ba86"/><stop offset="0.6" stop-color="#9aa387"/><stop offset="1" stop-color="#8a7fa4"/></linearGradient></defs><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke="#e6dcc6">--><g transform="translate(0,20)"><path d="M42 246 C42 288 258 288 258 246 C258 222 42 222 42 246 Z" stroke-width="6"/><path d="M86 244 C86 258 214 258 214 244" stroke-width="3.5" opacity="0.7"/><path d="M82 124 C40 108 28 160 90 176" stroke-width="7"/><ellipse cx="150" cy="122" rx="66" ry="9" fill="#d9843a" stroke="none"/><ellipse cx="150" cy="120" rx="76" ry="13" stroke-width="6"/><path d="M76 124 C78 170 116 190 126 212" stroke-width="6"/><path d="M224 124 C222 170 184 190 174 212" stroke-width="6"/><path d="M126 212 C126 226 124 232 122 240 M174 212 C174 226 176 232 178 240" stroke-width="5"/><path d="M122 240 C122 248 178 248 178 240" stroke-width="5"/><g stroke-width="3.5"><circle cx="112" cy="154" r="6"/><path d="M112 144 v-3 M121 151 l3 -2 M118 162 l2 3 M106 162 l-2 3 M103 151 l-3 -2"/><circle cx="170" cy="150" r="6"/><path d="M170 140 v-3 M179 147 l3 -2 M176 158 l2 3 M164 158 l-2 3 M161 147 l-3 -2"/><path d="M134 140 c8 -6 14 0 8 8 c-6 4 -12 -2 -8 -8 Z"/><path d="M92 138 c6 -5 12 0 7 7 c-5 3 -10 -2 -7 -7 Z"/><path d="M198 136 c6 -5 12 0 7 7 c-5 3 -10 -2 -7 -7 Z"/><path d="M142 178 c6 -4 11 1 6 7 c-5 2 -9 -3 -6 -7 Z"/></g><path d="M128 226 C140 230 160 230 172 226" stroke="#d9b256" stroke-width="3"/><!-- stick cookie on saucer (single, double size) --><g><path d="M170 268 L240 252" stroke="#e6dcc6" stroke-width="26"/><path d="M170 268 L240 252" stroke="#d9b27a" stroke-width="19"/><path d="M182 265 l0 0 M194 262 l0 0 M206 259 l0 0 M218 256 l0 0 M230 254 l0 0 M186 272 l0 0 M198 269 l0 0 M210 266 l0 0 M222 263 l0 0 M234 260 l0 0 M184 258 l0 0 M208 252 l0 0 M232 247 l0 0" stroke="#9a7440" stroke-width="2.4"/></g></g></g></svg>`,
+  'Rotten Tomatoes': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="392 36 120 312"><defs><linearGradient id="hbliq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7d6"/><stop offset="0.55" stop-color="#ffe6bf"/><stop offset="1" stop-color="#ffc99a"/></linearGradient><linearGradient id="matcha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9ba86"/><stop offset="0.6" stop-color="#9aa387"/><stop offset="1" stop-color="#8a7fa4"/></linearGradient></defs><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke="#e6dcc6">--><g transform="translate(300,10)"><!-- liquid (about 80%) --><path d="M110 122 L116 320 C116 326 184 326 184 320 L190 122 Z" fill="url(#hbliq)" stroke="none"/><ellipse cx="150" cy="122" rx="40" ry="6" fill="none" stroke="#e6dcc6" stroke-width="2.5" opacity="0.5"/><!-- stick ice (one thick piece) --><g stroke-width="4.5" fill="#1a1b20" fill-opacity="0.0"><rect x="126" y="84" width="48" height="220" rx="9" fill="#ffffff" fill-opacity="0.35"/></g><g stroke-width="3" opacity="0.5"><path d="M136 100 L136 250"/><path d="M150 120 l0 0 M146 150 l10 8 M152 190 l8 -6 M142 230 l10 6" /></g><!-- bubbles --><g stroke="#9cc0f5" stroke-width="2.6"><circle cx="118" cy="140" r="3"/><circle cx="119" cy="205" r="2.2"/><circle cx="181" cy="172" r="3.2"/><circle cx="120" cy="262" r="2.6"/><circle cx="182" cy="236" r="2.4"/><circle cx="180" cy="288" r="2.8"/><circle cx="116" cy="178" r="1.8"/><circle cx="184" cy="144" r="1.8"/><circle cx="150" cy="316" r="2.2"/><circle cx="138" cy="310" r="1.8"/><circle cx="162" cy="312" r="2"/><circle cx="150" cy="92" r="1.6" opacity="0"/></g><!-- glass --><ellipse cx="150" cy="70" rx="42" ry="8" stroke-width="6"/><path d="M108 72 L116 322" stroke-width="6"/><path d="M192 72 L184 322" stroke-width="6"/><path d="M116 322 C116 332 184 332 184 322" stroke-width="6"/><path d="M120 306 C130 314 170 314 180 306" stroke-width="3.5" opacity="0.6"/><path d="M112 100 L116 270" stroke="#fff" stroke-width="3" opacity="0.25"/><!-- garnish on pick: tomato + basil (horizontal) --><g><path d="M96 60 L204 60" stroke="#e6dcc6" stroke-width="4"/><circle cx="128" cy="47" r="13" fill="#d9533a" stroke="#e6dcc6" stroke-width="4.5"/><path d="M123 38 l5 4 l5 -4 M128 42 v-5" stroke="#7fa04a" stroke-width="2.5"/><ellipse cx="166" cy="53" rx="17" ry="7.5" transform="rotate(4 166 53)" fill="#7fa04a" stroke="#e6dcc6" stroke-width="4"/><path d="M150 54 L182 52" stroke="#e6dcc6" stroke-width="2" opacity="0.6"/></g></g></g></svg>`,
+  '灰色と青': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="608 84 246 266"><defs><linearGradient id="hbliq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7d6"/><stop offset="0.55" stop-color="#ffe6bf"/><stop offset="1" stop-color="#ffc99a"/></linearGradient><linearGradient id="matcha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9ba86"/><stop offset="0.6" stop-color="#9aa387"/><stop offset="1" stop-color="#8a7fa4"/></linearGradient></defs><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke="#e6dcc6">--><g transform="translate(600,10)"><path d="M132 96 C124 120 82 150 84 226 C86 282 124 306 164 306 C204 306 242 282 244 226 C246 150 204 120 196 96" stroke-width="6"/><path d="M128 98 C128 86 200 86 200 98 C200 108 128 108 128 98 Z" stroke-width="6" fill="#2a2c33"/><path d="M136 124 C108 112 92 142 106 172" stroke-width="4"/><path d="M134 118 C150 126 176 126 192 118" stroke-width="4"/><path d="M160 160 c8 -10 20 -10 28 -2 c-8 0 -14 4 -18 10 c-4 -4 -6 -6 -10 -8 Z" stroke-width="3.5"/><path d="M112 224 C140 214 188 214 216 224" stroke-width="5"/><path d="M122 236 L206 236" stroke-width="4"/><path d="M128 236 L128 280 M200 236 L200 280" stroke-width="4"/><path d="M164 242 l0 28" stroke-width="3" opacity="0.7"/><ellipse cx="164" cy="256" rx="9" ry="12" stroke-width="3.5" fill="#d9533a"/><!-- ochoko liquid (95%) --><path d="M19 267 C21 308 40 325 62 325 C84 325 103 308 105 267 Z" fill="url(#matcha)" stroke="none"/><ellipse cx="62" cy="266" rx="43" ry="9" fill="#b7c690" stroke="none"/><ellipse cx="62" cy="262" rx="46" ry="11" stroke-width="6"/><path d="M18 266 C20 308 40 326 62 326 C84 326 104 308 106 266" stroke-width="6"/><path d="M32 296 C48 288 64 288 80 296" stroke-width="3" opacity="0.6"/><path d="M40 282 l10 -8 l10 8 M48 282 v10 M60 282 v10" stroke-width="3" opacity="0.6"/></g></g></svg>`,
+  'Cigarettes After Sex': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 50 240 292"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><!-- cinnamon stick (solid roll, behind glass) --><path d="M192 156 L252 74" stroke="#c8864a" stroke-width="15"/><path d="M194 150 L250 74" stroke="#1a1b20" stroke-width="2" opacity="0.7"/><ellipse cx="253" cy="72" rx="4.5" ry="8" transform="rotate(36 253 72)" fill="#1a1b20" stroke="#c8864a" stroke-width="3"/><path d="M253 68 C255 70 255 73 252 74" stroke="#c8864a" stroke-width="1.8"/><!-- liquid (solid) --><path d="M56 180 C96 190 140 172 190 182 C214 187 232 178 244 182 C240 224 198 246 150 248 C102 246 60 224 56 180 Z" fill="#d9843a" stroke="none"/><!-- ice cube --><g transform="rotate(-6 148 178)"><path d="M104 150 C104 138 112 134 124 134 L172 134 C184 134 192 138 192 150 L192 204 C192 216 184 220 172 220 L124 220 C112 220 104 216 104 204 Z" fill="#1a1b20" stroke="#e6dcc6" stroke-width="5.5"/><path d="M116 150 L116 176" stroke="#e6dcc6" stroke-width="4" opacity="0.85"/><path d="M126 150 L152 150" stroke="#e6dcc6" stroke-width="4" opacity="0.85"/><path d="M156 196 L178 196" stroke="#e6dcc6" stroke-width="2.5" opacity="0.5"/></g><!-- glass bowl --><path d="M50 150 C72 133 230 133 250 150 C230 166 72 166 50 150 Z" stroke="#e6dcc6" stroke-width="6"/><path d="M53 156 C58 216 102 246 150 248 C198 246 242 216 247 156" stroke="#e6dcc6" stroke-width="6"/><!-- stem + foot --><path d="M150 252 C149 270 148 286 150 304" stroke="#e6dcc6" stroke-width="8"/><path d="M96 316 C96 304 204 304 204 316 C204 326 96 328 96 316 Z" stroke="#e6dcc6" stroke-width="6"/><!-- orange peel curl on rim --><path d="M88 138 C74 116 108 104 118 120 C124 134 104 140 102 128 C101 122 108 120 111 125" stroke="#f2a431" stroke-width="5.5"/></g></svg>`,
+};
+
 function openCocktailDetail(item) {
   document.getElementById('cocktailDetailName').textContent = item.name;
   document.getElementById('cocktailDetailKo').textContent = item.ko || '';
-  document.getElementById('cocktailDetailChart').innerHTML = item.radar ? cocktailRadarSVG(item.radar) : '';
+  const sketch = COCKTAIL_SKETCHES[item.name];
+  const radarSvg = item.radar ? cocktailRadarSVG(item.radar) : '';
+  document.getElementById('cocktailDetailChart').innerHTML = radarSvg;
+  document.getElementById('cocktailSketchArt').innerHTML = sketch || '';
+  document.getElementById('cocktailSketchCard').classList.toggle('show', !!sketch);
+  const sec = drinksTextData.cocktail.sections.find(sc => sc.items.includes(item));
+  document.getElementById('cocktailSketchLabel').textContent = sec ? sec.header : '';
+  document.getElementById('cocktailDetailPrice').textContent = item.glass ? '₩' + item.glass.toLocaleString() : '';
   const tagsEl = document.getElementById('cocktailDetailTags');
   tagsEl.innerHTML = (item.tags && item.tags.length)
     ? item.tags.map(t => `<span class="dtext-flavor-tag" style="background:${FLAVOR_TAG_COLORS[t.cat].bg};color:${FLAVOR_TAG_COLORS[t.cat].fg};">${t.label}</span>`).join('')
@@ -2940,11 +3000,11 @@ function initMonthlyButtons() {
   });
   const addDinnerSet = document.getElementById('addDinnerSet');
   if (addDinnerSet) addDinnerSet.addEventListener('click', () => {
-    addToCart('Dinner Set', '살치살스테이크+갈릭엔초비파스타+샤또오뜨브란드 or 소뮈르에르보쥬', '₩120,000', 120000);
+    addToCart('Dinner Set', '살치살스테이크+갈릭엔초비파스타+레드 샤또오뜨브란드 or 화이트 소뮈르에르보쥬', '₩120,000', 120000);
   });
   const addPairingSet = document.getElementById('addPairingSet');
   if (addPairingSet) addPairingSet.addEventListener('click', () => {
-    addToCart('Pairing Set', '브리치즈 구이+소뮈르 에르보쥬', '₩78,000', 78000);
+    addToCart('Pairing Set', '브리치즈 구이+화이트 소뮈르 에르보쥬', '₩78,000', 78000);
   });
 }
 document.addEventListener('DOMContentLoaded', initMonthlyButtons);
