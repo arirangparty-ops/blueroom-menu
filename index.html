@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>BLUE ROOM</title>
 <style>
@@ -1559,6 +1559,40 @@ html, body, .screen, #home, #monthly, .dtext-body, .dtext-tabs, .whisky-tabs, .w
 
 /* 라이터 그림 (2026-10) */
 .bd-art { display: block; width: 82%; margin: 4px auto 2px; }
+
+/* 아이패드 미니2 세로: 작은 글씨 키우기 (2026-10) */
+@media (max-width: 800px) {
+  .special-item-sub, .photo-card-ko, .drink-tile-ko, .dtext-flavor-tag, .cart-item-opt, .my-order-time, .my-status,
+  .cart-total-label, .table-badge, .my-orders-title, .cart-clear, .bn-row-sub, .menu-en { font-size: 12.5px !important; }
+  .menu-desc-preview, .dtext-item-sub { font-size: 13px !important; line-height: 1.55 !important; }
+  .dtext-abv, .dtext-vol-inline, .special-label { font-size: 11px !important; }
+  .dtext-item-ko { font-size: 14px !important; }
+  .cart-item-price { font-size: 13px !important; }
+}
+
+/* 휴대폰(온라인 메뉴판) 화면 (2026-10) */
+@media (max-width: 600px) {
+  #goodsScreen .goods-grid { padding: 4px 18px 30px; }
+  .gd-sec { margin: 24px 18px 0; }
+  .gd-intro { padding: 24px 18px 4px; }
+  .gd-intro-en { font-size: 28px; }
+  #goodsScreen .goods-card, #goodsScreen .gd-small .goods-card { width: 47.5%; margin: 20px 5% 0 0; clear: none; }
+  #goodsScreen .goods-card:nth-child(3n), #goodsScreen .gd-small .goods-card:nth-child(3n),
+  #goodsScreen .gd-small .goods-card:nth-child(4n) { margin-right: 5%; }
+  #goodsScreen .goods-card:nth-child(2n), #goodsScreen .gd-small .goods-card:nth-child(2n) { margin-right: 0; }
+  #goodsScreen .goods-card:nth-child(2n+1) { clear: left; }
+  #goodsScreen .goods-en, #goodsScreen .gd-small .goods-en { font-size: 16px; }
+  #goodsScreen .gd-foot { display: block; }
+  #goodsScreen .goods-add-btn { display: inline-block; height: 32px; line-height: 30px; margin-top: 8px; padding: 0 14px; }
+  .bn-ticket { -webkit-flex-direction: column; flex-direction: column; }
+  .bn-ticket-main { border-right: 0; border-bottom: 1px dashed var(--ink3); }
+  .bn-ticket-main:before, .bn-ticket-main:after { display: none; }
+  .bn-ticket-stub { width: auto !important; display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; padding: 14px 0 12px; }
+  .bn-qr + .bn-qr { margin-top: 0; margin-left: 28px; }
+  .bn-hero { height: 200px; }
+  .bn-hero-title { font-size: 30px; }
+  .bn-ticket-big { font-size: 28px; }
+}
 </style>
 </head>
 <body>
