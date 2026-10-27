@@ -1631,6 +1631,36 @@ html, body, .screen, #home, #monthly, .dtext-body, .dtext-tabs, .whisky-tabs, .w
   .special-item-price { margin-top: 2px !important; }
   .special-item .dtext-add-btn { min-width: 60px !important; height: 32px !important; padding: 0 10px !important; }
 }
+/* 휴대폰 4차: 이달의 메뉴 한 줄 + 팝업 짧게 (2026-10-27) */
+@media (max-width: 600px) {
+  .special-head { padding: 10px 14px 8px !important; }
+  .special-title { font-size: 17px !important; margin-top: 2px !important; }
+  .special-item { padding: 7px 4px !important; }
+  .special-item > div:first-child { display: -webkit-flex; display: flex; -webkit-align-items: baseline; align-items: baseline; -webkit-flex: 1; flex: 1; min-width: 0; }
+  .special-item-name { -webkit-flex: 1; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .special-item-price { margin: 0 0 0 8px !important; white-space: nowrap; }
+  .special-item-price s { font-size: 10.5px !important; }
+  .special-item-price b { font-size: 15px !important; }
+  .special-item .dtext-add-btn { min-width: 52px !important; height: 28px !important; margin-left: 10px !important; }
+  .bn-hero { height: 120px !important; }
+  .bn-hero-title { font-size: 22px !important; margin-top: 4px !important; }
+  .bn-hero-text { bottom: 14px !important; }
+  .bn-inner { padding: 14px 18px 18px !important; }
+  #bnMonthly { margin-bottom: 10px !important; }
+  .bn-row { padding: 6px 0 5px !important; }
+  .bn-row-name, .bn-price { font-size: 15px !important; }
+  .bn-row-sub { margin-top: 2px !important; -webkit-align-items: flex-start; align-items: flex-start; }
+  .bn-off { -webkit-align-self: flex-start; align-self: flex-start; line-height: 1.5; }
+  .bn-ticket-main { padding: 12px 14px 10px !important; }
+  .bn-ticket-big { font-size: 21px !important; }
+  .bn-ticket-ko { font-size: 12.5px !important; line-height: 1.55 !important; }
+  .bn-ticket-stub { padding: 10px 0 8px !important; }
+  .bn-qr img { width: 60px !important; height: 60px !important; }
+  .bn-notes { margin-top: 10px !important; }
+  .bn-go { margin-top: 12px !important; padding: 13px 0 !important; }
+  .back-btn { white-space: nowrap; -webkit-flex-shrink: 0; flex-shrink: 0; margin-right: 14px !important; }
+  .list-title { font-size: 16px !important; letter-spacing: 0.14em !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+}
 </style>
 </head>
 <body>
