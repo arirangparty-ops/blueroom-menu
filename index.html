@@ -1593,6 +1593,31 @@ html, body, .screen, #home, #monthly, .dtext-body, .dtext-tabs, .whisky-tabs, .w
   .bn-hero-title { font-size: 30px; }
   .bn-ticket-big { font-size: 28px; }
 }
+
+/* 휴대폰 2차: 카드 글씨 넘침 + 팝업 닫기 (2026-10) */
+@media (max-width: 600px) {
+  .photo-card { height: 112px !important; }
+  .photo-card:before { left: 5px !important; top: 5px !important; right: 5px !important; bottom: 5px !important; }
+  .photo-card-text { left: 11px !important; right: 8px !important; bottom: 10px !important; }
+  .photo-card-en { font-size: 14px !important; line-height: 1.15; }
+  .photo-card-ko { font-size: 10.5px !important; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .drink-tile { height: auto !important; min-height: 86px; padding: 28px 10px 10px !important; -webkit-justify-content: flex-start !important; justify-content: flex-start !important; }
+  .drink-tile:before { left: 12px !important; top: 12px !important; }
+  .drink-tile-en { font-size: 14px !important; line-height: 1.15; }
+  .drink-tile-ko { font-size: 10.5px !important; line-height: 1.35; }
+  #brNotice { -webkit-align-items: flex-start; align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 18px 0 30px; box-sizing: border-box; }
+  #brNotice .bn-box { max-width: 92%; margin: 0 auto; }
+  #brNotice .bn-close { position: fixed; top: 12px; right: 12px; width: 40px; height: 40px; line-height: 38px; padding: 0; text-align: center; border-radius: 50%; background: rgba(255,255,255,0.96); color: #1d1a16; font-size: 26px; text-shadow: none; box-shadow: 0 2px 10px rgba(0,0,0,0.25); z-index: 480; }
+  .bn-hero { height: 150px !important; }
+  .bn-hero-title { font-size: 25px !important; }
+  .bn-hero-text { left: 22px !important; bottom: 18px !important; }
+  .bn-inner { padding: 18px 20px 22px !important; }
+  .bn-row-name { font-size: 16px !important; }
+  .bn-price { font-size: 16px !important; }
+  .bn-old { font-size: 11px !important; margin-right: 6px !important; }
+  .bn-ticket-big { font-size: 24px !important; }
+  .bn-ticket-main { padding: 18px 16px 14px !important; }
+}
 </style>
 </head>
 <body>
