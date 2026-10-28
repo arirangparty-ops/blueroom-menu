@@ -1666,6 +1666,24 @@ html, body, .screen, #home, #monthly, .dtext-body, .dtext-tabs, .whisky-tabs, .w
 .photo-card, .bn-hero { -webkit-filter: none !important; filter: none !important; }
 #cocktailDetailModal { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 .menu-grid, .dtext-body, .whisky-list, .search-results, .guide-body, .cart-body { background-image: none !important; background-color: transparent !important; }
+
+/* 할로윈 이벤트 (2026-10-30~31만 표시) */
+.hw-box, .hw-home { display: none; }
+.hw-on .hw-box { display: block; }
+.hw-on .hw-home { display: block; }
+.hw-box { border: 1px solid var(--ink); background: #1d1a16; color: #f6f5f2; padding: 18px 20px 16px; margin: 2px 0 18px; text-align: center; position: relative; }
+.hw-box:before { content: ''; position: absolute; left: 4px; top: 4px; right: 4px; bottom: 4px; border: 1px solid rgba(246,245,242,0.35); pointer-events: none; }
+.hw-date { font-size: 10px; letter-spacing: 0.32em; color: #c9c2b4; }
+.hw-title { font-family: var(--serif); font-size: 28px; margin-top: 6px; letter-spacing: 0.01em; }
+.hw-title i { color: #d9894a; }
+.hw-lines { margin-top: 10px; font-size: 13px; line-height: 1.75; color: #e9e4da; }
+.hw-lines b { color: #fff; font-weight: 600; }
+.hw-lines small { color: #a9a294; font-size: 11.5px; }
+.hw-home { width: 88%; max-width: 860px; margin: 0 auto 14px; border: 1px solid #1d1a16; background: #1d1a16; color: #f6f5f2; padding: 11px 16px; box-sizing: border-box; cursor: pointer; text-align: center; font-size: 13px; letter-spacing: 0.02em; }
+.hw-home span { font-family: var(--serif); font-size: 15px; margin-right: 8px; }
+.hw-home .hw-d { display: none; font-weight: 400; font-family: inherit; font-size: 12px; color: #c9c2b4; margin-left: 4px; }
+.hw-home em { font-style: normal; color: #c9c2b4; margin-left: 6px; font-size: 12px; }
+@media (max-width: 600px) { .hw-title { font-size: 23px; } .hw-lines { font-size: 12.5px; } .hw-home { font-size: 12px; padding: 10px 12px; } .hw-home span { display: block; margin: 0 0 3px; } .hw-home em { display: none; } .hw-home .hw-d { display: inline; } }
 </style>
 </head>
 <body>
@@ -1711,6 +1729,7 @@ html, body, .screen, #home, #monthly, .dtext-body, .dtext-tabs, .whisky-tabs, .w
   <div class="home-wrap">
 
     <!-- 이달의 메뉴 (팝업 대신 첫 화면에 바로) -->
+    <div class="hw-home" onclick="openMonthlyPopup()"><span>Halloween Night <b class="hw-d">10.30–31</b></span>코스튬 입고 오시면 10% 할인 · 칵테일 샷 1잔<em>10.30–31</em></div>
     <div class="special-card">
       <div class="special-head" onclick="showScreen('monthly')">
         <div>
@@ -4438,6 +4457,7 @@ function closeDetail() {
       </div>
     </div>
     <div class="bn-inner">
+      <div class="hw-box"><div class="hw-date">10.30 FRI — 10.31 SAT</div><div class="hw-title">Halloween <i>Night</i></div><div class="hw-lines">할로윈 기념 <b>칵테일 샷 1잔</b>을 드려요<br>코스튬을 입고 오시면 <b>10% 할인</b><br><small>머리띠·소품 같은 작은 포인트도 OK</small></div></div>
       <div class="bn-sec"><span>Monthly Special</span><em>이달의 메뉴</em></div>
       <div id="bnMonthly"></div>
       <div class="bn-sec"><span>Event</span><em>이벤트</em></div>
@@ -4646,6 +4666,13 @@ var BR_SEATS_BAR = ['바1', '바2', '바3', '바4', '바5'];
   // 장바구니 위 「TABLE 3」 표시를 눌러도 자리 바꾸기
   var badge = document.getElementById('tableBadge');
   if (badge) { badge.style.cursor = 'pointer'; badge.addEventListener('click', function () { window.brSeatOpen(); }); }
+})();
+</script>
+<script>
+// 할로윈: 2026-10-28(미리 안내) ~ 11-01 새벽 6시까지만 보임. 미리보기: 주소 끝에 ?hw=1
+(function () {
+  var now = new Date(), start = new Date(2026, 9, 28, 0, 0), end = new Date(2026, 10, 1, 6, 0);
+  if ((now >= start && now < end) || /[?&]hw=1/.test(location.search)) document.documentElement.className += ' hw-on';
 })();
 </script>
 </body>
