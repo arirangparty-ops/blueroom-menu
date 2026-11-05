@@ -1503,6 +1503,7 @@ html, body, .screen, #home, #monthly, .dtext-body, .dtext-tabs, .whisky-tabs, .w
 .bs-group:after { content: ''; flex: 1; height: 3px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); margin-left: 14px; position: relative; top: -3px; }
 .bs-grid { display: flex; flex-wrap: wrap; margin: 0 -6px; }
 .bs-btn { width: 20%; padding: 0 6px 12px; box-sizing: border-box; }
+#bsBars .bs-btn { width: 25%; }
 .bs-btn div { height: 96px; border: 1px solid var(--ink); box-shadow: inset 0 0 0 3px var(--card), inset 0 0 0 4px var(--rule); background: var(--card); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
 .bs-btn div:active, .bs-btn.cur div { background: var(--ink); box-shadow: inset 0 0 0 3px var(--ink), inset 0 0 0 4px rgba(255,255,255,0.35); }
 .bs-btn b { font-family: var(--serif); font-weight: 400; font-size: 38px; color: var(--ink); line-height: 1; }
@@ -2277,7 +2278,7 @@ const foods = {
     items: [
       { en: 'Butter Glazed Sirloin Steak', ko: '살치살 스테이크', price: '₩34,000', img: 'mains_bgss.JPG',
         desc: '육향 가득한 살치살과 브라운 버터로 완성한 매시드 포테이토, 앤초비 버터로 깊이를 더한 시그니처 스테이크',
-        pairing: { wine: ["레드 · 샤토 르 부르디요 (Château Le Bourdillot)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+        pairing: { wine: ["레드 · 샤토 르 부르디요 (Château Le Bourdillot)"], cocktail: ["진토닉 (Gin Tonic)", "진 피즈 (Gin Fizz)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
     ]
   },
   pasta: {
@@ -2285,22 +2286,22 @@ const foods = {
     items: [
       { en: 'Carbonara', ko: '까르보나라', price: '₩18,000', img: 'pasta_ca.JPG',
         desc: '노른자와 그라나파다노 치즈로 진하게 유화시킨 크림에 바삭하게 구운 베이컨을 더하고, 후추와 페퍼론치노로 알싸함을 살린 클래식 까르보나라',
-        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["아마레토 사워 (Amaretto Sour)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["진 리키 (Gin Rickey)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
       { en: 'Basil Tomato Pasta', ko: '바질 토마토 파스타', price: '₩19,000', img: 'pasta_bt.JPG',
         desc: '토마토 소스에 탱글한 오징어와 새우를 더하고, 방울토마토와 신선한 바질 향을 얹어 완성한 깔끔하고 시원한 토마토 해산물 파스타',
-        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["프레시 라임 모히토 (Fresh Lime Mojito)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["로튼 토마토 (Rotten Tomatoes)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
       { en: 'Mentaiko Shrimp Oil Pasta', ko: '명란 새우 오일 파스타', price: '₩19,000', img: 'pasta_msop.JPG',
         desc: '탱글한 새우와 짭조름한 명란, 향긋한 재료가 오일에 어우러진 감칠맛 가득한 파스타',
-        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["올드 패션드 (Old Fashioned)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["랜치 워터 (Ranch Water)"], whisky: ["재패니즈 위스키 (Japanese Whisky)"], highball: ["산토리 · 하쿠슈 하이볼 (Suntory / Hakushu Highball)"] } },
       { en: 'Garlic Butter Anchovy Pasta', ko: '갈릭 버터 엔초비 파스타', price: '₩21,000', img: 'pasta_gbap.JPG',
         desc: '마늘칩과 엔초비를 노릇하게 볶아 깊은 감칠맛을 끌어올리고, 버터를 넉넉히 더해 완성한 갈릭버터 파스타',
-        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["드라이 마티니 (Dry Martini)"], whisky: ["버번 위스키 (Bourbon Whisky)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+        pairing: { wine: ["화이트 · 배비치 블랙라벨 소비뇽 블랑 (Babich Black Label Marlborough Sauvignon Blanc)"], cocktail: ["김렛 (Gimlet)"], whisky: ["버번 위스키 (Bourbon Whisky)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
       { en: 'Zucchini Basil Pasta', ko: '애호박 바질 파스타', price: '₩18,000', img: 'pasta_zbp.JPG',
         desc: '애호박과 신선한 바질이 어우러진 가볍고 신선하면서도 감칠맛이 터지는 풍미의 파스타',
-        pairing: { wine: ["화이트 · 소뮈르 에르보쥬 (White / Saumur Domaine Des Herbauges)"], cocktail: ["프레시 라임 모히토 (Fresh Lime Mojito)"], whisky: ["아이리시 위스키 (Irish Whiskey)"], highball: ["글렌모렌지 하이볼 (Glenmorangie Highball)"] } },
+        pairing: { wine: ["화이트 · 소뮈르 에르보쥬 (White / Saumur Domaine Des Herbauges)"], cocktail: ["쿠바 리브레 (Cuba Libre)"], whisky: ["아이리시 위스키 (Irish Whiskey)"], highball: ["글렌모렌지 하이볼 (Glenmorangie Highball)"] } },
       { en: 'White Mushroom Cream Risotto', ko: '양송이 크림 리조또', price: '₩24,000', img: 'plates_wmcr.JPG',
         desc: '잘 구운 스테이크와 함께 즐기는 부드럽고 진한 리조또, 그리고 향을 더해주는 화이트 머쉬룸으로 완성한 부드러운 풍미',
-        pairing: { wine: ["레드 · 르뷔우 트루폴리에 (Red / Le Vieux Truffolier)"], cocktail: ["아마레토 사워 (Amaretto Sour)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["버팔로 트레이스 하이볼 (Buffalo Trace Highball)"] } },
+        pairing: { wine: ["레드 · 르뷔우 트루폴리에 (Red / Le Vieux Truffolier)"], cocktail: ["모히또 (Mojito)"], whisky: ["버번 위스키 (Bourbon Whiskey)"], highball: ["버팔로 트레이스 하이볼 (Buffalo Trace Highball)"] } },
     ]
   },
 
@@ -2309,28 +2310,28 @@ const foods = {
     items: [
       { en: 'Herb Baked Brie', ko: '브리치즈 구이', price: '₩13,000', img: 'c_s_hbb.JPG',
         desc: '프랑스산 브리치즈를 부드럽게 구워, 향긋한 파슬리와 허브, 고소한 견과류와 톡 터지는 구운 토마토를 곁들인 따뜻한 치즈 플레이트.',
-        pairing: { wine: ["오이스터 베이 소비뇽 블랑 (Oyster Bay Sauvignon Blanc)"], cocktail: ["진 토닉 (Gin Tonic)"], whisky: ["우드포드 리저브 (Woodford Reserve)"], highball: ["히비키 하이볼 (Hibiki Highball)"] } },
+        pairing: { wine: ["오이스터 베이 소비뇽 블랑 (Oyster Bay Sauvignon Blanc)"], cocktail: ["모스코뮬 (Moscow Mule)", "페니실린 (Penicillin)"], whisky: ["우드포드 리저브 (Woodford Reserve)"], highball: ["히비키 하이볼 (Hibiki Highball)"] } },
       { en: 'Cheese Plate', ko: '치즈 플레이트', price: '₩21,000', img: 'c_s_cp.JPG',
         desc: '브라운, 콜비잭, 페퍼잭, 스모크 등 여섯 가지 치즈와 2종의 햄, 바삭하게 구운 호밀빵으로 구성된 정통 치즈 플레이트',
-        pairing: { wine: ["레드 · 프레스티지 르 세르 (Red / Prestige Le Serre)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)"], cocktail: ["네그로니 (Negroni)"], whisky: ["스페이사이드 싱글 몰트 위스키 (Speyside Single Malt Whisky)"], highball: ["글렌피딕 15 하이볼 (Glenfiddich 15 Highball)"] } },
+        pairing: { wine: ["레드 · 프레스티지 르 세르 (Red / Prestige Le Serre)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)"], cocktail: ["시가렛 애프터 섹스 (Cigarettes After Sex)"], whisky: ["스페이사이드 싱글 몰트 위스키 (Speyside Single Malt Whisky)"], highball: ["글렌피딕 15 하이볼 (Glenfiddich 15 Highball)"] } },
       { en: 'Yuzu Cream Cheese & Fruits', ko: '유자 크림치즈 & 과일', price: '₩19,000', img: 'c_s_ycc_f.JPG',
         desc: '홈메이드 유자 크림치즈와 제철 과일, 바삭한 크래커를 함께 즐기는 디저트. 상큼한 유자 향과 부드러운 크림의 균형이 돋보이는 가볍지만 인상적인 마무리. (과일은 계절에 따라 변경될 수 있습니다)',
-        pairing: { wine: ["스파클링 · 도멘 데 에르보쥬 루미네상스 N/V (Domaine Des Herbauges Luminescence N/V)"], cocktail: ["프렌치 커넥션 (French Connection)"], whisky: ["글렌피딕 15 (Glenfiddich 15)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
+        pairing: { wine: ["스파클링 · 도멘 데 에르보쥬 루미네상스 N/V (Domaine Des Herbauges Luminescence N/V)"], cocktail: ["진토닉 (Gin Tonic)"], whisky: ["글렌피딕 15 (Glenfiddich 15)"], highball: ["메이커스 마크 하이볼 (Maker's Mark Highball)"] } },
       { en: 'Vanilla Ice Cream', ko: '바닐라 아이스크림', price: '₩8,000', img: 'c_s_vic.JPG',
         desc: '위스키와 함께 즐길 때 새로운 디저트 경험이 완성됩니다.',
-        pairing: { wine: ["스파클링 · 브뤼, 펀 키스 (Sparkling / Brut, Fun Kiss)"], cocktail: ["아이리시 커피 (Irish Coffee)"], whisky: ["버번 위스키 · 와일드터키, 버팔로트레이스 (Bourbon Whiskey: Wild Turkey, Buffalo Trace)"], highball: ["버팔로 트레이스 하이볼 (Buffalo Trace Highball)"] } },
+        pairing: { wine: ["스파클링 · 브뤼, 펀 키스 (Sparkling / Brut, Fun Kiss)"], cocktail: ["브랜디 알렉산더 (Brandy Alexander)", "블랙 러시안 (Black Russian)"], whisky: ["버번 위스키 · 와일드터키, 버팔로트레이스 (Bourbon Whiskey: Wild Turkey, Buffalo Trace)"], highball: ["버팔로 트레이스 하이볼 (Buffalo Trace Highball)"] } },
       { en: 'Marlenka Honey Cake', ko: '말렌카 허니케이크', price: '₩8,000', img: 'c_s_mhc.JPG',
         desc: '체코 전통 디저트인 허니케이크, 꿀과 크림의 진한 단맛이 어우러져 부드럽게 퍼지는 달콤한 풍미를 선사합니다.',
         pairing: { wine: ["레드 · 프레스티지 르 세르 (Red / Prestige Le Serre)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)"], cocktail: ["에스프레소 마티니 (Espresso Martini)"], whisky: ["쉐리 캐스크 위스키 (Sherried Whisky)"], highball: ["아벨라워 12 하이볼 (Aberlour 12 Highball)"] } },
       { en: 'Yuja Cream Cheese Canapé', ko: '유자 크림치즈 카나페', price: '₩10,000', img: 'c_s_bcc.JPG',
         desc: '새콤달콤한 유자를 더한 부드러운 크림치즈를 바삭한 크래커 위에 올린 산뜻하고 고소한 한입 카나페',
-        pairing: { wine: ["레드 · 샤토 르 부르디요 (Red / Château Le Bourdillot)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)", "스파클링 · 브뤼, 펀 키스 (Sparkling / Brut, Fun Kiss)"], cocktail: ["블루베리 모히토 (Blueberry Mojito)"], whisky: ["아이리시 위스키 · 스페이사이드 위스키 (Irish Whiskey / Speyside Whisky)"], highball: ["제임슨 진저 하이볼 (Jameson Ginger Highball)"] } },
+        pairing: { wine: ["레드 · 샤토 르 부르디요 (Red / Château Le Bourdillot)", "화이트 · 물랭 다르장 샤르도네 (White / Moulin d'Argent Chardonnay)", "스파클링 · 브뤼, 펀 키스 (Sparkling / Brut, Fun Kiss)"], cocktail: ["잉글리쉬 티 (English Tea)"], whisky: ["아이리시 위스키 · 스페이사이드 위스키 (Irish Whiskey / Speyside Whisky)"], highball: ["제임슨 진저 하이볼 (Jameson Ginger Highball)"] } },
       { en: 'Jamón Bruschetta', ko: '하몽 부르스케타', price: '₩18,000', img: 'bites_cwj.JPG',
         desc: '바삭하게 구운 호밀빵 위에 상큼한 유자 향의 수제 리코타 크림 치즈, 루꼴라와 하몽이 어우러진 이탈리안 타파스',
-        pairing: { wine: ["화이트 · 마콩 빌라쥬 (Stéphane Brocard Mâcon-Villages)"], cocktail: ["네그로니 (Negroni)"], whisky: ["쉐리 캐스크 위스키 (Sherried Whisky)"], highball: ["몽키 숄더 하이볼 (Monkey Shoulder Highball)"] } },
+        pairing: { wine: ["화이트 · 마콩 빌라쥬 (Stéphane Brocard Mâcon-Villages)"], cocktail: ["네그로니 (Negroni)", "불바디에 (Boulevardier)"], whisky: ["쉐리 캐스크 위스키 (Sherried Whisky)"], highball: ["몽키 숄더 하이볼 (Monkey Shoulder Highball)"] } },
       { en: 'Melon & Jamón', ko: '메론 & 하몽', price: '₩15,000', img: 'c_s_m_j.jpg',
         desc: '달콤한 메론과 짭짤한 하몽의 클래식 조합, 입안에서 상반된 두 가지 풍미가 만나 깔끔한 스타터로 즐기기에 완벽합니다. (메론&하몽은 계절에 따라 변경될 수 있습니다)',
-        pairing: { wine: ["스파클링 · 도멘 데 에르보쥬 루미네상스 N/V (Domaine Des Herbauges Luminescence N/V)"], cocktail: ["아페롤 스프리츠 (Aperol Spritz)"], whisky: ["블렌디드 위스키 (Blended Whisky)"], highball: ["몽키 숄더 하이볼 (Monkey Shoulder Highball)"] } },
+        pairing: { wine: ["스파클링 · 도멘 데 에르보쥬 루미네상스 N/V (Domaine Des Herbauges Luminescence N/V)"], cocktail: ["하이랜드 쿨러 (Highland Cooler)", "진 피즈 (Gin Fizz)"], whisky: ["블렌디드 위스키 (Blended Whisky)"], highball: ["몽키 숄더 하이볼 (Monkey Shoulder Highball)"] } },
       { en: 'Jerky', ko: '육포', price: '₩15,000', img: 'c_s_j.JPG',
         desc: '짭조름하고 쫄깃한 식감이 술맛을 돋우는 전통적인 바 스낵',
         pairing: { wine: ["레드 · 르뷔우 트루폴리에 (Red / Le Vieux Truffolier)"], cocktail: ["맨해튼 (Manhattan)"], whisky: ["버번 · 라이 위스키 (Bourbon Whiskey / Rye Whiskey)"], highball: ["와일드 터키 하이볼 (Wild Turkey Highball)"] } },
@@ -2442,7 +2443,6 @@ const whiskyData = {
   ],
   'Islay': [
     { brand: 'Ardbeg', ko: '아드벡', items: [
-      { ctg: '5y Wee Beastie', shot: 10000, bottle: 200000 },
       { ctg: '10y', shot: 13000, bottle: 250000 },
       { ctg: 'Uigeadail', shot: 19000, bottle: 370000 },
       { ctg: 'Spectacular', shot: 20000, bottle: 390000 },
@@ -2523,6 +2523,9 @@ const whiskyData = {
     { brand: 'Aberfeldy', ko: '에버펠디', items: [
       { ctg: '16y', shot: 16000, bottle: 320000 },
     ]},
+    { brand: 'Dalwhinnie', ko: '달위니', items: [
+      { ctg: '15y', shot: 16000, bottle: 325000 },
+    ]},
   ],
   'Islands': [
     { brand: 'Arran', ko: '아란', items: [
@@ -2534,6 +2537,9 @@ const whiskyData = {
     ]},
     { brand: 'Talisker', ko: '탈리스커', items: [
       { ctg: '10y', shot: 10000, bottle: 195000 },
+    ]},
+    { brand: 'Highland Park', ko: '하이랜드 파크', items: [
+      { ctg: '12y', shot: 12000, bottle: 260000 },
     ]},
   ],
   'Japanese': [
@@ -2652,7 +2658,6 @@ const whiskyData = {
       { ctg: '21y', shot: 27000, bottle: 550000 },
     ]},
     { brand: 'Johnnie Walker', ko: '조니워커', items: [
-      { ctg: 'Red Label', shot: 6000, bottle: 80000 },
       { ctg: 'Black Label', shot: 7500, bottle: 140000 },
       { ctg: 'Double Black', shot: 8000, bottle: 150000 },
       { ctg: 'Black Ruby', shot: 8500, bottle: 150000 },
@@ -2875,6 +2880,9 @@ const drinksTextData = {
       { title: 'SPIRITS', items: [
         { brand: 'Absinthe', ko: '압생트', items: [
           { ctg: '', shot: 12000, bottle: 240000 },
+        ]},
+        { brand: 'Boulard Calvados', ko: '불라 깔바도스', items: [
+          { ctg: 'Grand Solage', shot: 10000, bottle: 190000 },
         ]},
       ]},
     ]
@@ -4507,7 +4515,9 @@ var BR_NOTICES = [
     setInterval(function () {
       brXhr('GET', '/api/orders?table=' + encodeURIComponent(TABLE_NO), null, function (ok, data) {
         if (!ok || !data) return;
-        var n = (data.orders || []).length;
+        // 이 패드를 자리에 놓은 뒤 들어온 주문만 셈 (앞 손님 주문 정리 때 패드가 초기화되지 않게)
+        var since = 0; try { since = +localStorage.getItem('br_since') || 0; } catch (e) {}
+        var n = (data.orders || []).filter(function (o) { return !since || (o.time || 0) >= since - 120; }).length;
         if (had && n === 0) { if (window.brSeatReset) { window.brSeatReset(); return; } if (typeof goHome === 'function') goHome(); window.openBrNotice(0); }
         had = n > 0;
       });
@@ -4591,7 +4601,7 @@ var BR_NOTICES = [
 // ══ 자리 선택: 패드를 돌려쓰고, 주문은 자리 번호로 ══
 var BR_SEAT_PIN = '0000';           // 자리 바꾸기 비밀번호 (직원용)
 var BR_SEATS_TABLE = ['1', '2', '3', '4', '5'];
-var BR_SEATS_BAR = ['바1', '바2', '바3', '바4', '바5'];
+var BR_SEATS_BAR = ['바1', '바2', '바3', '바4', '바5', '바6', '바7', '바8'];
 (function () {
   var isPad = false;
   try { if (TABLE_NO) localStorage.setItem('br_pad', '1'); isPad = localStorage.getItem('br_pad') === '1'; } catch (e) {}
@@ -4608,7 +4618,7 @@ var BR_SEATS_BAR = ['바1', '바2', '바3', '바4', '바5'];
     });
   }
   function pick(id) {
-    try { localStorage.setItem('br_table', id); localStorage.setItem('br_pad', '1'); } catch (e) {}
+    try { localStorage.setItem('br_table', id); localStorage.setItem('br_pad', '1'); localStorage.setItem('br_since', String(Math.floor(Date.now() / 1000))); } catch (e) {}
     location.replace(location.pathname);
   }
   function show(mode) {
